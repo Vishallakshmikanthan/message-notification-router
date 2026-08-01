@@ -128,3 +128,94 @@ class BehaviourContext:
     sender_avg_daily_messages: float = 0.0
     sender_forward_ratio: float = 0.0
     receiver_quiet_hours_active: bool = False
+
+
+# Standardized Default Sub-Context Singletons (Null Object Pattern)
+DEFAULT_USER_CONTEXT = UserContext(
+    user_id="UNKNOWN_USER",
+    display_name="Unknown Contact",
+    phone_number="UNKNOWN",
+    user_type="INDIVIDUAL",
+    registration_timestamp=0,
+    account_age_days=0,
+    preferred_language="en",
+    timezone="UTC",
+    is_verified=False,
+    is_registered_user=False,
+)
+
+DEFAULT_GROUP_CONTEXT = GroupContext(
+    group_id="NONE",
+    group_name="Direct Message",
+    group_type="DIRECT_CHAT",
+    created_at_timestamp=0,
+    total_member_count=2,
+    is_announcement_only=False,
+    sender_role="NON_MEMBER",
+    sender_joined_at=0,
+    sender_is_muted_in_group=False,
+)
+
+DEFAULT_BUSINESS_CONTEXT = BusinessContext(
+    business_id="NONE",
+    business_name="Non-Business",
+    category="NON_BUSINESS",
+    verification_status="UNVERIFIED",
+    support_email="",
+    catalog_enabled=False,
+    expected_sla_minutes=0,
+    is_business_account=False,
+)
+
+DEFAULT_MEDIA_CONTEXT = MediaContext(
+    media_id="NONE",
+    media_type="TEXT_ONLY",
+    sha256_hash="",
+    has_media=False,
+    image_summary="",
+    image_category="NONE",
+    ocr_extracted_text="",
+    image_risk_score=0.0,
+    voice_transcript="",
+    voice_duration_seconds=0.0,
+    acoustic_tone="NEUTRAL",
+    voice_urgency_score=0.0,
+)
+
+DEFAULT_HISTORY_CONTEXT = HistoryContext(
+    historical_message_count=0,
+    last_interaction_timestamp=0,
+    days_since_last_interaction=0.0,
+    recent_event_types=[],
+    historical_similar_message_count=0,
+)
+
+DEFAULT_NOTIFICATION_CONTEXT = NotificationContext(
+    user_daily_notification_volume=0,
+    historical_open_rate=0.0,
+    historical_avg_response_seconds=0.0,
+    daily_notification_cap=50,
+)
+
+DEFAULT_RELATIONSHIP_CONTEXT = RelationshipContext(
+    relationship_type="PEER_TO_PEER",
+    customer_total_orders=0,
+    customer_total_spend=0.0,
+    commercial_tier="NON_CUSTOMER",
+    is_contacts_saved=False,
+)
+
+DEFAULT_CONVERSATION_CONTEXT = ConversationContext(
+    conversation_id="DM",
+    is_group_chat=False,
+    active_participant_count=1,
+    burst_message_count=1,
+    thread_cadence="EPISODIC",
+)
+
+DEFAULT_BEHAVIOUR_CONTEXT = BehaviourContext(
+    sender_avg_daily_messages=0.0,
+    sender_forward_ratio=0.0,
+    receiver_quiet_hours_active=False,
+)
+

@@ -47,3 +47,10 @@ class ValidationFailedError(DomainError):
     """Exception raised when domain schema or referential constraint validation fails."""
 
     pass
+
+
+class InvalidPayloadException(ValidationFailedError):
+    """Exception raised when raw message payload is invalid or corrupted."""
+
+    pass
+
