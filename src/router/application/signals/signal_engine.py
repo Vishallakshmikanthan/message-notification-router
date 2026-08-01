@@ -1,64 +1,110 @@
-"""SignalEngine implementation implementing ISignalEngine interface contract."""
+"""SignalEngine implementation coordinating the full 12-stage signal computation DAG specifications."""
+
+import time
+from typing import Dict, Any
 
 from router.application.signals.behaviour_engine import BehaviourEngine
 from router.application.signals.personalization_engine import PersonalizationEngine
 from router.application.signals.risk_engine import RiskEngine
+from router.application.signals.signal_aggregator import SignalAggregator
+from router.application.signals.signal_factory import SignalFactory
+from router.application.signals.signal_normalizer import SignalNormalizer
+from router.application.signals.signal_registry import SignalRegistry
 from router.application.signals.signal_validator import SignalValidator
 from router.application.signals.trust_engine import TrustEngine
 from router.application.signals.urgency_engine import UrgencyEngine
 from router.core.logging.logger import get_logger
 from router.domain.entities.context import MessageContext
-from router.domain.entities.signal import SignalBundle
+from router.domain.entities.signal import SignalBundle, SignalValue
 from router.domain.ports.signal_ports import ISignalEngine
-from router.domain.value_objects.risk_level import RiskLevel
 
 logger = get_logger(__name__)
 
 
 class SignalEngine(ISignalEngine):
-    """Coordinates parallel signal calculator execution DAG and returns SignalBundle."""
+    """Deterministic Signal Computation Engine transforming MessageContext into an immutable SignalBundle."""
 
     def __init__(self) -> None:
-        """Initialize signal calculators."""
+        """Initialize validator, engines, normalizer, and calculator registry."""
         self.validator = SignalValidator()
+        self.normalizer = SignalNormalizer()
+        self.registry = SignalRegistry()
+
         self.behaviour_engine = BehaviourEngine()
+        self.risk_engine = RiskEngine()
         self.trust_engine = TrustEngine()
         self.urgency_engine = UrgencyEngine()
-        self.risk_engine = RiskEngine()
         self.personalization_engine = PersonalizationEngine()
 
+        self._register_default_calculators()
+
+    def _register_default_calculators(self) -> None:
+        """Register all engine sub-calculators in central registry."""
+        for engine in [
+            self.behaviour_engine,
+            self.risk_engine,
+            self.trust_engine,
+            self.urgency_engine,
+            self.personalization_engine,
+        ]:
+            for calc in getattr(engine, "calculators", []):
+                self.registry.register(calc)
+
     def compute_signals(self, context: MessageContext) -> SignalBundle:
-        """Compute all 7 analytical signal modules and return frozen SignalBundle."""
-        logger.debug("Computing signals for message context", message_id=context.message_id)
+        """Execute 12-stage analytical pipeline and return single frozen SignalBundle."""
+        start_time = time.perf_counter()
+        message_id = context.core_message.message_id or context.message_id or "UNKNOWN_MSG"
 
-        completeness = self.validator.validate_pre_check(context)
-        behaviour_res = self.behaviour_engine.calculate(context)
-        trust_res = self.trust_engine.calculate(context)
-        urgency_res = self.urgency_engine.calculate(context)
-        risk_res = self.risk_engine.calculate(context)
-        pers_res = self.personalization_engine.calculate(context)
+        logger.info("Executing SignalEngine computation pipeline", message_id=message_id)
 
-        risk_val = risk_res.get("risk_level", RiskLevel.NONE)
-        assert isinstance(risk_val, RiskLevel)
+        # Stage 1: Context Validation & Quality Pre-Check
+        pre_check_completeness = self.validator.validate_pre_check(context)
 
-        bundle = SignalBundle(
-            message_id=context.message_id,
-            is_quiet_hours=context.is_quiet_hours,
-            notification_fatigue_score=float(behaviour_res.get("notification_fatigue_score", 0.0)),
-            user_engagement_score=float(behaviour_res.get("user_engagement_score", 0.0)),
-            group_relevance_score=float(pers_res.get("group_relevance_score", 0.0)),
-            is_admin_message=bool(pers_res.get("is_admin_message", False)),
-            group_is_muted_by_user=bool(pers_res.get("group_is_muted_by_user", False)),
-            business_trust_score=float(trust_res.get("business_trust_score", 0.0)),
-            user_opted_in=bool(pers_res.get("user_opted_in", True)),
-            forward_chain_depth=int(risk_res.get("forward_chain_depth", 0)),
-            scam_keyword_score=float(risk_res.get("scam_keyword_score", 0.0)),
-            unverified_business_flag=bool(risk_res.get("unverified_business_flag", False)),
-            risk_level=risk_val,
-            urgency_keywords_present=bool(urgency_res.get("urgency_keywords_present", False)),
-            personal_sender_known=bool(trust_res.get("personal_sender_known", False)),
-            urgency_score=float(urgency_res.get("urgency_score", 0.0)),
-            completeness_score=completeness,
+        # Short-circuit protocol for corrupted contexts (Q_comp < 0.20)
+        if pre_check_completeness < 0.20:
+            logger.warning(
+                "Short-circuiting signal computation due to low completeness",
+                message_id=message_id,
+                completeness=pre_check_completeness,
+            )
+            elapsed_ms = (time.perf_counter() - start_time) * 1000.0
+            return SignalFactory.build_bundle(
+                message_id=message_id,
+                all_signals={},
+                latency_ms=elapsed_ms,
+                global_confidence=0.10,
+                global_completeness=pre_check_completeness,
+            )
+
+        # Stages 2-10: Parallel Category Execution
+        raw_signals: Dict[str, SignalValue] = {}
+        raw_signals.update(self.behaviour_engine.calculate_all(context))
+        raw_signals.update(self.risk_engine.calculate_all(context))
+        raw_signals.update(self.trust_engine.calculate_all(context))
+        raw_signals.update(self.urgency_engine.calculate_all(context))
+        raw_signals.update(self.personalization_engine.calculate_all(context))
+
+        # Stage 11: Normalization & Conflict Resolution
+        normalized_signals: Dict[str, SignalValue] = {
+            k: self.normalizer.normalize_signal(v) for k, v in raw_signals.items()
+        }
+        resolved_signals = self.normalizer.resolve_conflicts(normalized_signals)
+
+        # Stage 12: Aggregation & Assembly
+        elapsed_ms = (time.perf_counter() - start_time) * 1000.0
+        bundle = SignalAggregator.assemble_bundle(
+            message_id=message_id,
+            signals=resolved_signals,
+            latency_ms=elapsed_ms,
+            pre_check_completeness=pre_check_completeness,
         )
 
+        self.validator.validate_bundle(bundle)
+        logger.info(
+            "Completed SignalEngine computation",
+            message_id=message_id,
+            latency_ms=round(elapsed_ms, 2),
+            global_confidence=bundle.metadata.global_confidence,
+            global_completeness=bundle.metadata.global_completeness,
+        )
         return bundle
