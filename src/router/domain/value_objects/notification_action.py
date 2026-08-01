@@ -1,11 +1,11 @@
-"""Notification Action Value Object."""
+"""Notification Action Value Object representing routing decisions."""
 
-from enum import StrEnum, auto
+from enum import StrEnum
 
 
 class NotificationAction(StrEnum):
-    """Enumeration of valid routing actions for processed messages."""
+    """Supported routing notification actions."""
 
-    NOTIFY = auto()
-    DIGEST = auto()
-    MUTE = auto()
+    NOTIFY = "notify"
+    DIGEST = "digest"
+    MUTE = "mute"

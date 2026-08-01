@@ -1,18 +1,23 @@
-"""User Preference Domain Entity."""
+"""User Preference domain entity."""
 
 from dataclasses import dataclass, field
-from datetime import time
+from datetime import datetime, timezone
+
+
+def _utc_now() -> datetime:
+    """Return timezone-aware current UTC datetime."""
+    return datetime.now(timezone.utc)
 
 
 @dataclass(frozen=True)
 class UserPreference:
-    """Enterprise domain entity representing user notification preferences."""
+    """Domain model representing explicit and implicit user routing preferences."""
 
     user_id: str
-    vip_contacts: set[str] = field(default_factory=set)
-    quiet_hours_start: time | None = None
-    quiet_hours_end: time | None = None
-
-    def is_vip_sender(self, phone_number: str) -> bool:
-        """Evaluate whether a sender phone number is marked as VIP."""
-        return phone_number in self.vip_contacts
+    quiet_hours_start: str | None = None  # e.g., "22:00"
+    quiet_hours_end: str | None = None    # e.g., "07:00"
+    vip_senders: list[str] = field(default_factory=list)
+    muted_senders: list[str] = field(default_factory=list)
+    muted_groups: list[str] = field(default_factory=list)
+    allow_promotions: bool = True
+    updated_at: datetime = field(default_factory=_utc_now)

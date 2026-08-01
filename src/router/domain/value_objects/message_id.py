@@ -1,7 +1,14 @@
-"""Message ID Value Object."""
+"""Message ID Value Object encapsulating message identifier invariant validation."""
 
 from dataclasses import dataclass
-from router.domain.exceptions.domain_exceptions import InvalidMessageIdError
+
+from router.core.exceptions.base_exceptions import RouterError
+
+
+class InvalidMessageIdError(RouterError):
+    """Exception raised when a MessageId string format is invalid."""
+
+    pass
 
 
 @dataclass(frozen=True)
@@ -11,11 +18,10 @@ class MessageId:
     value: str
 
     def __post_init__(self) -> None:
-        """Validate raw message identifier."""
-        if not self.value or not isinstance(self.value, str):
-            raise InvalidMessageIdError("Message ID must be a non-empty string.")
+        """Validate non-empty string constraint."""
+        if not self.value or not isinstance(self.value, str) or not self.value.strip():
+            raise InvalidMessageIdError("MessageId must be a non-empty string.")
 
-    @classmethod
-    def from_raw(cls, raw_id: str) -> "MessageId":
-        """Factory method creating MessageId from raw string."""
-        return cls(value=raw_id)
+    def __str__(self) -> str:
+        """Return raw string representation."""
+        return self.value

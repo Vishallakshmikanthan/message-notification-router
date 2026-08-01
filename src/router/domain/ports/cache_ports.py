@@ -1,22 +1,52 @@
-"""Abstract cache port definitions."""
+"""Abstract Cache Port Specifications for Domain & Application Layer."""
 
 from abc import ABC, abstractmethod
+from typing import Any
 
 
-class CachePort(ABC):
-    """Abstract interface contract for high-speed caching operations."""
-
-    @abstractmethod
-    async def get(self, key: str) -> str | None:
-        """Retrieve a cached string value by key."""
-        pass
+class ICache(ABC):
+    """Abstract Single Cache Tier Interface."""
 
     @abstractmethod
-    async def set(self, key: str, value: str, ttl_seconds: int = 3600) -> None:
-        """Store a string value in cache with a time-to-live expiration."""
-        pass
+    def get(self, key: str) -> Any | None:
+        """Get cached value by key."""
+        ...
 
     @abstractmethod
-    async def delete(self, key: str) -> None:
-        """Delete a key from the cache."""
-        pass
+    def put(self, key: str, value: Any, ttl_seconds: int | None = None) -> None:
+        """Put value in cache with optional TTL."""
+        ...
+
+    @abstractmethod
+    def invalidate(self, key: str) -> None:
+        """Invalidate cached entry by key."""
+        ...
+
+    @abstractmethod
+    def clear(self) -> None:
+        """Clear all entries in tier."""
+        ...
+
+
+class ICacheManager(ABC):
+    """Abstract Multi-Tier Cache Manager Interface."""
+
+    @abstractmethod
+    def get(self, tier: str, key: str) -> Any | None:
+        """Get cached value from specific tier."""
+        ...
+
+    @abstractmethod
+    def put(self, tier: str, key: str, value: Any, ttl_seconds: int | None = None) -> None:
+        """Store value into specific cache tier."""
+        ...
+
+    @abstractmethod
+    def invalidate(self, tier: str, key: str) -> None:
+        """Invalidate key in specific tier."""
+        ...
+
+    @abstractmethod
+    def purge_all(self) -> None:
+        """Purge all cache tiers."""
+        ...
