@@ -1,0 +1,40 @@
+prompt_id: "confidence_prompt"
+version: "1.0.0"
+layer: "confidence"
+description: >
+  Computes a calibrated certainty score (0.0-1.0) with explicit deductions
+  for missing signals, conflicting evidence, and low completeness.
+token_budget: 250
+cacheable: false
+content: |
+  Compute a calibrated confidence score for the following routing decision.
+  Apply explicit deductions as specified. Output ONLY valid JSON.
+
+  ## DECISION SUMMARY
+  action: {action}
+  reason: {reason}
+  signal_completeness: {signal_completeness}
+  evidence_count: {evidence_count}
+  conflicting_signals: {conflicting_signals}
+
+  ## SCORING RUBRIC
+  Start from base score: 0.80
+  Deductions:
+  - Missing critical signals (urgency or trust unavailable): -0.10
+  - Conflicting signals detected: -0.08
+  - Zero evidence retrieved: -0.15
+  - Low signal completeness (< 0.50): -0.12
+  - Sender completely unknown: -0.05
+  Bonuses:
+  - Multiple corroborating evidence pieces (>= 3): +0.05
+  - VIP sender confirmed: +0.05
+  - High signal completeness (>= 0.85): +0.05
+
+  Clamp final score strictly to [0.10, 0.97].
+
+  Output ONLY valid JSON:
+  {
+    "calibrated_confidence": <float 0.0-1.0>,
+    "deductions_applied": [<deduction_name>],
+    "bonuses_applied": [<bonus_name>]
+  }

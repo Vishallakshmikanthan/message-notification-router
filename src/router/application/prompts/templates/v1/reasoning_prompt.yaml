@@ -1,0 +1,49 @@
+prompt_id: "reasoning_prompt"
+version: "1.0.0"
+layer: "reasoning"
+description: >
+  Step-by-step chain-of-thought analysis prompt. Guides the model through
+  5 structured reasoning steps before committing to an action.
+token_budget: 600
+cacheable: false
+content: |
+  Analyze the incoming notification using the following 5-step framework.
+  Think through each step before committing to a routing action.
+
+  ## SIGNAL SUMMARY
+  urgency_score: {urgency_score}
+  spam_score: {spam_score}
+  trust_score: {trust_score}
+  relationship_closeness: {relationship_closeness}
+  is_quiet_hours: {is_quiet_hours}
+  user_activity_status: {user_activity_status}
+  sender_is_vip: {sender_is_vip}
+  sender_in_address_book: {sender_in_address_book}
+  notification_fatigue_score: {notification_fatigue_score}
+
+  ## STEP 1 — Parse Context
+  Identify: sender relationship tier, message urgency, time context.
+
+  ## STEP 2 — Safety & Spam Alignment
+  If spam_score > 0.80 → action must be DO_NOT_DISTURB or SUMMARIZE_IN_BATCH.
+  If trust_score < 0.20 and sender unknown → increase skepticism.
+
+  ## STEP 3 — Temporal & User State
+  If is_quiet_hours=true and sender_is_vip=false and urgency_score < 0.85 →
+  prefer DELIVER_SILENTLY or SUMMARIZE_IN_BATCH.
+
+  ## STEP 4 — Evidence Grounding
+  Review retrieved evidence snippets. Cite at least one relevant evidence key
+  in your output. Do NOT fabricate evidence that was not provided.
+
+  ## STEP 5 — Action Synthesis
+  Synthesize all signals. Select the single most appropriate routing action.
+  Compute a calibrated confidence score based on signal completeness.
+
+  ## CURRENT MESSAGE
+  <user_message_content>
+  {message_text}
+  </user_message_content>
+
+  ## RETRIEVED EVIDENCE SNIPPETS
+  {evidence_snippets}

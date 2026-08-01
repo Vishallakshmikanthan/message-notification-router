@@ -1,0 +1,31 @@
+prompt_id: "classification_prompt"
+version: "1.0.0"
+layer: "classification"
+description: >
+  Maps computed features and signal scores to one of the 4 strict routing
+  action enum values. No novel categories permitted.
+token_budget: 300
+cacheable: false
+content: |
+  Based on the signal summary below, select the SINGLE correct routing action.
+
+  ## COMPUTED FEATURES
+  urgency: {urgency_score} | spam: {spam_score} | trust: {trust_score}
+  relationship: {relationship_closeness} | fatigue: {notification_fatigue_score}
+  quiet_hours: {is_quiet_hours} | vip: {sender_is_vip} | known: {sender_in_address_book}
+  media_type: {media_type} | message_type: {message_type}
+
+  ## CLASSIFICATION RULES (Priority Order)
+  1. If spam_score > 0.80 → DO_NOT_DISTURB
+  2. If urgency_score >= 0.85 and (sender_is_vip OR known) → NOTIFY_IMMEDIATELY
+  3. If is_quiet_hours and NOT sender_is_vip → DELIVER_SILENTLY or SUMMARIZE_IN_BATCH
+  4. If trust_score >= 0.70 and urgency_score >= 0.50 → DELIVER_SILENTLY
+  5. If urgency_score < 0.40 → SUMMARIZE_IN_BATCH
+
+  Output ONLY valid JSON. No markdown.
+  {
+    "action": "<ROUTING_ACTION>",
+    "reason": "<under 25 words>",
+    "confidence": <float>,
+    "evidence": [<evidence_keys>]
+  }

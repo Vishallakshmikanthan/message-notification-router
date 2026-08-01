@@ -1,0 +1,32 @@
+prompt_id: "output_validation_prompt"
+version: "1.0.0"
+layer: "output_validation"
+description: >
+  Emergency output repair prompt. Receives a malformed LLM response and
+  error trace. Reconstructs a schema-compliant JSON response. Max 200 tokens.
+token_budget: 200
+cacheable: false
+content: |
+  The previous model response was malformed. Repair it into valid JSON.
+
+  ## MALFORMED RESPONSE
+  {malformed_response}
+
+  ## SCHEMA ERRORS
+  {schema_errors}
+
+  ## TARGET SCHEMA
+  {
+    "action": "<NOTIFY_IMMEDIATELY|DELIVER_SILENTLY|SUMMARIZE_IN_BATCH|DO_NOT_DISTURB>",
+    "reason": "<string, max 25 words>",
+    "confidence": <float 0.0-1.0>,
+    "evidence": [<string>]
+  }
+
+  ## REPAIR RULES
+  - Extract the action value; default to "DELIVER_SILENTLY" if missing or invalid.
+  - Truncate reason to 25 words maximum.
+  - Clamp confidence to [0.10, 0.97].
+  - Set evidence to [] if no valid keys are present.
+
+  Output ONLY the repaired JSON. Absolutely nothing else.

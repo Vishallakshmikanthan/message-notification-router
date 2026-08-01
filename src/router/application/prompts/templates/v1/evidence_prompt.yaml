@@ -1,0 +1,31 @@
+prompt_id: "evidence_prompt"
+version: "1.0.0"
+layer: "evidence"
+description: >
+  Grounds decision in explicit contextual facts by extracting citations from
+  retrieved memory snippets. Anti-hallucination: must quote only provided sources.
+token_budget: 400
+cacheable: false
+content: |
+  Extract the key contextual citations that support the routing decision.
+  You MUST only reference facts present in the evidence snippets below.
+  Do NOT fabricate, infer, or hallucinate any citations.
+
+  ## PROPOSED ACTION
+  {proposed_action}
+
+  ## RETRIEVED EVIDENCE SNIPPETS
+  {evidence_snippets}
+
+  ## EXTRACTION RULES
+  - Extract 1-3 evidence keys that directly support the proposed action.
+  - Each key must map to an actual snippet ID provided above.
+  - If no relevant evidence exists, return an empty list: []
+  - Format: extract only snippet IDs (e.g., "mem_001", "thread_summary_003")
+
+  Output ONLY valid JSON:
+  {
+    "evidence_keys": [<snippet_id_1>, <snippet_id_2>],
+    "grounding_score": <float 0.0-1.0>,
+    "hallucination_risk": <"LOW"|"MEDIUM"|"HIGH">
+  }
