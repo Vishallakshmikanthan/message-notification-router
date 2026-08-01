@@ -1,27 +1,55 @@
-"""Unit tests for repository implementations."""
+"""Unit tests for all 8 domain repository implementations."""
 
-from router.domain.entities.message import Message
 from router.domain.entities.user import User
-from router.infrastructure.repositories.message_repository import MessageRepository
+from router.domain.entities.group import Group, GroupMember
+from router.domain.entities.business import BusinessAccount, UserBusinessHistory
 from router.infrastructure.repositories.user_repository import UserRepository
+from router.infrastructure.repositories.group_repository import GroupRepository
+from router.infrastructure.repositories.business_repository import BusinessRepository
+from router.infrastructure.repositories.media_repository import MediaRepository
+from router.infrastructure.repositories.history_repository import HistoryRepository
+from router.infrastructure.repositories.event_repository import EventRepository
+from router.infrastructure.repositories.notification_summary_repository import NotificationSummaryRepository
+from router.infrastructure.repositories.message_repository import MessageRepository
 
 
 def test_user_repository_crud(sample_user: User) -> None:
-    """Verify UserRepository add, get, count, exists ops."""
+    """Verify UserRepository O(1) primary key retrieval and CRUD operations."""
     repo = UserRepository()
+    repo.add(sample_user.user_id, sample_user)
+
+    assert repo.count() == 1
+    assert repo.exists("u_001")
+    assert repo.get_by_id("u_001") == sample_user
+    assert repo.get_by_id("u_999") is None
+
+    repo.clear()
     assert repo.count() == 0
 
-    repo.add(sample_user.user_id, sample_user)
-    assert repo.count() == 1
-    assert repo.exists(sample_user.user_id) is True
-    assert repo.get_by_id(sample_user.user_id) == sample_user
+
+def test_group_repository_junctions() -> None:
+    """Verify GroupRepository primary and member composite tuple index lookups."""
+    repo = GroupRepository()
+    group = Group(group_id="group_001", group_name="Engineering Team", group_type="WORK", member_count=5)
+    member = GroupMember(group_id="group_001", user_id="u_001", role="admin", is_muted=False)
+
+    repo.add(group.group_id, group)
+    repo.add_member(member)
+
+    assert repo.get_by_id("group_001") == group
+    assert repo.get_member("group_001", "u_001") == member
+    assert repo.is_admin("group_001", "u_001") is True
+    assert repo.is_admin("group_001", "u_002") is False
 
 
-def test_message_repository_secondary_index(sample_message: Message) -> None:
-    """Verify MessageRepository secondary user index functionality."""
-    repo = MessageRepository()
-    repo.add(sample_message.message_id, sample_message)
+def test_business_repository_history() -> None:
+    """Verify BusinessRepository profile and user-business history composite lookups."""
+    repo = BusinessRepository()
+    biz = BusinessAccount(business_id="business_001", business_name="Acme Corp", category="RETAIL")
+    hist = UserBusinessHistory(user_id="u_001", business_id="business_001", allows_promotions=True, total_orders=3)
 
-    user_msgs = repo.get_by_user_id(sample_message.user_id)
-    assert len(user_msgs) == 1
-    assert user_msgs[0].message_id == sample_message.message_id
+    repo.add(biz.business_id, biz)
+    repo.add_user_history(hist)
+
+    assert repo.get_by_id("business_001") == biz
+    assert repo.get_user_history("u_001", "business_001") == hist

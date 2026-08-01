@@ -1,10 +1,13 @@
-"""Primary Message, HistoricalMessage, MessageEvent, and DailyNotificationSummary Entities."""
+"""Primary Message Entity matching messages.csv schema."""
 
 from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Literal, Optional
 
-from router.domain.value_objects.notification_action import NotificationAction
+
+def _utc_now() -> datetime:
+    """Return timezone-aware current UTC datetime."""
+    return datetime.now(timezone.utc)
 
 
 @dataclass(frozen=True)
@@ -13,49 +16,19 @@ class Message:
 
     message_id: str
     user_id: str
-    conversation_type: Literal["personal", "group", "business"]
-    sender_id: str
-    message_text: str
-    created_at: datetime
-    group_id: str | None = None
-    business_id: str | None = None
-    media_id: str | None = None
-    media_type: Literal["image", "voice"] | None = None
+    conversation_type: str  # personal, group, business
+    message_text: str = ""
+    sender_id: Optional[str] = None
+    sender_user_id: Optional[str] = None
+    group_id: Optional[str] = None
+    business_id: Optional[str] = None
+    media_id: Optional[str] = None
+    media_type: Optional[str] = None
     forwarded_count: int = 0
+    created_at: datetime = field(default_factory=_utc_now)
 
-
-@dataclass(frozen=True)
-class HistoricalMessage:
-    """Historical chat log message entity matching message_history.csv."""
-
-    message_id: str
-    user_id: str
-    sender_id: str
-    message_text: str
-    created_at: datetime
-    group_id: str | None = None
-    business_id: str | None = None
-    forwarded_count: int = 0
-
-
-@dataclass(frozen=True)
-class MessageEvent:
-    """Message user reaction/event log matching message_events.csv."""
-
-    event_id: str
-    user_id: str
-    message_id: str
-    event_type: Literal["delivered", "read", "replied", "dismissed", "muted"]
-    timestamp: datetime
-
-
-@dataclass(frozen=True)
-class DailyNotificationSummary:
-    """Daily notification metric time-series summary matching daily_notification_summary.csv."""
-
-    user_id: str
-    date_str: str  # YYYY-MM-DD
-    total_notifications_received: int = 0
-    total_opened: int = 0
-    total_dismissed: int = 0
-    total_muted: int = 0
+    def __post_init__(self) -> None:
+        if not self.sender_id and self.sender_user_id:
+            object.__setattr__(self, "sender_id", self.sender_user_id)
+        elif not self.sender_user_id and self.sender_id:
+            object.__setattr__(self, "sender_user_id", self.sender_id)

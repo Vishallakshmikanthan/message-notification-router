@@ -1,6 +1,6 @@
 """NotificationSummaryRepository implementation matching daily_notification_summary.csv."""
 
-from router.domain.entities.message import DailyNotificationSummary
+from router.domain.entities.history import DailyNotificationSummary
 from router.domain.ports.repository_ports import INotificationSummaryRepository
 from router.infrastructure.repositories.base_repository import BaseRepository
 

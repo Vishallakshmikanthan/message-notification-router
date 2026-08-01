@@ -1,16 +1,39 @@
 """IndexManager implementation for managing composite hash keys and secondary indexes."""
 
-from typing import Any, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 
 class IndexManager:
-    """Constructs and maintains primary, composite, and inverted indexes."""
+    """Constructs and maintains primary, composite, and inverted indexes using fast bit-shifting hash arithmetic."""
 
     @staticmethod
     def build_tuple_key(key1: str, key2: str) -> Tuple[str, str]:
         """Build composite tuple hash key."""
         return (key1, key2)
 
-    def rebuild_indexes(self) -> None:
-        """Rebuild secondary inverted index structures."""
-        pass
+    @staticmethod
+    def compute_composite_hash(key1: str, key2: str) -> int:
+        """Compute bit-shifting composite hash: ((hash(key1) * 31) ^ hash(key2))."""
+        return ((hash(key1) * 31) ^ hash(key2))
+
+    @staticmethod
+    def build_secondary_index(items: List[Any], key_extractor: Any) -> Dict[str, List[Any]]:
+        """Construct inverted secondary index mapping keys to lists of entities."""
+        index: Dict[str, List[Any]] = {}
+        for item in items:
+            k = key_extractor(item)
+            if k is not None:
+                if k not in index:
+                    index[k] = []
+                index[k].append(item)
+        return index
+
+    @staticmethod
+    def build_set_index(items: List[Any], tuple_extractor: Any) -> Set[Tuple[str, str]]:
+        """Construct fast O(1) set index of composite key tuples."""
+        index: Set[Tuple[str, str]] = set()
+        for item in items:
+            t = tuple_extractor(item)
+            if t is not None:
+                index.add(t)
+        return index

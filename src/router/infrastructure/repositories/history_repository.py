@@ -2,7 +2,7 @@
 
 from typing import Sequence
 
-from router.domain.entities.message import HistoricalMessage
+from router.domain.entities.history import HistoricalMessage
 from router.domain.ports.repository_ports import IHistoryRepository
 from router.infrastructure.repositories.base_repository import BaseRepository
 

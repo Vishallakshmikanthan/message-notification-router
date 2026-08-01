@@ -50,6 +50,13 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     api_v1_prefix: str = Field(default="/api/v1", alias="API_V1_STR")
 
+    dataset_dir: str = Field(
+        default="./hackerrank-orchestrate-august26/dataset", alias="DATASET_DIR"
+    )
+    media_dir: str = Field(
+        default="./hackerrank-orchestrate-august26/dataset/media", alias="MEDIA_DIR"
+    )
+
     db: DatabaseSettings = Field(default_factory=DatabaseSettings)
     redis: RedisSettings = Field(default_factory=RedisSettings)
 

@@ -5,13 +5,13 @@ from typing import Generic, Sequence, TypeVar
 
 from router.domain.entities.business import BusinessAccount, UserBusinessHistory
 from router.domain.entities.group import Group, GroupMember
-from router.domain.entities.media import ImageManifest, VoiceNoteManifest
-from router.domain.entities.message import (
+from router.domain.entities.history import (
     DailyNotificationSummary,
     HistoricalMessage,
-    Message,
     MessageEvent,
 )
+from router.domain.entities.media import ImageManifest, VoiceNoteManifest
+from router.domain.entities.message import Message
 from router.domain.entities.user import User
 
 TEntity = TypeVar("TEntity")
@@ -52,9 +52,9 @@ class IMessageRepository(IRepository[Message, str]):
 
 
 class IUserRepository(IRepository[User, str]):
-    """User Profile Repository Contract."""
+    """User Repository Contract."""
 
-    ...
+    pass
 
 
 class IGroupRepository(IRepository[Group, str]):
@@ -62,26 +62,26 @@ class IGroupRepository(IRepository[Group, str]):
 
     @abstractmethod
     def get_member(self, group_id: str, user_id: str) -> GroupMember | None:
-        """Get group member junction entity."""
+        """Get group member junction record."""
         ...
 
     @abstractmethod
     def is_admin(self, group_id: str, user_id: str) -> bool:
-        """Verify if user is group administrator."""
+        """Verify admin role."""
         ...
 
 
 class IBusinessRepository(IRepository[BusinessAccount, str]):
-    """Business Account Repository Contract."""
+    """Business Repository Contract."""
 
     @abstractmethod
     def get_user_history(self, user_id: str, business_id: str) -> UserBusinessHistory | None:
-        """Get user business interaction history entity."""
+        """Get user business interaction history."""
         ...
 
 
 class IMediaRepository(IRepository[ImageManifest | VoiceNoteManifest, str]):
-    """Media Manifest Repository Contract."""
+    """Media Repository Contract."""
 
     @abstractmethod
     def get_image(self, media_id: str) -> ImageManifest | None:
@@ -95,27 +95,27 @@ class IMediaRepository(IRepository[ImageManifest | VoiceNoteManifest, str]):
 
 
 class IHistoryRepository(IRepository[HistoricalMessage, str]):
-    """Historical Message Repository Contract."""
+    """History Repository Contract."""
 
     @abstractmethod
     def get_trajectory(self, user_id: str, sender_id: str) -> Sequence[HistoricalMessage]:
-        """Get chronological trajectory between user and sender."""
+        """Get pre-sorted chronological message trajectory."""
         ...
 
 
 class IEventRepository(IRepository[MessageEvent, str]):
-    """Message Event Repository Contract."""
+    """Event Repository Contract."""
 
     @abstractmethod
     def get_user_events(self, user_id: str) -> Sequence[MessageEvent]:
-        """Get all message events associated with user."""
+        """Get message events for a user."""
         ...
 
 
 class INotificationSummaryRepository(IRepository[DailyNotificationSummary, str]):
-    """Daily Notification Summary Repository Contract."""
+    """Notification Summary Repository Contract."""
 
     @abstractmethod
     def get_summary(self, user_id: str, date_str: str) -> DailyNotificationSummary | None:
-        """Get user notification summary for date."""
+        """Get daily notification summary for user and date."""
         ...

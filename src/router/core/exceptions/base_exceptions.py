@@ -32,3 +32,34 @@ class InfrastructureError(RouterError):
     """Base exception for external technical failure conditions."""
 
     pass
+
+
+class DataLayerError(RouterError):
+    """Base exception for Data Layer subsystems."""
+
+    pass
+
+
+class SchemaValidationException(DataLayerError):
+    """Exception raised when dataset schema validation fails."""
+
+    pass
+
+
+class FatalSchemaException(SchemaValidationException):
+    """Fatal exception raised when critical FK or structural integrity fails in strict mode."""
+
+    pass
+
+
+class QuarantineException(DataLayerError):
+    """Exception raised during record quarantine operations."""
+
+    pass
+
+
+class RepositoryException(DataLayerError):
+    """Exception raised during repository operations."""
+
+    pass
+

@@ -17,6 +17,8 @@ class Group:
     group_name: str
     group_type: str
     member_count: int
+    admin_count: int = 0
+    is_announcement_only: bool = False
     created_at: datetime = field(default_factory=_utc_now)
 
 
@@ -27,6 +29,10 @@ class GroupMember:
     group_id: str
     user_id: str
     role: str  # e.g., 'admin', 'member'
+    messages_sent_30d: int = 0
+    messages_read_30d: int = 0
+    replies_sent_30d: int = 0
+    notifications_dismissed_30d: int = 0
     is_muted: bool = False
     activity_score: float = 0.0
     joined_at: datetime = field(default_factory=_utc_now)
