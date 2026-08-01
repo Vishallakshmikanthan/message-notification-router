@@ -9,6 +9,15 @@ from router.domain.entities.history import (
     MessageEvent,
 )
 from router.domain.entities.media import ImageManifest, MediaManifest, VoiceNoteManifest
+from router.domain.entities.media_context import (
+    ImageContext,
+    OCRResult,
+    QRPayload,
+    TableStructure,
+    TextBlock,
+    VoiceContext,
+    WordTimestamp,
+)
 from router.domain.entities.message import Message
 from router.domain.entities.signal import SignalBundle
 from router.domain.entities.sub_contexts import (
@@ -50,4 +59,12 @@ __all__ = [
     "RelationshipContext",
     "ConversationContext",
     "BehaviourContext",
+    "ImageContext",
+    "VoiceContext",
+    "TextBlock",
+    "TableStructure",
+    "QRPayload",
+    "OCRResult",
+    "WordTimestamp",
 ]
+

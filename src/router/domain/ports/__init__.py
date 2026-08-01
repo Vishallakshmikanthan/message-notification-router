@@ -10,6 +10,14 @@ from router.domain.ports.agent_ports import (
     ISafetyAgent,
 )
 from router.domain.ports.cache_ports import ICache, ICacheManager
+from router.domain.ports.media_ports import (
+    ImageProcessorPort,
+    MediaCachePort,
+    MediaValidatorPort,
+    OCRProcessorPort,
+    VoiceProcessorPort,
+    WhisperIntegrationPort,
+)
 from router.domain.ports.repository_ports import (
     IBusinessRepository,
     IEventRepository,
@@ -61,4 +69,11 @@ __all__ = [
     "ISignalCalculator",
     "ISignalEngine",
     "IUserRepository",
+    "MediaValidatorPort",
+    "OCRProcessorPort",
+    "WhisperIntegrationPort",
+    "ImageProcessorPort",
+    "VoiceProcessorPort",
+    "MediaCachePort",
 ]
+

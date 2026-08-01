@@ -1,16 +1,11 @@
 """Unit tests for all 8 domain repository implementations."""
 
-from router.domain.entities.user import User
-from router.domain.entities.group import Group, GroupMember
 from router.domain.entities.business import BusinessAccount, UserBusinessHistory
-from router.infrastructure.repositories.user_repository import UserRepository
-from router.infrastructure.repositories.group_repository import GroupRepository
+from router.domain.entities.group import Group, GroupMember
+from router.domain.entities.user import User
 from router.infrastructure.repositories.business_repository import BusinessRepository
-from router.infrastructure.repositories.media_repository import MediaRepository
-from router.infrastructure.repositories.history_repository import HistoryRepository
-from router.infrastructure.repositories.event_repository import EventRepository
-from router.infrastructure.repositories.notification_summary_repository import NotificationSummaryRepository
-from router.infrastructure.repositories.message_repository import MessageRepository
+from router.infrastructure.repositories.group_repository import GroupRepository
+from router.infrastructure.repositories.user_repository import UserRepository
 
 
 def test_user_repository_crud(sample_user: User) -> None:

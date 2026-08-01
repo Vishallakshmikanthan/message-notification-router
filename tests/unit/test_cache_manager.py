@@ -1,6 +1,7 @@
 """Unit tests for multi-tier CacheManager LRU, TTL, and telemetry stats."""
 
 import time
+
 from router.infrastructure.cache.cache_manager import CacheManager, InMemoryCacheTier
 
 

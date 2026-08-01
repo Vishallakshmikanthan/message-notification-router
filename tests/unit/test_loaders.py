@@ -1,7 +1,6 @@
 """Unit tests verifying every loader stage independently."""
 
 import os
-import pytest
 
 from router.infrastructure.repositories.business_repository import BusinessRepository
 from router.infrastructure.repositories.event_repository import EventRepository

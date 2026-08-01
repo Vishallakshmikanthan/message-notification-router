@@ -49,14 +49,24 @@ class BusinessContext:
     is_business_account: bool = True
 
 
+from router.domain.entities.media_context import ImageContext, VoiceContext
+
+
 @dataclass(frozen=True)
 class MediaContext:
     """Unifies visual OCR, acoustic voice analysis, and multimodal metadata."""
 
     media_id: str
-    media_type: str  # TEXT_ONLY, IMAGE, VOICE, DOCUMENT
+    media_type: str  # TEXT_ONLY, IMAGE, VOICE, DOCUMENT, MULTIMODAL_COMBO
     sha256_hash: str
-    has_media: bool
+    has_media: bool = True
+    image_context: Optional[ImageContext] = None
+    voice_context: Optional[VoiceContext] = None
+    validation_status: str = "VALIDATED"  # VALIDATED, PARTIAL, CORRUPTED, FAILED
+    processing_latency_ms: float = 0.0
+    error_flags: List[str] = field(default_factory=list)
+    created_at: str = ""
+    # Backward compatibility attributes
     image_summary: str = ""
     image_category: str = ""
     ocr_extracted_text: str = ""
@@ -65,6 +75,7 @@ class MediaContext:
     voice_duration_seconds: float = 0.0
     acoustic_tone: str = "NEUTRAL"  # CALM, URGENT, SHOUTING, NEUTRAL
     voice_urgency_score: float = 0.0
+
 
 
 @dataclass(frozen=True)
