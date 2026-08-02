@@ -1,31 +1,111 @@
 message_id,action,message_type,reason,confidence,evidence_message_ids
-sample_msg_001,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_002,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
-sample_msg_003,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_004,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
-sample_msg_005,notify,urgent,Health emergency signal detected.,0.35,routine;health_keywords;unverified_business;direct
-sample_msg_006,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_007,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
-sample_msg_008,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
-sample_msg_009,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
-sample_msg_010,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;near_term_keyword;non_business;direct
-sample_msg_011,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
-sample_msg_012,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_013,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
-sample_msg_014,digest,personal,Group is explicitly muted by user and user is not mentioned.,0.73,routine;non_business;frequently_forwarded;clean
-sample_msg_015,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;unverified_business;forwarded;clean
-sample_msg_019,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct
-sample_msg_020,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;otp_code;non_business;direct
-sample_msg_041,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_042,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_043,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
-sample_msg_044,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_045,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_046,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_047,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
-sample_msg_048,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;unverified_business;direct
-sample_msg_049,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
-sample_msg_050,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,emergency_keywords;non_business;direct;clean
-sample_msg_051,digest,spam,High spam probability detected; message suppressed.,0.22,routine;imminent_event_keyword;non_business;direct
-sample_msg_052,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
-sample_msg_053,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct
+msg_023,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_091,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+msg_090,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_048,digest,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;near_term_keyword;non_business;forwarded
+msg_040,digest,spam,Unsolicited broadcast from unknown sender with high spam score.,0.73,routine;non_business;frequently_forwarded;clean
+msg_075,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_005,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+msg_104,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_069,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_107,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;otp_code;non_business;forwarded
+msg_070,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct
+msg_003,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+msg_099,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;starting_now;near_term_keyword;non_business
+msg_008,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_092,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_060,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;near_term_keyword;non_business;direct
+msg_004,notify,urgent,Health emergency signal detected.,0.35,routine;health_keywords;unverified_business;direct
+msg_030,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;forwarded;clean
+msg_045,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+msg_052,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;unverified_business;forwarded
+msg_009,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+msg_071,digest,urgent,High urgency detected; immediate delivery warranted.,0.11,doctor_appointment;routine;health_keywords;non_business
+msg_016,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;forwarded;clean
+msg_065,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_038,digest,personal,Group is explicitly muted by user and user is not mentioned.,0.61,emergency_keywords;non_business;frequently_forwarded;clean
+msg_086,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;unverified_business;direct;clean
+msg_014,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_094,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;near_term_keyword;unverified_business;direct
+msg_029,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_105,digest,spam,Unsolicited broadcast from unknown sender with high spam score.,0.73,routine;non_business;frequently_forwarded;clean
+msg_002,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_010,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_078,digest,spam,Unsolicited broadcast from unknown sender with high spam score.,0.61,emergency_keywords;non_business;frequently_forwarded;clean
+msg_013,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+msg_018,digest,spam,Unsolicited broadcast from unknown sender with high spam score.,0.61,routine;near_term_keyword;non_business;frequently_forwarded
+msg_044,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;otp_code;near_term_keyword;non_business
+msg_032,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_106,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;near_term_keyword;non_business;direct
+msg_006,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+msg_109,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+msg_108,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+msg_019,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_088,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_056,digest,spam,High spam probability detected; message suppressed.,0.22,doctor_appointment;routine;health_keywords;non_business
+msg_027,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_050,digest,urgent,Health emergency signal detected.,0.35,routine;health_keywords;unverified_business;direct
+msg_083,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+msg_063,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,emergency_keywords;near_term_keyword;non_business;direct
+msg_033,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,emergency_keywords;non_business;direct;clean
+msg_061,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_020,digest,spam,Unsolicited broadcast from unknown sender with high spam score.,0.61,emergency_keywords;near_term_keyword;non_business;forwarded
+msg_017,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+msg_058,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,doctor_appointment;routine;health_keywords;non_business
+msg_026,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+msg_047,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+msg_046,digest,urgent,High urgency detected; immediate delivery warranted.,0.11,routine;otp_code;non_business;direct
+msg_042,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_079,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct
+msg_098,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;health_keywords;non_business;direct
+msg_037,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_007,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.83,routine;non_business;direct;clean
+msg_085,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_001,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_021,digest,payment,Impending bill due date within 24 hours.,0.27,today_deadline;routine;bill_overdue;near_term_keyword
+msg_028,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_012,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_064,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;non_business;forwarded
+msg_103,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_031,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+msg_057,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_087,notify,personal,Group is explicitly muted by user and user is not mentioned.,0.61,routine;non_business;direct;clean
+msg_067,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_039,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+msg_082,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+msg_066,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;unverified_business;forwarded
+msg_049,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;near_term_keyword;unverified_business;direct
+msg_015,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct
+msg_051,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;unverified_business;forwarded
+msg_097,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,emergency_keywords;non_business;direct;clean
+msg_089,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+msg_053,digest,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_059,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+msg_024,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;unverified_business;forwarded
+msg_072,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;otp_code;non_business;forwarded
+msg_036,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;unverified_business;forwarded;clean
+msg_076,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;unverified_business;forwarded
+msg_055,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,emergency_keywords;non_business;direct;clean
+msg_102,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_080,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_093,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;near_term_keyword;unverified_business
+msg_034,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,emergency_keywords;non_business;frequently_forwarded;clean
+msg_035,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_101,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_041,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+msg_011,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;non_business;frequently_forwarded
+msg_110,digest,spam,Unsolicited broadcast from unknown sender with high spam score.,0.61,emergency_keywords;non_business;forwarded;clean
+msg_095,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_074,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;non_business;frequently_forwarded
+msg_073,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;near_term_keyword;non_business;frequently_forwarded
+msg_054,digest,personal,Group is explicitly muted by user and user is not mentioned.,0.31,routine;near_term_keyword;non_business;direct
+msg_068,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+msg_100,digest,spam,High spam probability detected; message suppressed.,0.22,routine;imminent_event_keyword;non_business;direct
+msg_062,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_096,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_043,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+msg_077,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+msg_081,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+msg_025,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+msg_084,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+msg_022,digest,payment,Impending bill due date within 24 hours.,0.57,today_deadline;routine;bill_overdue;near_term_keyword
