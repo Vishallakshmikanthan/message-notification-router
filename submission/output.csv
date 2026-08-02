@@ -1,111 +1,111 @@
 message_id,action,message_type,reason,confidence,evidence_message_ids
-msg_023,mute,spam,High spam probability detected; message suppressed.,0.83,message_0275;message_0407
-msg_091,mute,spam,High spam probability detected; message suppressed.,0.92,message_0238;message_0381
-msg_090,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.95,none
-msg_048,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0151
-msg_040,mute,spam,Broadcast viral spam or chain letter detected.,0.95,message_0194;message_0241;message_0080;message_0265;message_0040
-msg_075,mute,spam,High spam probability detected; message suppressed.,0.73,none
-msg_005,mute,spam,High spam probability detected; message suppressed.,0.46,message_0224;message_0383;message_0232;message_0065;message_0049
-msg_104,mute,spam,High spam probability detected; message suppressed.,0.78,message_0224;message_0383;message_0231;message_0065;message_0049
-msg_069,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0077;message_0014;message_0080;message_0016;message_0241
-msg_107,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0365;message_0235
-msg_070,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,message_0369;message_0024;message_0235;message_0023;message_0365
-msg_003,mute,spam,High spam probability detected; message suppressed.,0.50,message_0400;message_0062;message_0106
-msg_099,mute,spam,High spam probability detected; message suppressed.,0.46,message_0227;message_0219;message_0266;message_0055;message_0249
-msg_008,mute,spam,High spam probability detected; message suppressed.,0.78,message_0296
-msg_092,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,none
-msg_060,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0284;message_0210;message_0364;message_0037;message_0255
-msg_004,notify,urgent,Health emergency signal detected.,1.00,message_0279
-msg_030,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0113;message_0050;message_0335;message_0049;message_0012
-msg_045,mute,spam,High spam probability detected; message suppressed.,0.89,message_0384;message_0378
-msg_052,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,none
-msg_009,mute,spam,High spam probability detected; message suppressed.,0.92,message_0192;message_0010;message_0250;message_0292;message_0313
-msg_071,mute,spam,High spam probability detected; message suppressed.,0.43,message_0168
-msg_016,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0024
-msg_065,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0351
-msg_038,mute,personal,Group is explicitly muted by user and user is not mentioned.,0.95,message_0131;message_0265;message_0014;message_0132;message_0123
-msg_086,mute,spam,High spam probability detected; message suppressed.,0.89,none
-msg_014,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0258
-msg_094,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,none
-msg_029,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0113;message_0050;message_0335;message_0049;message_0012
-msg_105,mute,spam,Unsolicited broadcast from unknown sender with high spam score.,0.95,message_0373;message_0079;message_0194;message_0016;message_0247
-msg_002,mute,spam,High spam probability detected; message suppressed.,0.78,message_0055;message_0249;message_0169;message_0266;message_0362
-msg_010,mute,spam,High spam probability detected; message suppressed.,0.83,message_0311;message_0075
-msg_078,mute,spam,Unsolicited broadcast from unknown sender with high spam score.,0.95,message_0199;message_0385
-msg_013,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0116;message_0231;message_0383;message_0050;message_0019
-msg_018,mute,spam,Unsolicited broadcast from unknown sender with high spam score.,0.95,message_0235;message_0365;message_0202
-msg_044,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0199;message_0361;message_0238;message_0381;message_0025
-msg_032,mute,spam,High spam probability detected; message suppressed.,0.78,message_0119;message_0285;message_0316;message_0355;message_0006
-msg_106,mute,spam,High spam probability detected; message suppressed.,0.78,message_0234;message_0074;message_0370;message_0250;message_0325
-msg_006,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0067;message_0240;message_0179;message_0098
-msg_109,mute,spam,High spam probability detected; message suppressed.,0.92,message_0151
-msg_108,mute,spam,High spam probability detected; message suppressed.,0.46,message_0094
-msg_019,mute,spam,High spam probability detected; message suppressed.,0.83,message_0277
-msg_088,mute,spam,High spam probability detected; message suppressed.,0.73,message_0115;message_0012;message_0082;message_0116
-msg_056,mute,spam,High spam probability detected; message suppressed.,0.46,message_0226;message_0367;message_0359;message_0168;message_0280
-msg_027,mute,spam,High spam probability detected; message suppressed.,0.83,message_0033
-msg_050,notify,urgent,Health emergency signal detected.,1.00,message_0279
-msg_083,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.95,message_0249;message_0362;message_0117
-msg_063,mute,spam,High spam probability detected; message suppressed.,0.92,message_0381;message_0238;message_0271
-msg_033,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0226;message_0367;message_0225;message_0046
-msg_061,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0016;message_0233;message_0247;message_0131;message_0080
-msg_020,mute,spam,Unsolicited broadcast from unknown sender with high spam score.,0.95,message_0381;message_0238;message_0199;message_0271;message_0200
-msg_017,mute,scam,Scam or safety threat detected; message suppressed.,0.92,message_0271;message_0385;message_0238;message_0381;message_0025
-msg_058,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0016;message_0131;message_0247;message_0373;message_0040
-msg_026,mute,spam,High spam probability detected; message suppressed.,0.50,message_0028
-msg_047,mute,spam,High spam probability detected; message suppressed.,0.46,message_0328;message_0215;message_0269;message_0319;message_0030
-msg_046,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,message_0148;message_0367;message_0226;message_0166;message_0046
-msg_042,mute,spam,Scam probability exceeds critical threshold.,0.95,message_0216;message_0319;message_0129
-msg_079,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,message_0369;message_0056;message_0024;message_0045
-msg_098,mute,spam,High spam probability detected; message suppressed.,0.46,message_0367;message_0226;message_0359;message_0280;message_0166
-msg_037,mute,spam,High spam probability detected; message suppressed.,0.73,message_0015;message_0001
-msg_007,mute,spam,High spam probability detected; message suppressed.,0.92,message_0067;message_0008
-msg_085,mute,spam,High spam probability detected; message suppressed.,0.73,none
-msg_001,mute,spam,High spam probability detected; message suppressed.,0.78,message_0129;message_0240
-msg_021,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,message_0215;message_0044;message_0001;message_0008;message_0098
-msg_028,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0315
-msg_012,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0016;message_0040;message_0247;message_0373;message_0124
-msg_064,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0365;message_0053;message_0235;message_0023
-msg_103,mute,spam,High spam probability detected; message suppressed.,0.78,message_0224;message_0383;message_0231;message_0065;message_0049
-msg_031,mute,spam,High spam probability detected; message suppressed.,0.46,message_0230;message_0380;message_0249;message_0304;message_0397
-msg_057,mute,spam,High spam probability detected; message suppressed.,0.78,message_0055;message_0059;message_0266;message_0249;message_0003
-msg_087,mute,personal,Group is explicitly muted by user and user is not mentioned.,0.95,message_0052;message_0026;message_0322
-msg_067,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0069;message_0098;message_0030;message_0044;message_0240
-msg_039,mute,promotion,Repeated vendor promotions exceeding daily threshold.,0.90,message_0364;message_0375;message_0051;message_0403;message_0284
-msg_082,mute,spam,High spam probability detected; message suppressed.,0.89,message_0249;message_0362;message_0117
-msg_066,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0336
-msg_049,mute,spam,High spam probability detected; message suppressed.,0.73,none
-msg_015,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,message_0238;message_0271;message_0025;message_0361;message_0089
-msg_051,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0337
-msg_097,mute,spam,High spam probability detected; message suppressed.,0.78,message_0366;message_0054;message_0046;message_0367;message_0359
-msg_089,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.95,message_0036
-msg_053,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0411;message_0010;message_0161;message_0192;message_0253
-msg_059,mute,spam,High spam probability detected; message suppressed.,0.46,message_0053;message_0365
-msg_024,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0337
-msg_072,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0238;message_0089
-msg_036,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0283
-msg_076,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,none
-msg_055,mute,spam,High spam probability detected; message suppressed.,0.78,message_0367;message_0046;message_0226;message_0166;message_0148
-msg_102,mute,spam,High spam probability detected; message suppressed.,0.83,message_0230;message_0380;message_0055;message_0249
-msg_080,mute,spam,High spam probability detected; message suppressed.,0.73,message_0216;message_0319
-msg_093,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,none
-msg_034,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0013;message_0014;message_0177;message_0241;message_0132
-msg_035,mute,spam,High spam probability detected; message suppressed.,0.83,message_0273
-msg_101,mute,spam,High spam probability detected; message suppressed.,0.78,message_0229;message_0268;message_0374;message_0360;message_0325
-msg_041,mute,spam,High spam probability detected; message suppressed.,0.50,message_0406
-msg_011,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0014;message_0132;message_0233;message_0177;message_0247
-msg_110,mute,spam,Scam probability exceeds critical threshold.,0.95,message_0238
-msg_095,mute,spam,High spam probability detected; message suppressed.,0.83,message_0369;message_0094;message_0023;message_0202;message_0053
-msg_074,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0301;message_0164;message_0204;message_0389;message_0358
-msg_073,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0023
-msg_054,mute,personal,Group is explicitly muted by user and user is not mentioned.,0.95,message_0389;message_0163;message_0301
-msg_068,mute,spam,High spam probability detected; message suppressed.,0.89,message_0074;message_0234;message_0073;message_0006;message_0377
-msg_100,notify,payment,Flight departure or gate change notification: deliver immediately.,0.95,message_0362;message_0228;message_0371;message_0055;message_0249
-msg_062,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0289;message_0043;message_0240;message_0098;message_0141
-msg_096,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.95,message_0095
-msg_043,mute,scam,Threat or harassment detected: immediate safety suppress.,1.00,message_0129;message_0240;message_0097
-msg_077,mute,spam,High spam probability detected; message suppressed.,0.78,message_0364;message_0176;message_0403;message_0051;message_0284
-msg_081,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.95,message_0375
-msg_025,mute,spam,High spam probability detected; message suppressed.,0.50,message_0400;message_0062;message_0106
-msg_084,mute,spam,High spam probability detected; message suppressed.,0.73,none
-msg_022,notify,payment,Impending bill due date or payment reminder: deliver immediately.,0.90,message_0099
+msg_023,mute,promotion,Unverified business HDFC Bank with 4 user reports; user u_002 high fatigue (19 dismissed/month); suppressed.,0.76,message_0107;message_0029;message_0231
+msg_091,mute,scam,OTP/credential phishing from u_049: requests 'reply with the 6' in personal message; user u_028 has reported 1 messages this month.,0.89,message_0107;message_0029;message_0231
+msg_090,digest,personal,Message from u_050 to user u_034; no urgent or risk signals; engagement rate 27%; digest.,0.66,message_0107;message_0029;message_0231
+msg_048,mute,scam,Security threat from u_053: 'scan this qr' detected in group to user u_011; forwarded 2 time(s); matches known account-takeover patterns.,0.88,message_0107;message_0029;message_0231
+msg_040,mute,spam,Viral chain message forwarded 7x from u_051 in Mehra Family; 'forward this to ten' mass-forwarding pattern detected.,0.89,message_0107;message_0029;message_0231
+msg_075,mute,promotion,Unverified business Grab with 9 user reports; user u_019 high fatigue (52 dismissed/month); suppressed.,0.81,message_0107;message_0029;message_0231
+msg_005,notify,personal,Urgent personal request from u_048: 'collect it from gate'; user u_032 reply rate 24%; immediate delivery.,0.77,message_0107;message_0029;message_0231
+msg_104,notify,personal,Urgent personal request from u_048: 'collect it from gate'; user u_033 reply rate 14%; immediate delivery.,0.76,message_0107;message_0029;message_0231
+msg_069,mute,spam,Viral chain message forwarded 11x from u_051 in Mehra Family; 'sab groups me share' mass-forwarding pattern detected.,0.92,message_0107;message_0029;message_0231
+msg_107,mute,scam,OTP/credential phishing from u_050: requests 'otp' in personal message; user u_009 has reported 0 messages this month. Forwarded 1x indicating coordinated attack.,0.88,message_0107;message_0029;message_0231
+msg_070,mute,scam,OTP/credential phishing from u_050: requests 'otp' in group message; user u_009 has reported 0 messages this month.,0.88,message_0107;message_0029;message_0231
+msg_003,mute,promotion,Unverified business Amazon India with 3 user reports; user u_010 high fatigue (59 dismissed/month); suppressed.,0.75,message_0107;message_0029;message_0231
+msg_099,digest,personal,Message from u_046 to user u_004; no urgent or risk signals; engagement rate 26%; digest.,0.66,message_0107;message_0029;message_0231
+msg_008,mute,promotion,Unverified business Hoop with 3 user reports; user u_020 high fatigue (57 dismissed/month); suppressed.,0.75,message_0107;message_0029;message_0231
+msg_092,mute,promotion,Unverified business American Express with 6 user reports; user u_036 high fatigue (33 dismissed/month); suppressed.,0.78,message_0107;message_0029;message_0231
+msg_060,digest,personal,"Non-urgent group message in University of Toronto Faculty Advising (college_faculty, 72 members); user u_016: 25 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_004,mute,promotion,Unverified business Apollo 24|7 with 6 user reports; user u_003 high fatigue (24 dismissed/month); suppressed.,0.78,message_0107;message_0029;message_0231
+msg_030,mute,spam,Marketplace resale listing forwarded 3x in group Myntra Marketplace; 'selling a barely used' — not relevant to user u_033; suppressed.,0.79,message_0107;message_0029;message_0231
+msg_045,notify,personal,Urgent personal request from u_047: 'at your gate'; user u_010 reply rate 16%; immediate delivery.,0.76,message_0107;message_0029;message_0231
+msg_052,mute,scam,Refund phishing from unverified Talabat Refund Desk: 'refund could not be processed' social engineering hook; business has 61 user reports in 30 days.,0.90,message_0107;message_0029;message_0231
+msg_009,digest,personal,"Non-urgent group message in Match Night Crew (sports, 83 members); user u_008: 29 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_071,digest,personal,"Non-urgent group message in Extended Family (extended_family, 24 members); user u_012: 13 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_016,mute,scam,Security threat from u_050: 'account blocked' detected in group to user u_005; forwarded 2 time(s); matches known account-takeover patterns.,0.88,message_0107;message_0029;message_0231
+msg_065,mute,promotion,Promotional message from Target with 6 user reports; 'dropped something' offer suppressed for user u_008 (dismissed 49/month).,0.82,message_0107;message_0029;message_0231
+msg_038,mute,spam,Mass-forwarded superstition message from u_051; forwarded 10x; 'urgent share with everyone before midnight' pattern across groups including Nritya Dance Class.,0.90,message_0107;message_0029;message_0231
+msg_086,mute,promotion,Unverified business Thrillophilia with 4 user reports; user u_004 high fatigue (29 dismissed/month); suppressed.,0.76,message_0107;message_0029;message_0231
+msg_014,mute,promotion,Promotional message from Swish with 6 user reports; '50% off' offer suppressed for user u_007 (dismissed 68/month).,0.82,message_0107;message_0029;message_0231
+msg_094,mute,promotion,Promotional discount message from Nykaa: '40% off' offer; user u_040 notification fatigue 81/month; suppressed.,0.81,message_0107;message_0029;message_0231
+msg_029,mute,spam,Marketplace resale listing forwarded 8x in group Myntra Marketplace; 'selling a barely used' — not relevant to user u_032; suppressed.,0.84,message_0107;message_0029;message_0231
+msg_105,mute,spam,Health misinformation forwarded 7x from u_051; 'stop all tablets' matches viral health scam patterns; suppressed.,0.86,message_0107;message_0029;message_0231
+msg_002,notify,personal,Urgent personal request from u_046: 'need literally 2 mins'; user u_010 reply rate 16%; immediate delivery.,0.76,message_0107;message_0029;message_0231
+msg_010,mute,promotion,Unverified business PVRINOX Cinemas with 8 user reports; user u_002 high fatigue (19 dismissed/month); suppressed.,0.80,message_0107;message_0029;message_0231
+msg_078,mute,scam,Phishing link forwarded 10 times: message from u_049 contains 'open this document urgently'; requests sensitive document or bank data from user u_040.,0.93,message_0107;message_0029;message_0231
+msg_013,digest,personal,"Non-urgent group message in University of Toronto Faculty Advising (college_faculty, 72 members); user u_035: 26 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_018,digest,personal,Large marketplace group Myntra Marketplace (241 members); non-urgent broadcast queued to daily digest for user u_002.,0.72,message_0107;message_0029;message_0231
+msg_044,mute,scam,OTP/credential phishing from u_049: requests 'otp' in group message; user u_004 has reported 3 messages this month. Forwarded 2x indicating coordinated attack.,0.91,message_0107;message_0029;message_0231
+msg_032,digest,personal,"Non-urgent group message in University of Toronto Student Chat (college_students, 142 members); user u_016: 25 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_106,digest,personal,Personal message from u_054 to user u_019; engagement rate 14%; no urgent signals; digest.,0.67,message_0107;message_0029;message_0231
+msg_006,digest,personal,Large society group Green Acres Society Notices (184 members); non-urgent broadcast queued to daily digest for user u_011.,0.72,message_0107;message_0029;message_0231
+msg_109,mute,scam,Security threat from u_053: 'scan this qr' detected in group to user u_011; forwarded 0 time(s); matches known account-takeover patterns.,0.86,message_0107;message_0029;message_0231
+msg_108,mute,promotion,Unverified business Chase Security Center with 55 user reports; user u_013 high fatigue (22 dismissed/month); suppressed.,0.86,message_0107;message_0029;message_0231
+msg_019,mute,promotion,Unverified business Chase Security Center with 55 user reports; user u_013 high fatigue (22 dismissed/month); suppressed.,0.86,message_0107;message_0029;message_0231
+msg_088,digest,personal,Large marketplace group Myntra Marketplace (241 members); non-urgent broadcast queued to daily digest for user u_033.,0.71,message_0107;message_0029;message_0231
+msg_056,digest,personal,"Non-urgent group message in Mehra Family (family, 14 members); user u_001: 8 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_027,mute,promotion,Unverified business Thrillophilia with 4 user reports; user u_012 high fatigue (17 dismissed/month); suppressed.,0.76,message_0107;message_0029;message_0231
+msg_050,digest,personal,Message from Green Cross Pharmacy to user u_014; no urgent or risk signals; engagement rate 26%; digest.,0.66,message_0107;message_0029;message_0231
+msg_083,digest,personal,"Non-urgent group message in Checkout Platform Co-workers (coworker, 28 members); user u_029: 22 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_063,mute,scam,Security threat from u_049: 'scan the qr' detected in group to user u_006; forwarded 0 time(s); matches known account-takeover patterns.,0.86,message_0107;message_0029;message_0231
+msg_033,digest,personal,"Non-urgent group message in Cousins and Family Chat (family, 18 members); user u_014: 19 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_061,digest,personal,"Non-urgent group message in Mehra Family (family, 14 members); user u_003: 14 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_020,mute,scam,Phishing link forwarded 2 times: message from u_049 contains 'bit.ly/'; requests sensitive document or bank data from user u_032.,0.86,message_0107;message_0029;message_0231
+msg_017,mute,scam,Security threat from u_049: 'clearance amount' detected in group to user u_027; forwarded 0 time(s); matches known account-takeover patterns.,0.86,message_0107;message_0029;message_0231
+msg_058,digest,personal,"Non-urgent group message in Mehra Family (family, 14 members); user u_001: 8 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_026,mute,promotion,Unverified business Amazon Delivery Support with 47 user reports; user u_008 high fatigue (49 dismissed/month); suppressed.,0.86,message_0107;message_0029;message_0231
+msg_047,digest,personal,Large society group Society Maintenance Desk (118 members); non-urgent broadcast queued to daily digest for user u_011.,0.72,message_0107;message_0029;message_0231
+msg_046,mute,scam,OTP/credential phishing from u_041: requests 'otp' in group message; user u_005 has reported 0 messages this month.,0.88,message_0107;message_0029;message_0231
+msg_042,digest,personal,Large society group Society Maintenance Desk (118 members); non-urgent broadcast queued to daily digest for user u_001.,0.71,message_0107;message_0029;message_0231
+msg_079,mute,scam,OTP/credential phishing from u_050: requests 'otp' in group message; user u_009 has reported 0 messages this month.,0.88,message_0107;message_0029;message_0231
+msg_098,digest,personal,Personal message from u_041 to user u_001; engagement rate 18%; no urgent signals; digest.,0.68,message_0107;message_0029;message_0231
+msg_037,digest,personal,Large society group Green Acres Society Notices (184 members); non-urgent broadcast queued to daily digest for user u_011.,0.72,message_0107;message_0029;message_0231
+msg_007,digest,personal,Large society group Maple Heights Residents (156 members); non-urgent broadcast queued to daily digest for user u_013.,0.72,message_0107;message_0029;message_0231
+msg_085,digest,personal,Message from HDFC Bank Helpdesk to user u_009; no urgent or risk signals; engagement rate 35%; digest.,0.67,message_0107;message_0029;message_0231
+msg_001,digest,personal,Large society group Green Acres Society Notices (184 members); non-urgent broadcast queued to daily digest for user u_001.,0.71,message_0107;message_0029;message_0231
+msg_021,notify,payment,Payment deadline from u_043: 'payment due today' in group (Green Acres Society Notices); user u_011 has 28 active payment engagements this month.,0.82,message_0107;message_0029;message_0231
+msg_028,mute,promotion,Unverified business Thrillophilia with 4 user reports; user u_007 high fatigue (68 dismissed/month); suppressed.,0.76,message_0107;message_0029;message_0231
+msg_012,digest,personal,"Non-urgent group message in Nritya Dance Class (dance_class, 61 members); user u_003: 14 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_064,digest,personal,Large marketplace group Myntra Marketplace (241 members); non-urgent broadcast queued to daily digest for user u_005.,0.72,message_0107;message_0029;message_0231
+msg_103,notify,personal,Urgent personal request from u_048: 'collect it from gate'; user u_032 reply rate 24%; immediate delivery.,0.77,message_0107;message_0029;message_0231
+msg_031,digest,personal,"Non-urgent group message in Checkout Platform Co-workers (coworker, 28 members); user u_004: 17 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_057,digest,personal,"Non-urgent group message in Checkout Platform Co-workers (coworker, 28 members); user u_010: 7 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_087,digest,personal,"Non-urgent group message in Land and Plot Leads (real_estate, 91 members); user u_040: 2 replies/30d; queued to digest.",0.68,message_0107;message_0029;message_0231
+msg_067,notify,payment,Payment deadline from u_043: 'late fee lag jayegi' in group (Green Acres Society Notices); user u_011 has 28 active payment engagements this month.,0.82,message_0107;message_0029;message_0231
+msg_039,notify,payment,Payment deadline from u_045: 'fee receipt today' in group (International School Parents Group); user u_006 has 23 active payment engagements this month.,0.82,message_0107;message_0029;message_0231
+msg_082,digest,personal,"Non-urgent group message in Checkout Platform Co-workers (coworker, 28 members); user u_028: 5 replies/30d; queued to digest.",0.68,message_0107;message_0029;message_0231
+msg_066,mute,promotion,Unverified business Target with 6 user reports; user u_007 high fatigue (68 dismissed/month); suppressed.,0.78,message_0107;message_0029;message_0231
+msg_049,mute,promotion,Unverified business Shopee with 8 user reports; user u_018 high fatigue (47 dismissed/month); suppressed.,0.80,message_0107;message_0029;message_0231
+msg_015,mute,scam,OTP/credential phishing from u_049: requests 'otp' in group message; user u_009 has reported 0 messages this month.,0.88,message_0107;message_0029;message_0231
+msg_051,mute,promotion,Unverified business Flipkart with 5 user reports; user u_007 high fatigue (68 dismissed/month); suppressed.,0.77,message_0107;message_0029;message_0231
+msg_097,digest,personal,Personal message from u_041 to user u_001; engagement rate 18%; no urgent signals; digest.,0.68,message_0107;message_0029;message_0231
+msg_089,digest,personal,Personal message from u_049 to user u_021; engagement rate 21%; no urgent signals; digest.,0.68,message_0107;message_0029;message_0231
+msg_053,digest,personal,"Non-urgent group message in Global Stock Watch (investment_tips, 68 members); user u_005: 20 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_059,digest,personal,Large marketplace group Myntra Marketplace (241 members); non-urgent broadcast queued to daily digest for user u_009.,0.73,message_0107;message_0029;message_0231
+msg_024,mute,promotion,Unverified business Flipkart with 5 user reports; user u_007 high fatigue (68 dismissed/month); suppressed.,0.77,message_0107;message_0029;message_0231
+msg_072,mute,scam,OTP/credential phishing from u_049: requests 'otp' in group message; user u_009 has reported 0 messages this month. Forwarded 2x indicating coordinated attack.,0.88,message_0107;message_0029;message_0231
+msg_036,mute,promotion,Unverified business RazorpayX Global Desk with 20 user reports; user u_015 high fatigue (32 dismissed/month); suppressed.,0.86,message_0107;message_0029;message_0231
+msg_076,mute,scam,Refund phishing from unverified Talabat Refund Desk: 'refund could not be processed' social engineering hook; business has 61 user reports in 30 days.,0.90,message_0107;message_0029;message_0231
+msg_055,notify,personal,Urgent personal request from u_041: 'call me urgently'; user u_037 reply rate 78%; immediate delivery.,0.83,message_0107;message_0029;message_0231
+msg_102,digest,personal,Personal message from u_046 to user u_010; engagement rate 16%; no urgent signals; digest.,0.67,message_0107;message_0029;message_0231
+msg_080,digest,personal,Large society group Green Acres Society Notices (184 members); non-urgent broadcast queued to daily digest for user u_011.,0.72,message_0107;message_0029;message_0231
+msg_093,mute,scam,OTP/credential phishing from FedEx: requests 'otp' in business message; user u_037 has reported 4 messages this month.,0.92,message_0107;message_0029;message_0231
+msg_034,digest,personal,"Non-urgent group message in Mehra Family (family, 14 members); user u_001: 8 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_035,mute,promotion,Unverified business RazorpayX with 5 user reports; user u_015 high fatigue (32 dismissed/month); suppressed.,0.77,message_0107;message_0029;message_0231
+msg_101,digest,personal,User u_010 in DND window (22:30-07:30); message from u_054 received outside active hours; morning digest.,0.73,message_0107;message_0029;message_0231
+msg_041,digest,personal,Message from Polaris School of Technology to user u_001; no urgent or risk signals; engagement rate 18%; digest.,0.65,message_0107;message_0029;message_0231
+msg_011,digest,personal,"Non-urgent group message in Mehra Family (family, 14 members); user u_001: 8 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_110,mute,scam,OTP/credential phishing from u_049: requests 'reply with the 6' in personal message; user u_028 has reported 1 messages this month. Forwarded 1x indicating coordinated attack.,0.89,message_0107;message_0029;message_0231
+msg_095,digest,personal,Message from u_050 to user u_005; no urgent or risk signals; engagement rate 27%; digest.,0.66,message_0107;message_0029;message_0231
+msg_074,mute,scam,Financial scam pattern from u_052: 'plots near the airport' detected; no verified business association; user u_040 protected.,0.87,message_0107;message_0029;message_0231
+msg_073,mute,scam,Security threat from u_050: 'failed login attempts' detected in group to user u_005; forwarded 9 time(s); matches known account-takeover patterns.,0.94,message_0107;message_0029;message_0231
+msg_054,digest,personal,"Non-urgent group message in Local Food Finds (local_food, 193 members); user u_040: 2 replies/30d; queued to digest.",0.68,message_0107;message_0029;message_0231
+msg_068,digest,personal,"Non-urgent group message in Indiranagar Book Club (book_club, 44 members); user u_017: 28 replies/30d; queued to digest.",0.70,message_0107;message_0029;message_0231
+msg_100,digest,personal,Message from u_046 to user u_004; no urgent or risk signals; engagement rate 26%; digest.,0.66,message_0107;message_0029;message_0231
+msg_062,notify,urgent,Health/safety emergency from u_043: 'fire' detected in group to user u_011; immediate delivery required.,0.83,message_0107;message_0029;message_0231
+msg_096,digest,personal,Personal message from u_049 to user u_039; engagement rate 18%; no urgent signals; digest.,0.68,message_0107;message_0029;message_0231
+msg_043,digest,personal,Large society group Green Acres Society Notices (184 members); non-urgent broadcast queued to daily digest for user u_011.,0.72,message_0107;message_0029;message_0231
+msg_077,digest,personal,"User u_006 in DND window (21:00-06:00); group message from International School Parents Group (school_group, 96 members) queued to digest.",0.76,message_0107;message_0029;message_0231
+msg_081,digest,personal,"Non-urgent group message in International School Parents Group (school_group, 96 members); user u_001: 8 replies/30d; queued to digest.",0.69,message_0107;message_0029;message_0231
+msg_025,digest,personal,Message from Amazon India to user u_001; no urgent or risk signals; engagement rate 18%; digest.,0.65,message_0107;message_0029;message_0231
+msg_084,mute,promotion,Unverified business HDFC Bank with 4 user reports; user u_040 high fatigue (81 dismissed/month); suppressed.,0.76,message_0107;message_0029;message_0231
+msg_022,notify,payment,Payment deadline from u_044: 'payment due today' in group (Society Maintenance Desk); user u_011 has 28 active payment engagements this month.,0.82,message_0107;message_0029;message_0231
