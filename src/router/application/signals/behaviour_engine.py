@@ -1,7 +1,6 @@
 """BehaviourEngine implementation modeling user alert load, engagement velocity, and dismissal habits."""
 
 import math
-from typing import Dict
 
 from router.application.signals.base_calculator import BaseSignalCalculator
 from router.core.logging.logger import get_logger
@@ -282,6 +281,6 @@ class BehaviourEngine(BaseSignalCalculator):
         results = {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}
         return results["notification_fatigue"]
 
-    def calculate_all(self, context: MessageContext) -> Dict[str, SignalValue]:
+    def calculate_all(self, context: MessageContext) -> dict[str, SignalValue]:
         """Compute dictionary mapping each behavioural signal name to its SignalValue."""
         return {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}

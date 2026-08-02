@@ -1,6 +1,6 @@
 """Unit tests for EvidenceValidator component."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from router.application.retrieval.evidence_validator import EvidenceValidator
 from router.domain.entities.context import MessageContext
@@ -24,7 +24,7 @@ def test_validator_false_positive_filter() -> None:
         sender_id="sender_bad",
         conversation_type="personal",
         message_text="Your OTP for banking is 998811",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     cand = RetrievalCandidate(
@@ -56,7 +56,7 @@ def test_validator_pass_matching_entity() -> None:
         sender_id="auth_service",
         conversation_type="personal",
         message_text="Your verification code is 482910",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     cand = RetrievalCandidate(

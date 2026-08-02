@@ -1,6 +1,5 @@
 """Unit tests for Phase 8 Prompt System."""
 
-import pytest
 from router.application.prompts.context_compressor import ContextCompressor
 from router.application.prompts.prompt_cache import PromptCache
 from router.application.prompts.prompt_loader import PromptLoader

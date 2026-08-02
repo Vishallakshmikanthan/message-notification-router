@@ -13,11 +13,11 @@ Spec: prompt_architecture.md §6 (Prompt Engineering Governance & Version Contro
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from router.application.prompts.context_compressor import ContextCompressor
 from router.application.prompts.prompt_builder import BuiltPrompt, PromptBuilder
-from router.application.prompts.prompt_cache import PromptCache, CacheStats
+from router.application.prompts.prompt_cache import CacheStats, PromptCache
 from router.application.prompts.prompt_loader import PromptLoader, PromptTemplate
 from router.application.prompts.prompt_version import PromptVersion
 from router.application.prompts.token_optimizer import TokenOptimizer
@@ -44,8 +44,8 @@ class PromptManager:
         self,
         provider: str = "default",
         major_version: int = 1,
-        loader: Optional[PromptLoader] = None,
-        cache: Optional[PromptCache] = None,
+        loader: PromptLoader | None = None,
+        cache: PromptCache | None = None,
     ) -> None:
         """Initialize the PromptManager.
 
@@ -81,10 +81,10 @@ class PromptManager:
     def build_classification(
         self,
         message_text: str,
-        signal_dict: Dict[str, Any],
-        evidence_snippets: Optional[List[str]] = None,
-        thread_turns: Optional[List[str]] = None,
-        few_shot_examples: Optional[List[str]] = None,
+        signal_dict: dict[str, Any],
+        evidence_snippets: list[str] | None = None,
+        thread_turns: list[str] | None = None,
+        few_shot_examples: list[str] | None = None,
     ) -> BuiltPrompt:
         """Build a Tier 1 fast-path classification prompt.
 
@@ -111,9 +111,9 @@ class PromptManager:
     def build_reasoning(
         self,
         message_text: str,
-        signal_dict: Dict[str, Any],
-        evidence_snippets: Optional[List[str]] = None,
-        thread_turns: Optional[List[str]] = None,
+        signal_dict: dict[str, Any],
+        evidence_snippets: list[str] | None = None,
+        thread_turns: list[str] | None = None,
     ) -> BuiltPrompt:
         """Build a Tier 2 multi-stage chain-of-thought reasoning prompt.
 
@@ -138,7 +138,7 @@ class PromptManager:
     def build_repair(
         self,
         malformed_response: str,
-        schema_errors: List[str],
+        schema_errors: list[str],
     ) -> BuiltPrompt:
         """Build the Stage 4 output repair / self-healing prompt.
 
@@ -171,7 +171,7 @@ class PromptManager:
         """
         return self._loader.load(prompt_id, self._major_version)
 
-    def list_available_prompts(self) -> List[str]:
+    def list_available_prompts(self) -> list[str]:
         """List all available prompt IDs for the current major version.
 
         Returns:
@@ -198,7 +198,7 @@ class PromptManager:
     # Cache and observability API
     # ------------------------------------------------------------------
 
-    def get_cache_stats(self) -> Dict[str, CacheStats]:
+    def get_cache_stats(self) -> dict[str, CacheStats]:
         """Return prompt prefix cache statistics.
 
         Returns:
@@ -206,7 +206,7 @@ class PromptManager:
         """
         return self._cache.get_stats()
 
-    def invalidate_cache(self, prompt_id: Optional[str] = None) -> None:
+    def invalidate_cache(self, prompt_id: str | None = None) -> None:
         """Invalidate the prompt template loader cache.
 
         Args:
@@ -219,7 +219,7 @@ class PromptManager:
             extra={"prompt_id": prompt_id or "ALL"},
         )
 
-    def get_token_budget(self) -> Dict[str, int]:
+    def get_token_budget(self) -> dict[str, int]:
         """Return the current token budget allocation.
 
         Returns:

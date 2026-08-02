@@ -10,7 +10,6 @@ git_commit_hash equivalent for full observability and auditability.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 
 @dataclass(frozen=True)
@@ -31,7 +30,7 @@ class PromptVersion:
     patch: int
     prompt_id: str
     layer: str
-    commit_hash: Optional[str] = field(default=None)
+    commit_hash: str | None = field(default=None)
 
     @property
     def version_string(self) -> str:
@@ -44,7 +43,7 @@ class PromptVersion:
         return f"{self.prompt_id}@{self.version_string}"
 
     @classmethod
-    def from_string(cls, prompt_id: str, layer: str, version_str: str) -> "PromptVersion":
+    def from_string(cls, prompt_id: str, layer: str, version_str: str) -> PromptVersion:
         """Parse a semantic version string into a PromptVersion.
 
         Args:
@@ -77,7 +76,7 @@ class PromptVersion:
             layer=layer,
         )
 
-    def is_compatible_with(self, other: "PromptVersion") -> bool:
+    def is_compatible_with(self, other: PromptVersion) -> bool:
         """Check backward compatibility (same major version).
 
         Args:

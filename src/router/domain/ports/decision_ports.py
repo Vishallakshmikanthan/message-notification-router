@@ -8,13 +8,10 @@ implementations.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, List, Optional, Tuple
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.decision_models import (
     CalibratedDecision,
-    DecisionAction,
-    DecisionCategory,
     DecisionContext,
     DecisionResult,
     ReasonerInputFrame,
@@ -113,8 +110,8 @@ class IConfidenceEngine(ABC):
     @abstractmethod
     def calibrate(
         self,
-        rule_result: Optional[RuleEvaluationResult],
-        reasoning_output: Optional[ReasoningOutput],
+        rule_result: RuleEvaluationResult | None,
+        reasoning_output: ReasoningOutput | None,
         context: DecisionContext,
     ) -> CalibratedDecision:
         """Compute calibrated posterior confidence from raw inputs.
@@ -187,7 +184,7 @@ class IOutputFormatter(ABC):
     def format(
         self,
         decision_result: DecisionResult,
-    ) -> Tuple[NotificationAction, MessageType, str, float, List[str]]:
+    ) -> tuple[NotificationAction, MessageType, str, float, list[str]]:
         """Map a DecisionResult to the legacy 5-tuple IDecisionEngine output contract.
 
         Args:

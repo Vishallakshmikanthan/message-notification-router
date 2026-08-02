@@ -14,8 +14,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import logging
-import os
 import sys
 from pathlib import Path
 
@@ -32,10 +30,9 @@ from eval.output_validator import OutputCSVValidator
 from router.application.context.context_assembler import ContextAssembler
 from router.application.data.data_manager import DataManager
 from router.application.decision.decision_engine import DecisionEngineV2
-
+from router.application.retrieval.retrieval_engine import RetrievalEngine
 from router.core.config.settings import get_settings
 from router.core.logging.logger import configure_logger, get_logger
-from router.domain.entities.context import MessageContext
 from router.infrastructure.repositories.context_repository_registry import (
     ContextRepositoryRegistry,
 )
@@ -112,7 +109,14 @@ def run_process(input_path: str, output_path: str) -> None:
         daily_notification_summary_repo=data_manager.summary_repo,
     )
     context_assembler = ContextAssembler(registry=registry)
-    engine = DecisionEngineV2()
+
+    retrieval_engine = RetrievalEngine()
+    history_messages = data_manager.history_repo.get_all()
+    if history_messages:
+        logger.info(f"Indexing {len(history_messages)} historical corpus messages into RetrievalEngine")
+        retrieval_engine.index_corpus(history_messages)
+
+    engine = DecisionEngineV2(retrieval_engine=retrieval_engine)
 
     items = []
     if in_p.suffix.lower() == ".csv":
@@ -162,7 +166,33 @@ def run_process(input_path: str, output_path: str) -> None:
 
 def run_evaluate(dataset_path: str, report_dir: str) -> None:
     """Run offline evaluation pipeline."""
-    pipeline = EvaluationPipeline()
+    ds_p = Path(dataset_path)
+    dataset_dir = ds_p.parent if ds_p.is_file() else ds_p
+    retrieval_engine = RetrievalEngine()
+    context_assembler = None
+    try:
+        data_manager = DataManager(dataset_dir=str(dataset_dir))
+        data_manager.initialize()
+        history_messages = data_manager.history_repo.get_all()
+        if history_messages:
+            logger.info(f"Indexing {len(history_messages)} historical messages for evaluation")
+            retrieval_engine.index_corpus(history_messages)
+
+        registry = ContextRepositoryRegistry(
+            messages_repo=data_manager.message_repo,
+            users_repo=data_manager.user_repo,
+            groups_repo=data_manager.group_repo,
+            business_accounts_repo=data_manager.business_repo,
+            message_history_repo=data_manager.history_repo,
+            message_events_repo=data_manager.event_repo,
+            daily_notification_summary_repo=data_manager.summary_repo,
+        )
+        context_assembler = ContextAssembler(registry=registry)
+    except Exception as exc:
+        logger.warning(f"Could not load data layer for evaluation context: {exc}")
+
+    engine = DecisionEngineV2(retrieval_engine=retrieval_engine)
+    pipeline = EvaluationPipeline(decision_engine=engine, context_assembler=context_assembler)
     report_file = Path(report_dir) / "eval_report.json"
     res = pipeline.run_evaluation(dataset_path, str(report_file))
     print("\n================ EVALUATION SUMMARY ================")

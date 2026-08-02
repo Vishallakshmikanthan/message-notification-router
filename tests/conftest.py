@@ -1,7 +1,7 @@
 """Pytest fixtures for unit and integration testing."""
 
-from datetime import datetime, timezone
-import os
+from datetime import UTC, datetime
+
 import pytest
 
 from router.domain.entities.message import Message
@@ -36,5 +36,5 @@ def sample_message() -> Message:
         conversation_type="personal",
         sender_user_id="u_002",
         message_text="Hey! Are we still meeting for lunch today?",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )

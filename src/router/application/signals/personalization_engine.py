@@ -1,6 +1,5 @@
 """PersonalizationEngine implementation dynamically adapting base signals to match user preferences."""
 
-from typing import Dict
 
 from router.application.signals.base_calculator import BaseSignalCalculator
 from router.core.logging.logger import get_logger
@@ -430,6 +429,6 @@ class PersonalizationEngine(BaseSignalCalculator):
         results = {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}
         return results["user_preference_alignment"]
 
-    def calculate_all(self, context: MessageContext) -> Dict[str, SignalValue]:
+    def calculate_all(self, context: MessageContext) -> dict[str, SignalValue]:
         """Compute dictionary mapping each personalization signal name to its SignalValue."""
         return {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}

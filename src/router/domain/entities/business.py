@@ -1,13 +1,12 @@
 """BusinessAccount and UserBusinessHistory Domain Entities matching business_accounts.csv and user_business_history.csv."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import UTC, datetime
 
 
 def _utc_now() -> datetime:
     """Return timezone-aware current UTC datetime."""
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 @dataclass(frozen=True)
@@ -49,7 +48,7 @@ class UserBusinessHistory:
     why_user_knows_account: str = ""
     allows_promotions: bool = True
     opted_in_promotions: bool = True
-    promotions_opted_out_at: Optional[datetime] = None
+    promotions_opted_out_at: datetime | None = None
     activity_count_180d: int = 0
     interaction_count_180d: int = 0
     messages_opened_30d: int = 0
@@ -59,6 +58,6 @@ class UserBusinessHistory:
     domain_used_by_sender_age_days: int = 0
     total_orders: int = 0
     total_spend: float = 0.0
-    last_order_timestamp: Optional[datetime] = None
-    last_activity_at: Optional[datetime] = None
-    last_reply_at: Optional[datetime] = None
+    last_order_timestamp: datetime | None = None
+    last_activity_at: datetime | None = None
+    last_reply_at: datetime | None = None

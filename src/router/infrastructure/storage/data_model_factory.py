@@ -1,7 +1,8 @@
 """DataModelFactory for converting validated raw CSV rows into immutable domain entities."""
 
+from collections.abc import Mapping
 from datetime import date, datetime
-from typing import Any, Mapping, Optional
+from typing import Any
 
 from router.domain.entities.business import BusinessAccount, UserBusinessHistory
 from router.domain.entities.group import Group, GroupMember
@@ -19,7 +20,7 @@ from router.infrastructure.memory.string_intern_pool import StringInternPool
 class DataModelFactory:
     """Instantiates domain entities from CSV row dictionaries using string interning."""
 
-    def __init__(self, string_pool: Optional[StringInternPool] = None) -> None:
+    def __init__(self, string_pool: StringInternPool | None = None) -> None:
         """Initialize DataModelFactory with optional StringInternPool."""
         self.string_pool = string_pool or StringInternPool()
 

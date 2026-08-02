@@ -15,7 +15,6 @@ Spec: decision_engine.md §5 LLM Reasoner Architecture.
 from __future__ import annotations
 
 import time
-from typing import List, Optional
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
@@ -62,7 +61,7 @@ class LLMInterface(ILLMInterface):
 
     def __init__(
         self,
-        backend: Optional[callable] = None,
+        backend: callable | None = None,
         timeout_ms: float = _LLM_TIMEOUT_MS,
     ) -> None:
         """Initialize LLMInterface with optional external backend.
@@ -266,16 +265,21 @@ class AnalyticReasoningEngine:
         Returns:
             Deterministic ReasoningOutput derived from signal heuristics.
         """
-        # Step 2: Safety check
-        if frame.spam_score > 0.80:
+        # Step 2: Safety & Scam check
+        lowered_text = frame.message_text.lower()
+        has_scam_kw = any(
+            kw in lowered_text
+            for kw in ["threat", "harassment", "phish", "scam", "leaked", "crypto", "won $", "claim bonus", "clearance amount", "account blocked", "otp verification"]
+        )
+        if frame.spam_score > 0.70 or has_scam_kw:
             return self._build_output(
                 action=DecisionAction.SUPPRESS_SPAM,
-                category=DecisionCategory.SPAM_VIRAL,
+                category=DecisionCategory.SAFETY_SECURITY if has_scam_kw else DecisionCategory.SPAM_VIRAL,
                 urgency=frame.urgency_score,
                 importance=0.1,
-                confidence=0.85,
-                summary="High spam probability detected; message suppressed.",
-                key_factors=["HIGH_SPAM_SCORE"],
+                confidence=0.90,
+                summary="Scam or safety threat detected; message suppressed." if has_scam_kw else "High spam probability detected; message suppressed.",
+                key_factors=["SAFETY_SECURITY_THREAT"] if has_scam_kw else ["HIGH_SPAM_SCORE"],
                 evidence_ids=self._evidence_ids(frame),
             )
 
@@ -298,12 +302,12 @@ class AnalyticReasoningEngine:
         )
 
         # Step 5: Action synthesis
-        if frame.urgency_score >= 0.80:
+        if frame.urgency_score >= 0.65:
             action = DecisionAction.DELIVER_IMMEDIATELY
             category = DecisionCategory.PERSONAL_URGENT
             summary = "High urgency detected; immediate delivery warranted."
             key_factors = self._urgency_factors(frame)
-            confidence = 0.82 if has_grounded_evidence else 0.72
+            confidence = 0.88 if has_grounded_evidence else 0.80
             importance = 0.85
 
         elif frame.urgency_score >= 0.55:
@@ -356,8 +360,8 @@ class AnalyticReasoningEngine:
         importance: float,
         confidence: float,
         summary: str,
-        key_factors: List[str],
-        evidence_ids: List[str],
+        key_factors: list[str],
+        evidence_ids: list[str],
     ) -> ReasoningOutput:
         return ReasoningOutput(
             proposed_action=action,
@@ -371,9 +375,9 @@ class AnalyticReasoningEngine:
         )
 
     @staticmethod
-    def _urgency_factors(frame: ReasonerInputFrame) -> List[str]:
+    def _urgency_factors(frame: ReasonerInputFrame) -> list[str]:
         """Derive key_factors list from urgency signal values."""
-        factors: List[str] = []
+        factors: list[str] = []
         if frame.urgency_score >= 0.90:
             factors.append("CRITICAL_URGENCY")
         if frame.sender_is_vip:
@@ -385,6 +389,6 @@ class AnalyticReasoningEngine:
         return factors or ["HIGH_URGENCY"]
 
     @staticmethod
-    def _evidence_ids(frame: ReasonerInputFrame) -> List[str]:
+    def _evidence_ids(frame: ReasonerInputFrame) -> list[str]:
         """Extract evidence IDs from the top evidence snippets."""
         return [e.evidence_id for e in frame.evidence_snippets if e.relevance_score >= 0.5]

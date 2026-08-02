@@ -1,7 +1,6 @@
 """SignalEngine implementation coordinating the full 12-stage signal computation DAG specifications."""
 
 import time
-from typing import Dict, Any
 
 from router.application.signals.behaviour_engine import BehaviourEngine
 from router.application.signals.personalization_engine import PersonalizationEngine
@@ -77,7 +76,7 @@ class SignalEngine(ISignalEngine):
             )
 
         # Stages 2-10: Parallel Category Execution
-        raw_signals: Dict[str, SignalValue] = {}
+        raw_signals: dict[str, SignalValue] = {}
         raw_signals.update(self.behaviour_engine.calculate_all(context))
         raw_signals.update(self.risk_engine.calculate_all(context))
         raw_signals.update(self.trust_engine.calculate_all(context))
@@ -85,7 +84,7 @@ class SignalEngine(ISignalEngine):
         raw_signals.update(self.personalization_engine.calculate_all(context))
 
         # Stage 11: Normalization & Conflict Resolution
-        normalized_signals: Dict[str, SignalValue] = {
+        normalized_signals: dict[str, SignalValue] = {
             k: self.normalizer.normalize_signal(v) for k, v in raw_signals.items()
         }
         resolved_signals = self.normalizer.resolve_conflicts(normalized_signals)

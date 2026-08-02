@@ -13,9 +13,7 @@ Spec: observability.md §3 (Core Metrics Specification Table).
 from __future__ import annotations
 
 import logging
-import time
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +25,7 @@ class MetricCounter:
     name: str
     description: str
     value: float = 0.0
-    labels: Dict[str, str] = field(default_factory=dict)
+    labels: dict[str, str] = field(default_factory=dict)
 
     def inc(self, amount: float = 1.0) -> None:
         """Increment counter."""
@@ -41,7 +39,7 @@ class MetricGauge:
     name: str
     description: str
     value: float = 0.0
-    labels: Dict[str, str] = field(default_factory=dict)
+    labels: dict[str, str] = field(default_factory=dict)
 
     def set(self, val: float) -> None:
         """Set gauge value."""
@@ -54,7 +52,7 @@ class MetricHistogram:
 
     name: str
     description: str
-    observations: List[float] = field(default_factory=list)
+    observations: list[float] = field(default_factory=list)
 
     def observe(self, val: float) -> None:
         """Record an observation value."""
@@ -88,7 +86,7 @@ class MetricHistogram:
 class TelemetryCollector:
     """Singleton telemetry collector exporting metrics."""
 
-    _instance: Optional[TelemetryCollector] = None
+    _instance: TelemetryCollector | None = None
 
     def __init__(self) -> None:
         """Initialize telemetry counters, gauges, and histograms."""
@@ -141,7 +139,7 @@ class TelemetryCollector:
         if error:
             self.pipeline_error_total.inc()
 
-    def get_summary(self) -> Dict[str, Any]:
+    def get_summary(self) -> dict[str, Any]:
         """Export metrics summary dict."""
         return {
             "latency_p50_ms": self.router_request_latency_ms.p50(),

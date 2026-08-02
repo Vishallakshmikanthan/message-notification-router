@@ -1,11 +1,10 @@
 """Multi-Level In-Memory ContextCache implementing L1, L2, and L3 caching topology."""
 
-from typing import Any, Dict, Optional, Tuple
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.business import BusinessAccount, UserBusinessHistory
 from router.domain.entities.group import Group, GroupMember
-from router.domain.entities.sub_contexts import ImageContext, VoiceContext
 from router.domain.entities.user import User
 
 logger = get_logger(__name__)
@@ -19,19 +18,19 @@ class ContextCache:
         self.max_l1_entries = max_l1_entries
 
         # L1 Hot Entity Cache: (user_id -> User), (business_id -> BusinessAccount), (group_id -> Group)
-        self._l1_users: Dict[str, User] = {}
-        self._l1_businesses: Dict[str, BusinessAccount] = {}
-        self._l1_groups: Dict[str, Group] = {}
+        self._l1_users: dict[str, User] = {}
+        self._l1_businesses: dict[str, BusinessAccount] = {}
+        self._l1_groups: dict[str, Group] = {}
 
         # L2 Relational Index Cache: ((group_id, user_id) -> GroupMember), ((user_id, business_id) -> UserBusinessHistory)
-        self._l2_group_members: Dict[Tuple[str, str], GroupMember] = {}
-        self._l2_user_business_history: Dict[Tuple[str, str], UserBusinessHistory] = {}
+        self._l2_group_members: dict[tuple[str, str], GroupMember] = {}
+        self._l2_user_business_history: dict[tuple[str, str], UserBusinessHistory] = {}
 
         # L3 Multimodal Cache: (sha256_hash -> ImageContext/VoiceContext)
-        self._l3_multimodal: Dict[str, Any] = {}
+        self._l3_multimodal: dict[str, Any] = {}
 
     # --- L1 Entity Tier ---
-    def get_user(self, user_id: str) -> Optional[User]:
+    def get_user(self, user_id: str) -> User | None:
         """Lookup user in L1 cache."""
         return self._l1_users.get(user_id)
 
@@ -41,7 +40,7 @@ class ContextCache:
             self._l1_users.clear()
         self._l1_users[user_id] = user
 
-    def get_business(self, business_id: str) -> Optional[BusinessAccount]:
+    def get_business(self, business_id: str) -> BusinessAccount | None:
         """Lookup business account in L1 cache."""
         return self._l1_businesses.get(business_id)
 
@@ -51,7 +50,7 @@ class ContextCache:
             self._l1_businesses.clear()
         self._l1_businesses[business_id] = business
 
-    def get_group(self, group_id: str) -> Optional[Group]:
+    def get_group(self, group_id: str) -> Group | None:
         """Lookup group in L1 cache."""
         return self._l1_groups.get(group_id)
 
@@ -62,7 +61,7 @@ class ContextCache:
         self._l1_groups[group_id] = group
 
     # --- L2 Relational Tier ---
-    def get_group_member(self, group_id: str, user_id: str) -> Optional[GroupMember]:
+    def get_group_member(self, group_id: str, user_id: str) -> GroupMember | None:
         """Lookup group member junction record in L2 index."""
         return self._l2_group_members.get((group_id, user_id))
 
@@ -72,7 +71,7 @@ class ContextCache:
 
     def get_user_business_history(
         self, user_id: str, business_id: str
-    ) -> Optional[UserBusinessHistory]:
+    ) -> UserBusinessHistory | None:
         """Lookup user-business history in L2 index."""
         return self._l2_user_business_history.get((user_id, business_id))
 
@@ -83,7 +82,7 @@ class ContextCache:
         self._l2_user_business_history[(user_id, business_id)] = history
 
     # --- L3 Multimodal Tier ---
-    def get_multimodal(self, sha256_hash: str) -> Optional[Any]:
+    def get_multimodal(self, sha256_hash: str) -> Any | None:
         """Lookup multimodal artifact by content hash in L3 cache."""
         return self._l3_multimodal.get(sha256_hash)
 

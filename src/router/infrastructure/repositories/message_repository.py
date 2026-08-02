@@ -1,6 +1,6 @@
 """MessageRepository implementation matching messages.csv dataset."""
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from router.domain.entities.message import Message
 from router.domain.ports.repository_ports import IMessageRepository

@@ -3,21 +3,21 @@
 import math
 import re
 import unicodedata
-from typing import Dict, List, Sequence, Set
+from collections.abc import Sequence
 
 from router.domain.entities.evidence import RetrievalCandidate, StructuredQuery
 from router.domain.entities.history import HistoricalMessage
 from router.domain.ports.retrieval_ports import IBM25Service
 
 # Preserved stop-words (negations and urgency tokens MUST NOT be removed)
-PRESERVED_STOPWORDS: Set[str] = {"not", "no", "don't", "dont", "never", "now", "urgent", "immediately"}
+PRESERVED_STOPWORDS: set[str] = {"not", "no", "don't", "dont", "never", "now", "urgent", "immediately"}
 
 # Generic stop-words to filter
-DEFAULT_STOPWORDS: Set[str] = {
+DEFAULT_STOPWORDS: set[str] = {
     "is", "the", "at", "in", "on", "a", "an", "and", "or", "to", "for", "of", "with", "this", "that", "it", "by", "be"
 } - PRESERVED_STOPWORDS
 
-FIELD_WEIGHTS: Dict[str, float] = {
+FIELD_WEIGHTS: dict[str, float] = {
     "sender_user_id": 3.0,
     "business_id": 3.0,
     "official_domain": 2.5,
@@ -45,14 +45,14 @@ class BM25Service(IBM25Service):
         self._epsilon = epsilon
 
         # Document store and stats
-        self._corpus: Dict[str, HistoricalMessage] = {}
-        self._doc_tokens: Dict[str, List[str]] = {}
-        self._doc_lengths: Dict[str, int] = {}
-        self._df: Dict[str, int] = {}  # Document frequency of terms
+        self._corpus: dict[str, HistoricalMessage] = {}
+        self._doc_tokens: dict[str, list[str]] = {}
+        self._doc_lengths: dict[str, int] = {}
+        self._df: dict[str, int] = {}  # Document frequency of terms
         self._avgdl: float = 0.0
         self._N: int = 0
 
-    def tokenize(self, text: str) -> List[str]:
+    def tokenize(self, text: str) -> list[str]:
         """Preprocess and tokenize text following Unicode NFKC and entity preservation rules."""
         if not text:
             return []
@@ -62,7 +62,7 @@ class BM25Service(IBM25Service):
         # Preserve numeric sequences, currencies, URLs, and words
         raw_tokens = re.findall(r"https?://\S+|\b\d{4,8}\b|\$\d+|\brs\.\s*\d+|\b\w+\b", text_norm)
 
-        tokens: List[str] = []
+        tokens: list[str] = []
         for t in raw_tokens:
             if t in DEFAULT_STOPWORDS:
                 continue
@@ -109,7 +109,7 @@ class BM25Service(IBM25Service):
         idf_val = math.log((self._N - n_q + 0.5) / (n_q + 0.5) + 1.0)
         return max(self._epsilon, idf_val)
 
-    def search(self, query: StructuredQuery, top_k: int = 100) -> List[RetrievalCandidate]:
+    def search(self, query: StructuredQuery, top_k: int = 100) -> list[RetrievalCandidate]:
         """Perform BM25 search over indexed corpus for query.
 
         Args:
@@ -126,7 +126,7 @@ class BM25Service(IBM25Service):
         for term in query.sparse_terms:
             query_terms.update(self.tokenize(term))
 
-        candidates: List[RetrievalCandidate] = []
+        candidates: list[RetrievalCandidate] = []
 
         # Numerical sequence in query for exact numeric boosting
         numeric_matches = re.findall(r"\b\d{4,8}\b", query.query_text)
@@ -139,7 +139,7 @@ class BM25Service(IBM25Service):
                 continue
 
             # Calculate term frequencies
-            tf_map: Dict[str, int] = {}
+            tf_map: dict[str, int] = {}
             for tok in doc_toks:
                 tf_map[tok] = tf_map.get(tok, 0) + 1
 

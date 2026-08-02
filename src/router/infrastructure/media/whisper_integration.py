@@ -30,9 +30,10 @@ class WhisperIntegration(WhisperIntegrationPort):
                 detected_lang = "en"
                 lang_conf = 0.98
             else:
-                transcript = "Hey, please send me the project report by 5 PM today, it's urgent!"
+                base_name = os.path.basename(file_path).rsplit('.', 1)[0]
+                transcript = f"Audio message ({base_name})"
                 detected_lang = "en"
-                lang_conf = 0.95
+                lang_conf = 0.85
 
             # Align word timestamps
             words = transcript.split()

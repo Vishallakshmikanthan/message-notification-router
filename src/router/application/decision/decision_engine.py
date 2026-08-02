@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import time
 import uuid
-from typing import List, Optional, Tuple
 
 from router.application.decision.confidence_engine import ConfidenceEngine
 from router.application.decision.decision_factory import DecisionFactory
@@ -25,7 +24,6 @@ from router.application.decision.decision_logger import DecisionLogger
 from router.application.decision.decision_orchestrator import DecisionOrchestrator
 from router.application.decision.decision_validator import DecisionValidator
 from router.application.decision.llm_interface import (
-    AnalyticReasoningEngine,
     LLMInterface,
     LLMServiceError,
     LLMTimeoutError,
@@ -37,7 +35,6 @@ from router.application.signals.signal_engine import SignalEngine
 from router.core.logging.logger import get_logger
 from router.domain.entities.context import MessageContext
 from router.domain.entities.decision_models import (
-    ActionParameters,
     CalibratedDecision,
     ConfidenceBreakdown,
     DecisionAction,
@@ -96,16 +93,16 @@ class DecisionEngineV2(IDecisionEngine):
 
     def __init__(
         self,
-        signal_engine: Optional[SignalEngine] = None,
-        retrieval_engine: Optional[RetrievalEngine] = None,
-        decision_factory: Optional[IDecisionFactory] = None,
-        rule_engine: Optional[IRuleEngineV2] = None,
-        orchestrator: Optional[IDecisionOrchestrator] = None,
-        llm_interface: Optional[ILLMInterface] = None,
-        confidence_engine: Optional[IConfidenceEngine] = None,
-        validator: Optional[IDecisionValidator] = None,
-        decision_logger: Optional[IDecisionLogger] = None,
-        output_formatter: Optional[IOutputFormatter] = None,
+        signal_engine: SignalEngine | None = None,
+        retrieval_engine: RetrievalEngine | None = None,
+        decision_factory: IDecisionFactory | None = None,
+        rule_engine: IRuleEngineV2 | None = None,
+        orchestrator: IDecisionOrchestrator | None = None,
+        llm_interface: ILLMInterface | None = None,
+        confidence_engine: IConfidenceEngine | None = None,
+        validator: IDecisionValidator | None = None,
+        decision_logger: IDecisionLogger | None = None,
+        output_formatter: IOutputFormatter | None = None,
     ) -> None:
         """Initialize DecisionEngineV2 with all pipeline components."""
         self._signal_engine = signal_engine or SignalEngine()
@@ -123,7 +120,7 @@ class DecisionEngineV2(IDecisionEngine):
 
     def evaluate_routing(
         self, context: MessageContext
-    ) -> Tuple[NotificationAction, MessageType, str, float, List[str]]:
+    ) -> tuple[NotificationAction, MessageType, str, float, list[str]]:
         """Execute the full 12-stage Decision Intelligence Pipeline.
 
         Returns (action, message_type, reason, calibrated_confidence, evidence_ids).
@@ -322,7 +319,7 @@ class DecisionEngineV2(IDecisionEngine):
         reasoning_summary = calibrated.reasoning_summary
         if fallback_applied and fallback_reason:
             reasoning_summary = (
-                f"System applied safe default due to output validation correction."
+                "System applied safe default due to output validation correction."
                 if "SCHEMA" in (fallback_reason or "")
                 else calibrated.reasoning_summary
             )
@@ -506,7 +503,7 @@ class DecisionEngineV2(IDecisionEngine):
         context: MessageContext,
         decision_id: str,
         error: str,
-    ) -> Tuple[NotificationAction, MessageType, str, float, List[str]]:
+    ) -> tuple[NotificationAction, MessageType, str, float, list[str]]:
         """Return a safe emergency fallback 5-tuple on critical pipeline failure.
 
         Args:

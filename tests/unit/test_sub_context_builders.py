@@ -1,17 +1,11 @@
 """Unit tests for individual Sub-Context Builders."""
 
-from datetime import datetime, timezone
-import pytest
-from unittest.mock import MagicMock
 
 from router.application.context.sub_builders import (
-    BehaviourContextBuilder,
     BusinessContextBuilder,
     ConversationContextBuilder,
     GroupContextBuilder,
-    HistoryContextBuilder,
     MediaContextBuilder,
-    NotificationContextBuilder,
     RelationshipContextBuilder,
     UserContextBuilder,
 )
@@ -21,12 +15,9 @@ from router.domain.entities.sub_contexts import (
     DEFAULT_GROUP_CONTEXT,
     DEFAULT_MEDIA_CONTEXT,
     DEFAULT_USER_CONTEXT,
-    BusinessContext,
-    GroupContext,
     HistoryContext,
     UserContext,
 )
-from router.infrastructure.cache.context_cache import ContextCache
 from router.infrastructure.repositories.context_repository_registry import ContextRepositoryRegistry
 
 

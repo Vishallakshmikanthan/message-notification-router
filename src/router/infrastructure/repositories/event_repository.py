@@ -1,6 +1,6 @@
 """EventRepository implementation matching message_events.csv."""
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from router.domain.entities.history import MessageEvent
 from router.domain.ports.repository_ports import IEventRepository

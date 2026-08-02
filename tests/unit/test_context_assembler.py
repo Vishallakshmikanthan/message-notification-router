@@ -1,6 +1,7 @@
 """Unit tests for ContextAssembler (ContextAssemblyEngine)."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 import pytest
 
 from router.application.context.context_assembler import ContextAssembler
@@ -8,8 +9,6 @@ from router.domain.entities.context import MessageContext
 from router.domain.entities.message import Message
 from router.domain.entities.raw_message import RawMessagePayload
 from router.domain.exceptions import InvalidPayloadException
-from router.infrastructure.cache.context_cache import ContextCache
-from router.infrastructure.repositories.context_repository_registry import ContextRepositoryRegistry
 
 
 def test_context_assembler_single_message():
@@ -43,7 +42,7 @@ def test_context_assembler_domain_message():
         sender_id="+15551234567",
         conversation_type="personal",
         message_text="Hello world!",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     ctx = assembler.assemble(msg)

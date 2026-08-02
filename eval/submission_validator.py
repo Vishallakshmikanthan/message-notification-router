@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 from eval.output_validator import OutputCSVValidator
 
@@ -33,7 +33,7 @@ class SubmissionValidator:
         submission_dir: str = "submission",
         output_csv_filename: str = "output.csv",
         code_zip_filename: str = "code.zip",
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Validate all final submission artifacts.
 
         Args:
@@ -48,7 +48,7 @@ class SubmissionValidator:
         csv_path = sub_path / output_csv_filename
         zip_path = sub_path / code_zip_filename
 
-        checklist: Dict[str, bool] = {
+        checklist: dict[str, bool] = {
             "output_csv_exists": csv_path.exists(),
             "output_csv_schema_valid": False,
             "code_zip_exists": zip_path.exists(),
@@ -56,7 +56,7 @@ class SubmissionValidator:
             "pyproject_exists": Path("pyproject.toml").exists(),
         }
 
-        errors: List[str] = []
+        errors: list[str] = []
 
         # Validate CSV
         if csv_path.exists():

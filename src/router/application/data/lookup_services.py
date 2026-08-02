@@ -1,15 +1,9 @@
 """Lookup Services providing enriched query facades above entity repositories."""
 
 from datetime import datetime, time
-from typing import Any, Dict, List, Mapping, Optional, Tuple
+from typing import Any
 
 from router.core.logging.logger import get_logger
-from router.domain.entities.business import BusinessAccount, UserBusinessHistory
-from router.domain.entities.group import Group, GroupMember
-from router.domain.entities.history import (
-    DailyNotificationSummary,
-    HistoricalMessage,
-)
 from router.domain.entities.user import User
 from router.domain.ports.repository_ports import (
     IBusinessRepository,
@@ -30,17 +24,17 @@ class UserLookupService(ILookupService):
     def __init__(
         self,
         user_repo: IUserRepository,
-        summary_repo: Optional[INotificationSummaryRepository] = None,
+        summary_repo: INotificationSummaryRepository | None = None,
     ) -> None:
         """Initialize UserLookupService with user repository dependencies."""
         self.user_repo = user_repo
         self.summary_repo = summary_repo
 
-    def get_user_profile(self, user_id: str) -> Optional[User]:
+    def get_user_profile(self, user_id: str) -> User | None:
         """Resolve user profile entity."""
         return self.user_repo.get_by_id(user_id)
 
-    def evaluate_dnd_status(self, user_id: str, current_dt: Optional[datetime] = None) -> Dict[str, Any]:
+    def evaluate_dnd_status(self, user_id: str, current_dt: datetime | None = None) -> dict[str, Any]:
         """Evaluate if timestamp falls within user do_not_disturb_window, handling midnight wraps."""
         user = self.get_user_profile(user_id)
         if not user or not user.do_not_disturb_window:
@@ -74,7 +68,7 @@ class UserLookupService(ILookupService):
         except Exception:
             return {"is_dnd_active": False, "window_start": None, "window_end": None}
 
-    def get_user_activity_metrics(self, user_id: str) -> Dict[str, float]:
+    def get_user_activity_metrics(self, user_id: str) -> dict[str, float]:
         """Calculate global 30-day engagement ratios."""
         user = self.get_user_profile(user_id)
         if not user:
@@ -104,8 +98,8 @@ class ChannelLookupService(ILookupService):
         self,
         group_repo: IGroupRepository,
         business_repo: IBusinessRepository,
-        user_repo: Optional[IUserRepository] = None,
-        history_repo: Optional[IHistoryRepository] = None,
+        user_repo: IUserRepository | None = None,
+        history_repo: IHistoryRepository | None = None,
     ) -> None:
         """Initialize ChannelLookupService with group and business repository dependencies."""
         self.group_repo = group_repo
@@ -113,7 +107,7 @@ class ChannelLookupService(ILookupService):
         self.user_repo = user_repo
         self.history_repo = history_repo
 
-    def resolve_personal_channel(self, user_id: str, sender_user_id: str) -> Dict[str, Any]:
+    def resolve_personal_channel(self, user_id: str, sender_user_id: str) -> dict[str, Any]:
         """Fetch sender profile and compute mutual groups intersection count."""
         sender = self.user_repo.get_by_id(sender_user_id) if self.user_repo else None
 
@@ -129,7 +123,7 @@ class ChannelLookupService(ILookupService):
             "mutual_groups_count": mutual_count,
         }
 
-    def resolve_group_context(self, group_id: str, user_id: str) -> Dict[str, Any]:
+    def resolve_group_context(self, group_id: str, user_id: str) -> dict[str, Any]:
         """Resolve group metadata, user membership role, and mute status in O(1) time."""
         group = self.group_repo.get_by_id(group_id)
         member = self.group_repo.get_member(group_id, user_id)
@@ -144,7 +138,7 @@ class ChannelLookupService(ILookupService):
             "messages_read_30d": member.messages_read_30d if member else 0,
         }
 
-    def resolve_business_context(self, user_id: str, business_id: str) -> Dict[str, Any]:
+    def resolve_business_context(self, user_id: str, business_id: str) -> dict[str, Any]:
         """Resolve business account profile, history, domain mismatch flag, and promotional consent."""
         business = self.business_repo.get_by_id(business_id)
         history = self.business_repo.get_user_history(user_id, business_id)
@@ -173,20 +167,20 @@ class HistoryLookupService(ILookupService):
     def __init__(
         self,
         history_repo: IHistoryRepository,
-        event_repo: Optional[IEventRepository] = None,
-        summary_repo: Optional[INotificationSummaryRepository] = None,
+        event_repo: IEventRepository | None = None,
+        summary_repo: INotificationSummaryRepository | None = None,
     ) -> None:
         """Initialize HistoryLookupService with history repository dependencies."""
         self.history_repo = history_repo
         self.event_repo = event_repo
         self.summary_repo = summary_repo
 
-    def get_interaction_trajectory(self, user_id: str, sender_or_business_id: str) -> Dict[str, Any]:
+    def get_interaction_trajectory(self, user_id: str, sender_or_business_id: str) -> dict[str, Any]:
         """Retrieve historical interaction trajectory between user and sender/business."""
         messages = self.history_repo.get_trajectory(user_id, sender_or_business_id)
         total_messages = len(messages)
 
-        last_interaction_ts: Optional[datetime] = None
+        last_interaction_ts: datetime | None = None
         days_since_last: float = 999.0
 
         if total_messages > 0:
@@ -202,7 +196,7 @@ class HistoryLookupService(ILookupService):
             "days_since_last_interaction": round(days_since_last, 2),
         }
 
-    def get_daily_notification_baseline(self, user_id: str, date_str: str) -> Dict[str, Any]:
+    def get_daily_notification_baseline(self, user_id: str, date_str: str) -> dict[str, Any]:
         """Retrieve daily notification baseline for user."""
         summary = self.summary_repo.get_summary(user_id, date_str) if self.summary_repo else None
 

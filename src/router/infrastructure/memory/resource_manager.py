@@ -1,7 +1,7 @@
 """ResourceManager implementation for system memory footprint monitoring and lock management."""
 
 import threading
-from typing import Mapping
+from collections.abc import Mapping
 
 
 class ResourceManager:

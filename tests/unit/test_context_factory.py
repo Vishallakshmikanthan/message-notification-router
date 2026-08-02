@@ -1,6 +1,5 @@
 """Unit tests for MessageContextFactory."""
 
-import pytest
 
 from router.application.context.builder_pipeline import UnvalidatedContextBag
 from router.application.context.context_factory import MessageContextFactory

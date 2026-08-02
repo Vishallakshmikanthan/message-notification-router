@@ -1,13 +1,12 @@
 """Primary Message Entity matching messages.csv schema."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Literal, Optional
+from datetime import UTC, datetime
 
 
 def _utc_now() -> datetime:
     """Return timezone-aware current UTC datetime."""
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 @dataclass(frozen=True)
@@ -18,12 +17,12 @@ class Message:
     user_id: str
     conversation_type: str  # personal, group, business
     message_text: str = ""
-    sender_id: Optional[str] = None
-    sender_user_id: Optional[str] = None
-    group_id: Optional[str] = None
-    business_id: Optional[str] = None
-    media_id: Optional[str] = None
-    media_type: Optional[str] = None
+    sender_id: str | None = None
+    sender_user_id: str | None = None
+    group_id: str | None = None
+    business_id: str | None = None
+    media_id: str | None = None
+    media_type: str | None = None
     forwarded_count: int = 0
     created_at: datetime = field(default_factory=_utc_now)
 

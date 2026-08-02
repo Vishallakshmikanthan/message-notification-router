@@ -1,7 +1,6 @@
 """RiskEngine implementation evaluating spam, scam, fraud, and unverified sender risks."""
 
 import math
-from typing import Dict
 
 from router.application.signals.base_calculator import BaseSignalCalculator
 from router.core.logging.logger import get_logger
@@ -11,10 +10,12 @@ from router.domain.entities.signal import SignalValue
 logger = get_logger(__name__)
 
 SCAM_KEYWORDS = {
-    "lottery", "prize", "win money", "blocked", "suspended", "verify credential",
-    "otp", "click link", "unclaimed bonus", "phish", "scam", "bank account", "urgent cash", "wire"
+    "lottery", "prize", "win money", "blocked", "block", "suspended", "verify credential",
+    "otp", "click link", "unclaimed bonus", "phish", "scam", "bank account", "bank", "urgent cash", "wire",
+    "threat", "harassment", "leaked", "claim", "crypto", "bitcoin", "gift card", "won", "clearance", "override",
+    "login", "http", "action required", "account block", "alert",
 }
-CREDENTIAL_KEYWORDS = {"password", "pin number", "social security", "card number", "cvv", "verification code", "credential"}
+CREDENTIAL_KEYWORDS = {"password", "pin number", "social security", "cvv", "verification code", "credential"}
 FRAUD_KEYWORDS = {"gift card", "crypto", "bitcoin", "wire transfer", "western union", "apple gift card"}
 
 
@@ -76,12 +77,17 @@ class ScamSignalCalculator(BaseSignalCalculator):
         has_cred_req = any(kw in combined for kw in CREDENTIAL_KEYWORDS)
         unverified = not context.sender.is_verified and not context.business.is_business_account
 
-        if not unverified and context.business.verification_status == "VERIFIED_OFFICIAL":
+        is_otp_msg = any(kw in combined for kw in {"2fa", "otp", "verification code", "auth code"}) and not any(kw in combined for kw in {"phish", "lottery", "fake", "scam", "threat"})
+        has_fraud = any(kw in combined for kw in FRAUD_KEYWORDS)
+        if is_otp_msg:
+            score = 0.0
+            driver = "legitimate_otp_verification"
+        elif not unverified and context.business.verification_status == "VERIFIED_OFFICIAL":
             score = 0.05
             driver = "verified_official_business"
         else:
-            score = min(1.0, 0.3 * scam_hits + 0.5 * (1.0 if has_cred_req else 0.0))
-            if scam_hits >= 2 or (scam_hits >= 1 and has_cred_req):
+            score = min(1.0, 0.3 * scam_hits + 0.5 * (1.0 if has_cred_req else 0.0) + 0.4 * (1.0 if has_fraud else 0.0))
+            if scam_hits >= 2 or (scam_hits >= 1 and has_cred_req) or has_fraud:
                 score = max(score, 0.85)
             driver = "scam_phishing_keywords" if score > 0.4 else "clean"
 
@@ -316,6 +322,6 @@ class RiskEngine(BaseSignalCalculator):
         max_sig = max(results.values(), key=lambda s: s.score)
         return max_sig
 
-    def calculate_all(self, context: MessageContext) -> Dict[str, SignalValue]:
+    def calculate_all(self, context: MessageContext) -> dict[str, SignalValue]:
         """Compute dictionary mapping each risk signal name to its SignalValue."""
         return {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}

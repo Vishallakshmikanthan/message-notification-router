@@ -1,6 +1,6 @@
 """Unit tests for EmbeddingService and FAISSIndexWrapper."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from router.application.retrieval.embedding_service import EmbeddingService
 from router.domain.entities.history import HistoricalMessage
@@ -32,7 +32,7 @@ def test_vector_indexing_and_search() -> None:
         sender_id="bank_official",
         conversation_type="business",
         message_text="Your account has been debited by Rs. 1500 for order #991.",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
     msg2 = HistoricalMessage(
         message_id="h_002",
@@ -40,7 +40,7 @@ def test_vector_indexing_and_search() -> None:
         sender_id="friend_john",
         conversation_type="personal",
         message_text="Are we playing football this Sunday at 5 PM?",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     service.index_vectors([msg1, msg2])

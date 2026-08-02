@@ -1,7 +1,6 @@
 """SignalNormalizer implementation for mathematical scaling and conflict arbitration."""
 
 import math
-from typing import Dict
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.signal import SignalExplainability, SignalValue
@@ -48,7 +47,7 @@ class SignalNormalizer:
         )
 
     @classmethod
-    def resolve_conflicts(cls, signals: Dict[str, SignalValue]) -> Dict[str, SignalValue]:
+    def resolve_conflicts(cls, signals: dict[str, SignalValue]) -> dict[str, SignalValue]:
         """Apply deterministic arbitration matrix for conflicting signal pairs (signal_quality.md)."""
         resolved = dict(signals)
 

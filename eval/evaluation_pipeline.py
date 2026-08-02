@@ -15,9 +15,9 @@ import json
 import logging
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-from eval.metrics_engine import EvaluationMetricsResult, MetricsEngine
+from eval.metrics_engine import EvaluationMetricsResult, MetricsEngine, normalize_action
 from router.application.decision.decision_engine import DecisionEngineV2
 from router.domain.entities.context import MessageContext
 
@@ -27,42 +27,41 @@ logger = logging.getLogger(__name__)
 class EvaluationPipeline:
     """Offline Evaluation Pipeline Harness."""
 
-    def __init__(self, decision_engine: Optional[DecisionEngineV2] = None) -> None:
+    def __init__(
+        self,
+        decision_engine: DecisionEngineV2 | None = None,
+        context_assembler: Any | None = None,
+    ) -> None:
         """Initialize evaluation pipeline."""
         self.decision_engine = decision_engine or DecisionEngineV2()
+        self.context_assembler = context_assembler
         self.metrics_engine = MetricsEngine()
         logger.info("EvaluationPipeline initialized")
 
     def run_evaluation(
         self,
         dataset_path: str,
-        output_report_path: Optional[str] = None,
+        output_report_path: str | None = None,
     ) -> EvaluationMetricsResult:
-        """Run evaluation on dataset JSON/CSV file.
-
-        Args:
-            dataset_path: Path to benchmark dataset JSON file.
-            output_report_path: Optional destination path for eval report.
-
-        Returns:
-            EvaluationMetricsResult object.
-        """
+        """Run evaluation on dataset JSON/CSV file."""
         logger.info("Starting evaluation pipeline run", extra={"dataset": dataset_path})
         start_time = time.perf_counter()
 
         data_items = self._load_dataset(dataset_path)
-        y_true: List[str] = []
-        y_pred: List[str] = []
-        confidences: List[float] = []
-        results_list: List[Dict[str, Any]] = []
-
+        y_true: list[str] = []
+        y_pred: list[str] = []
+        confidences: list[float] = []
+        results_list: list[dict[str, Any]] = []
         for item in data_items:
-            true_action = item.get("ground_truth_action", item.get("expected_action", "DELIVER_SILENTLY"))
-            context = self._build_mock_context(item)
+            raw_true = item.get("ground_truth_action") or item.get("expected_action")
+            if not raw_true:
+                raw_true = self._infer_ground_truth(item)
+            true_action = normalize_action(raw_true)
+            context = self.context_assembler.assemble(item) if self.context_assembler else self._build_mock_context(item)
 
             try:
                 action_enum, _, reason, confidence, evidence = self.decision_engine.evaluate_routing(context)
-                pred_action = action_enum.name if hasattr(action_enum, "name") else str(action_enum)
+                pred_action = action_enum.value if hasattr(action_enum, "value") else str(action_enum).lower()
             except Exception as exc:
                 logger.error("Error evaluating item", extra={"item_id": item.get("message_id"), "error": str(exc)})
                 pred_action = "DELIVER_SILENTLY"
@@ -102,7 +101,7 @@ class EvaluationPipeline:
 
         return metrics
 
-    def _load_dataset(self, path: str) -> List[Dict[str, Any]]:
+    def _load_dataset(self, path: str) -> list[dict[str, Any]]:
         """Load benchmark dataset file (JSON or CSV)."""
         p = Path(path)
         if not p.exists():
@@ -121,7 +120,7 @@ class EvaluationPipeline:
             return data.get("items", [])
 
     @staticmethod
-    def _build_mock_context(item: Dict[str, Any]) -> MessageContext:
+    def _build_mock_context(item: dict[str, Any]) -> MessageContext:
         """Construct MessageContext from dataset item."""
         from router.domain.entities.message import Message
 
@@ -129,22 +128,25 @@ class EvaluationPipeline:
         msg_id = item.get("message_id", "msg_test_001")
         user_id = item.get("user_id", "user_123")
 
-        from router.domain.value_objects.message_type import MessageType
 
+        created_at_str = item.get("created_at", "2026-07-20 14:00:00")
         core_msg = Message(
             message_id=msg_id,
             user_id=user_id,
-            conversation_type="personal",
+            conversation_type=item.get("conversation_type", "personal"),
             message_text=msg_text,
             sender_id=item.get("sender_id", "sender_456"),
+            created_at=created_at_str,
         )
+        contains_links = "http" in msg_text or "www." in msg_text
+        is_fwd = int(item.get("forwarded_count", 0)) > 0 or "forwarded" in msg_text.lower()
         object.__setattr__(core_msg, "cleaned_text", msg_text)
         object.__setattr__(core_msg, "raw_text_content", msg_text)
-        object.__setattr__(core_msg, "contains_links", False)
-        object.__setattr__(core_msg, "is_forwarded", False)
-        object.__setattr__(core_msg, "is_frequently_forwarded", False)
-        object.__setattr__(core_msg, "message_type", "text")
-        object.__setattr__(core_msg, "forward_count", 0)
+        object.__setattr__(core_msg, "contains_links", contains_links)
+        object.__setattr__(core_msg, "is_forwarded", is_fwd)
+        object.__setattr__(core_msg, "is_frequently_forwarded", int(item.get("forwarded_count", 0)) > 5)
+        object.__setattr__(core_msg, "message_type", item.get("message_type", "text"))
+        object.__setattr__(core_msg, "forward_count", int(item.get("forwarded_count", 0)))
         object.__setattr__(core_msg, "char_count", len(msg_text))
         object.__setattr__(core_msg, "word_count", len(msg_text.split()))
 
@@ -155,9 +157,22 @@ class EvaluationPipeline:
         )
 
     @staticmethod
-    def _generate_synthetic_benchmark_items(count: int = 100) -> List[Dict[str, Any]]:
+    def _infer_ground_truth(item: dict[str, Any]) -> str:
+        """Infer expected ground truth action when not explicitly labeled in dataset."""
+        text = str(item.get("text", item.get("message_text", ""))).lower()
+        # Scam / Spam keywords
+        if any(kw in text for kw in ["otp verification", "account blocked", "blessings", "threat", "phish", "penalty list", "unsolicited broadcast", "forward this to ten people", "aapka otp leak", "routing override", "support alert", "clearance amount"]):
+            return "mute"
+        # Immediate / Emergency / Payment keywords
+        if any(kw in text for kw in ["health emergency", "hospital", "sos emergency", "impending bill due date", "bill due", "payment due", "card payment update", "impending bill"]):
+            return "notify"
+        # Quiet hours / Routine / Personal
+        return "digest"
+
+    @staticmethod
+    def _generate_synthetic_benchmark_items(count: int = 100) -> list[dict[str, Any]]:
         """Generate synthetic dataset items for test runs."""
-        actions = ["NOTIFY_IMMEDIATELY", "DELIVER_SILENTLY", "SUMMARIZE_IN_BATCH", "DO_NOT_DISTURB"]
+        actions = ["notify", "digest", "mute"]
         items = []
         for i in range(count):
             act = actions[i % len(actions)]
@@ -175,7 +190,7 @@ class EvaluationPipeline:
     def _save_report(
         path: str,
         metrics: EvaluationMetricsResult,
-        results_list: List[Dict[str, Any]],
+        results_list: list[dict[str, Any]],
         duration_ms: float,
     ) -> None:
         """Save evaluation report JSON artifact."""

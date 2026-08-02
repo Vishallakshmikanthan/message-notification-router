@@ -13,7 +13,6 @@ Spec: evaluation_framework.md §7.
 from __future__ import annotations
 
 import logging
-from typing import Dict, List, Optional
 
 from eval.metrics_engine import EvaluationMetricsResult
 
@@ -39,8 +38,8 @@ class RegressionTester:
     def assert_gate_compliance(
         self,
         metrics: EvaluationMetricsResult,
-        p95_latency_ms: Optional[float] = None,
-    ) -> Dict[str, Any]:
+        p95_latency_ms: float | None = None,
+    ) -> dict[str, Any]:
         """Assert metrics pass CI/CD release gate standards.
 
         Args:
@@ -50,7 +49,7 @@ class RegressionTester:
         Returns:
             Dict containing gate pass/fail status and violations.
         """
-        violations: List[str] = []
+        violations: list[str] = []
 
         if metrics.macro_f1 < self.min_macro_f1:
             violations.append(f"Macro F1 drop: {metrics.macro_f1:.4f} < required {self.min_macro_f1}")

@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Dict, List
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +25,7 @@ class PromptJudgeScore:
     conciseness_score: float  # 0.0-1.0
     logic_score: float  # 0.0-1.0
     overall_judge_score: float  # 0.0-1.0
-    violations: List[str]
+    violations: list[str]
 
 
 class PromptEvaluator:
@@ -40,8 +39,8 @@ class PromptEvaluator:
         self,
         action: str,
         reason: str,
-        evidence_keys: List[str],
-        valid_context_keys: List[str],
+        evidence_keys: list[str],
+        valid_context_keys: list[str],
     ) -> PromptJudgeScore:
         """Evaluate reason and evidence using rubrics.
 
@@ -54,7 +53,7 @@ class PromptEvaluator:
         Returns:
             PromptJudgeScore object.
         """
-        violations: List[str] = []
+        violations: list[str] = []
 
         # 1. Conciseness Check (<25 words)
         words = reason.split()

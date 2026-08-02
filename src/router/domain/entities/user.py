@@ -1,13 +1,12 @@
 """User Domain Entity representing recipient user profile."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import UTC, datetime
 
 
 def _utc_now() -> datetime:
     """Return timezone-aware current UTC datetime."""
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 @dataclass(frozen=True)
@@ -23,7 +22,7 @@ class User:
     preferred_language: str = "en"
     timezone: str = "UTC"
     is_verified: bool = False
-    do_not_disturb_window: Optional[str] = None
+    do_not_disturb_window: str | None = None
     messages_opened_30d: int = 0
     messages_replied_30d: int = 0
     notifications_dismissed_30d: int = 0

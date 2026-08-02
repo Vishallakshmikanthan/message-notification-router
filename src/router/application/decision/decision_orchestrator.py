@@ -11,8 +11,6 @@ Spec: decision_engine.md §3 Decision Orchestration, decision_flow.md Stage 6.
 
 from __future__ import annotations
 
-from typing import List
-
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
     DecisionContext,
@@ -161,7 +159,7 @@ class DecisionOrchestrator(IDecisionOrchestrator):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _extract_evidence_snippets(eb) -> List[EvidenceSnippet]:
+    def _extract_evidence_snippets(eb) -> list[EvidenceSnippet]:
         """Extract top-5 evidence snippets ordered by similarity score.
 
         Args:
@@ -170,11 +168,11 @@ class DecisionOrchestrator(IDecisionOrchestrator):
         Returns:
             List of up to 5 EvidenceSnippet objects.
         """
-        items: List[EvidenceItem] = sorted(
+        items: list[EvidenceItem] = sorted(
             eb.items, key=lambda e: e.similarity_score, reverse=True
         )[:_MAX_EVIDENCE_SNIPPETS]
 
-        snippets: List[EvidenceSnippet] = []
+        snippets: list[EvidenceSnippet] = []
         for item in items:
             snippet_text = (item.raw_text or "")[:_MAX_SNIPPET_TEXT_LENGTH]
             snippets.append(

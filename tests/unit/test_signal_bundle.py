@@ -1,13 +1,12 @@
 """Unit tests for SignalBundle and SignalValue domain entities."""
 
-import pytest
 from dataclasses import FrozenInstanceError
+
+import pytest
 
 from router.application.signals.signal_factory import SignalFactory
 from router.domain.entities.signal import (
     SignalBundle,
-    SignalExplainability,
-    SignalValue,
 )
 from router.domain.value_objects.risk_level import RiskLevel
 

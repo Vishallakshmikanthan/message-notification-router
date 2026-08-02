@@ -1,18 +1,11 @@
 """Context Validation, Null Handling, and Fallback Validation Service."""
 
-from datetime import datetime, timezone
-import re
-from typing import Tuple
 
 from router.application.context.builder_pipeline import UnvalidatedContextBag
 from router.application.context.context_quality_engine import ContextQualityEngine
 from router.core.logging.logger import get_logger
 from router.domain.entities.context import ContextQualityMetrics
 from router.domain.entities.sub_contexts import (
-    DEFAULT_BUSINESS_CONTEXT,
-    DEFAULT_GROUP_CONTEXT,
-    DEFAULT_MEDIA_CONTEXT,
-    DEFAULT_USER_CONTEXT,
     MediaContext,
 )
 from router.domain.exceptions import InvalidPayloadException
@@ -27,7 +20,7 @@ class ContextValidationService:
         """Initialize validation service with quality scoring engine."""
         self.quality_engine = quality_engine or ContextQualityEngine()
 
-    def validate(self, bag: UnvalidatedContextBag) -> Tuple[UnvalidatedContextBag, ContextQualityMetrics]:
+    def validate(self, bag: UnvalidatedContextBag) -> tuple[UnvalidatedContextBag, ContextQualityMetrics]:
         """Perform 4-stage validation pipeline on unvalidated context bag."""
         # Stage 1: Structural & Schema Validation
         self._validate_structure(bag)

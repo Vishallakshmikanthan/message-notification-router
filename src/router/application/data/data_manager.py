@@ -1,7 +1,13 @@
 """DataManager implementation implementing IDataManager interface contract and system facade."""
 
-from typing import Any, Dict, Mapping, Optional
+from collections.abc import Mapping
+from typing import Any
 
+from router.application.data.lookup_services import (
+    ChannelLookupService,
+    HistoryLookupService,
+    UserLookupService,
+)
 from router.core.logging.logger import get_logger
 from router.domain.ports.cache_ports import ICacheManager
 from router.domain.ports.service_ports import IDataLoader, IDataManager
@@ -17,14 +23,8 @@ from router.infrastructure.repositories.notification_summary_repository import (
 )
 from router.infrastructure.repositories.user_repository import UserRepository
 from router.infrastructure.storage.data_loader import DataLoader
-from router.infrastructure.storage.file_manager import FileManager
 from router.infrastructure.storage.quarantine_engine import QuarantineEngine
 from router.infrastructure.storage.schema_validator import SchemaValidator
-from router.application.data.lookup_services import (
-    ChannelLookupService,
-    HistoryLookupService,
-    UserLookupService,
-)
 
 logger = get_logger(__name__)
 
@@ -35,7 +35,7 @@ class DataManager(IDataManager):
     def __init__(
         self,
         dataset_dir: str = "./hackerrank-orchestrate-august26/dataset",
-        cache_manager: Optional[ICacheManager] = None,
+        cache_manager: ICacheManager | None = None,
     ) -> None:
         """Initialize DataManager dependencies and concrete repositories."""
         self.dataset_dir = dataset_dir
@@ -73,7 +73,7 @@ class DataManager(IDataManager):
 
         self._is_initialized: bool = False
 
-    def initialize(self, dataset_dir: Optional[str] = None) -> None:
+    def initialize(self, dataset_dir: str | None = None) -> None:
         """Initialize data layer components and execute 7-stage boot pipeline."""
         target_dir = dataset_dir or self.dataset_dir
         logger.info("Initializing DataManager facade", dataset_dir=target_dir)

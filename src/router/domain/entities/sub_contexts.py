@@ -1,7 +1,6 @@
 """Explicit Data Models for 9 Sub-Context Objects as specified in context_models.md."""
 
 from dataclasses import dataclass, field
-from typing import List, Optional
 
 
 @dataclass(frozen=True)
@@ -60,11 +59,11 @@ class MediaContext:
     media_type: str  # TEXT_ONLY, IMAGE, VOICE, DOCUMENT, MULTIMODAL_COMBO
     sha256_hash: str
     has_media: bool = True
-    image_context: Optional[ImageContext] = None
-    voice_context: Optional[VoiceContext] = None
+    image_context: ImageContext | None = None
+    voice_context: VoiceContext | None = None
     validation_status: str = "VALIDATED"  # VALIDATED, PARTIAL, CORRUPTED, FAILED
     processing_latency_ms: float = 0.0
-    error_flags: List[str] = field(default_factory=list)
+    error_flags: list[str] = field(default_factory=list)
     created_at: str = ""
     # Backward compatibility attributes
     image_summary: str = ""
@@ -85,7 +84,7 @@ class HistoryContext:
     historical_message_count: int
     last_interaction_timestamp: int
     days_since_last_interaction: float
-    recent_event_types: List[str] = field(default_factory=list)
+    recent_event_types: list[str] = field(default_factory=list)
     historical_similar_message_count: int = 0
 
 

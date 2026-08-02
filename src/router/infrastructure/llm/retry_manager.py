@@ -20,8 +20,9 @@ from __future__ import annotations
 import logging
 import random
 import time
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any, Callable, List, Optional, Type
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +67,7 @@ class RetryResult:
 
     success: bool
     value: Any
-    attempts: List[RetryAttempt]
+    attempts: list[RetryAttempt]
     total_duration_ms: float
 
     @property
@@ -88,7 +89,7 @@ class MaxRetriesExceededError(Exception):
         last_error: The last exception that caused the failure.
     """
 
-    def __init__(self, attempts: List[RetryAttempt], last_error: Exception) -> None:
+    def __init__(self, attempts: list[RetryAttempt], last_error: Exception) -> None:
         self.attempts = attempts
         self.last_error = last_error
         super().__init__(
@@ -118,7 +119,7 @@ class RetryManager:
         max_retries: int = _MAX_RETRIES,
         base_backoff_ms: float = _BASE_BACKOFF_MS,
         max_backoff_ms: float = _MAX_BACKOFF_MS,
-        retryable_exceptions: Optional[tuple[Type[Exception], ...]] = None,
+        retryable_exceptions: tuple[type[Exception], ...] | None = None,
         jitter: bool = True,
     ) -> None:
         """Initialize the RetryManager.
@@ -158,8 +159,8 @@ class RetryManager:
             MaxRetriesExceededError: If all retries are exhausted.
         """
         start_time = time.perf_counter()
-        attempts: List[RetryAttempt] = []
-        last_error: Optional[Exception] = None
+        attempts: list[RetryAttempt] = []
+        last_error: Exception | None = None
 
         for attempt_num in range(1, self._max_retries + 2):  # +2 = initial + retries
             try:

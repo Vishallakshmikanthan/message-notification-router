@@ -1,11 +1,11 @@
 """MessageContext Domain Entity representing enriched master evaluation context as defined in message_context.md."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from typing import Any, Dict, List, Literal, Optional, Union
+from datetime import UTC, datetime
+from typing import Any
 
-from router.domain.entities.business import BusinessAccount, UserBusinessHistory
-from router.domain.entities.group import Group, GroupMember
+from router.domain.entities.business import UserBusinessHistory
+from router.domain.entities.group import GroupMember
 from router.domain.entities.signal import SignalBundle
 from router.domain.entities.sub_contexts import (
     DEFAULT_BEHAVIOUR_CONTEXT,
@@ -74,10 +74,10 @@ class ContextQualityMetrics:
     """Context completeness metrics and structural validation status."""
 
     completeness_score: float
-    sub_context_scores: Dict[str, float] = field(default_factory=dict)
+    sub_context_scores: dict[str, float] = field(default_factory=dict)
     is_anonymous_sender: bool = False
-    missing_fields: List[str] = field(default_factory=list)
-    validation_warnings: List[str] = field(default_factory=list)
+    missing_fields: list[str] = field(default_factory=list)
+    validation_warnings: list[str] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
@@ -88,7 +88,7 @@ class MessageContext:
     context_metadata: ContextMetadata = field(
         default_factory=lambda: ContextMetadata(
             context_id="NONE",
-            assembled_at=datetime.now(timezone.utc).isoformat(),
+            assembled_at=datetime.now(UTC).isoformat(),
             assembly_latency_ms=0.0,
             completeness_score=1.0,
         )
@@ -111,7 +111,7 @@ class MessageContext:
     temporal_info: TemporalInformation = field(
         default_factory=lambda: TemporalInformation(
             timestamp_epoch_ms=0,
-            iso_timestamp=datetime.now(timezone.utc).isoformat(),
+            iso_timestamp=datetime.now(UTC).isoformat(),
             day_of_week="MONDAY",
             hour_of_day=0,
             is_weekend=False,
@@ -146,24 +146,24 @@ class MessageContext:
     sender_id: str = ""
     conversation_type: Any = "personal"
     message_text: str = ""
-    created_at: Optional[datetime] = None
+    created_at: datetime | None = None
     forwarded_count: int = 0
-    user: Optional[User] = None
+    user: User | None = None
     is_quiet_hours: bool = False
     notification_load_today: int = 0
-    group_member: Optional[GroupMember] = None
+    group_member: GroupMember | None = None
     group_muted: bool = False
-    user_business_history: Optional[UserBusinessHistory] = None
-    media_id: Optional[str] = None
-    media_type: Optional[str] = None
-    media_ocr_text: Optional[str] = None
-    media_vlm_caption: Optional[str] = None
-    media_category: Optional[str] = None
-    voice_transcript: Optional[str] = None
+    user_business_history: UserBusinessHistory | None = None
+    media_id: str | None = None
+    media_type: str | None = None
+    media_ocr_text: str | None = None
+    media_vlm_caption: str | None = None
+    media_category: str | None = None
+    voice_transcript: str | None = None
     voice_duration_seconds: float = 0.0
-    recent_history: List[Dict[str, Any]] = field(default_factory=list)
-    user_reactions: Dict[str, int] = field(default_factory=dict)
-    signals: Optional[SignalBundle] = None
+    recent_history: list[dict[str, Any]] = field(default_factory=list)
+    user_reactions: dict[str, int] = field(default_factory=dict)
+    signals: SignalBundle | None = None
 
     # Property aliases for Phase 1-3 sub-context references
     @property

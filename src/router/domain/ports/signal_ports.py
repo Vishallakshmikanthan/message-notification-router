@@ -1,7 +1,8 @@
 """Abstract Signal, Rule Engine, and Decision Engine Interfaces."""
 
 from abc import ABC, abstractmethod
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.signal import SignalBundle

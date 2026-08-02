@@ -1,6 +1,7 @@
 """ClassifierAgent implementation (Core LLM Reasoning Engine)."""
 
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.application.agents.base_agent import BaseAgent
 from router.domain.entities.context import MessageContext

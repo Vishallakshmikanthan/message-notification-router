@@ -8,8 +8,8 @@ agent_architecture.md §2 & §3:
 from __future__ import annotations
 
 import asyncio
-import logging
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.application.agents.classifier_agent import ClassifierAgent
 from router.application.agents.confidence_agent import ConfidenceAgent

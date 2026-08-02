@@ -1,20 +1,15 @@
 """Sub-Context Builders for individual domain context extraction and enrichment."""
 
-from datetime import datetime, timezone
-import math
-from typing import List, Optional
+from datetime import UTC, datetime
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.raw_message import RawMessagePayload
 from router.domain.entities.sub_contexts import (
-    DEFAULT_BEHAVIOUR_CONTEXT,
     DEFAULT_BUSINESS_CONTEXT,
-    DEFAULT_CONVERSATION_CONTEXT,
     DEFAULT_GROUP_CONTEXT,
     DEFAULT_HISTORY_CONTEXT,
     DEFAULT_MEDIA_CONTEXT,
     DEFAULT_NOTIFICATION_CONTEXT,
-    DEFAULT_RELATIONSHIP_CONTEXT,
     DEFAULT_USER_CONTEXT,
     BehaviourContext,
     BusinessContext,
@@ -39,8 +34,8 @@ class UserContextBuilder:
         self,
         phone_or_id: str,
         registry: ContextRepositoryRegistry,
-        cache: Optional[ContextCache] = None,
-        now_ts_ms: Optional[int] = None,
+        cache: ContextCache | None = None,
+        now_ts_ms: int | None = None,
     ) -> UserContext:
         """Construct UserContext instance from repository or cache, falling back to default."""
         if not phone_or_id or phone_or_id in ("NONE", "UNKNOWN", "UNKNOWN_USER", ""):
@@ -51,7 +46,7 @@ class UserContextBuilder:
         if cache:
             cached = cache.get_user(phone_or_id)
             if cached:
-                now_ms = now_ts_ms or int(datetime.now(timezone.utc).timestamp() * 1000)
+                now_ms = now_ts_ms or int(datetime.now(UTC).timestamp() * 1000)
                 reg_ts = getattr(cached, "created_at_epoch_ms", 0) or 0
                 age_days = max(0, int((now_ms - reg_ts) / (1000 * 86400))) if reg_ts > 0 else 0
                 disp_name = getattr(cached, "display_name", None) or getattr(cached, "name", None) or getattr(cached, "user_name", None) or "User"
@@ -74,7 +69,7 @@ class UserContextBuilder:
             if user:
                 if cache:
                     cache.put_user(phone_or_id, user)
-                now_ms = now_ts_ms or int(datetime.now(timezone.utc).timestamp() * 1000)
+                now_ms = now_ts_ms or int(datetime.now(UTC).timestamp() * 1000)
                 reg_ts = getattr(user, "created_at_epoch_ms", 0) or 0
                 age_days = max(0, int((now_ms - reg_ts) / (1000 * 86400))) if reg_ts > 0 else 0
                 disp_name = getattr(user, "display_name", None) or getattr(user, "name", None) or getattr(user, "user_name", None) or "User"
@@ -115,7 +110,7 @@ class GroupContextBuilder:
         group_id: str,
         sender_phone_or_id: str,
         registry: ContextRepositoryRegistry,
-        cache: Optional[ContextCache] = None,
+        cache: ContextCache | None = None,
     ) -> GroupContext:
         """Construct GroupContext instance for group chats, falling back for DMs."""
         if not group_id or group_id in ("NONE", "DM", ""):
@@ -163,7 +158,7 @@ class BusinessContextBuilder:
         self,
         business_id: str,
         registry: ContextRepositoryRegistry,
-        cache: Optional[ContextCache] = None,
+        cache: ContextCache | None = None,
     ) -> BusinessContext:
         """Construct BusinessContext instance for business interactions."""
         if not business_id or business_id in ("NONE", ""):
@@ -204,7 +199,7 @@ class MediaContextBuilder:
         self,
         payload: RawMessagePayload,
         registry: ContextRepositoryRegistry,
-        cache: Optional[ContextCache] = None,
+        cache: ContextCache | None = None,
     ) -> MediaContext:
         """Construct MediaContext instance from multimodal cache or defaults."""
         if not payload.media_hash or payload.media_type in ("TEXT", "NONE", ""):
@@ -274,13 +269,13 @@ class HistoryContextBuilder:
         sender_id: str,
         receiver_id: str,
         registry: ContextRepositoryRegistry,
-        now_ts_ms: Optional[int] = None,
+        now_ts_ms: int | None = None,
     ) -> HistoryContext:
         """Construct HistoryContext from history and events repositories."""
         if not registry.message_history_repo:
             return DEFAULT_HISTORY_CONTEXT
 
-        now_ms = now_ts_ms or int(datetime.now(timezone.utc).timestamp() * 1000)
+        now_ms = now_ts_ms or int(datetime.now(UTC).timestamp() * 1000)
         trajectory = registry.message_history_repo.get_trajectory(receiver_id, sender_id)
 
         if not trajectory:
@@ -291,7 +286,7 @@ class HistoryContextBuilder:
         last_ts = getattr(last_item, "timestamp_epoch_ms", 0) or 0
         days_since = max(0.0, round((now_ms - last_ts) / (1000.0 * 86400.0), 2)) if last_ts > 0 else 0.0
 
-        events: List[str] = []
+        events: list[str] = []
         if registry.message_events_repo:
             user_events = registry.message_events_repo.get_user_events(receiver_id)
             events = [getattr(ev, "event_type", "DELIVERED") for ev in user_events[:5]]
@@ -312,13 +307,13 @@ class NotificationContextBuilder:
         self,
         receiver_id: str,
         registry: ContextRepositoryRegistry,
-        date_str: Optional[str] = None,
+        date_str: str | None = None,
     ) -> NotificationContext:
         """Construct NotificationContext from daily summary repository."""
         if not registry.daily_notification_summary_repo or not receiver_id:
             return DEFAULT_NOTIFICATION_CONTEXT
 
-        date_key = date_str or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        date_key = date_str or datetime.now(UTC).strftime("%Y-%m-%d")
         summary = registry.daily_notification_summary_repo.get_summary(receiver_id, date_key)
 
         if not summary:
@@ -347,7 +342,7 @@ class RelationshipContextBuilder:
         group_ctx: GroupContext,
         history_ctx: HistoryContext,
         registry: ContextRepositoryRegistry,
-        cache: Optional[ContextCache] = None,
+        cache: ContextCache | None = None,
     ) -> RelationshipContext:
         """Synthesize relational attributes between sender, recipient, and group/business entities."""
         rel_type = "PEER_TO_PEER"
@@ -409,7 +404,7 @@ class BehaviourContextBuilder:
         fwd_ratio = 0.5 if payload.is_forwarded else 0.0
 
         # Check quiet hours (e.g. 22:00 to 07:00)
-        dt = datetime.fromtimestamp(payload.timestamp / 1000.0, tz=timezone.utc) if payload.timestamp > 0 else datetime.now(timezone.utc)
+        dt = datetime.fromtimestamp(payload.timestamp / 1000.0, tz=UTC) if payload.timestamp > 0 else datetime.now(UTC)
         hour = dt.hour
         is_quiet = hour >= 22 or hour < 7
 

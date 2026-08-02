@@ -14,7 +14,7 @@ import logging
 import time
 import uuid
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -26,10 +26,10 @@ class Span:
     name: str
     trace_id: str
     span_id: str = field(default_factory=lambda: str(uuid.uuid4())[:8])
-    parent_span_id: Optional[str] = None
+    parent_span_id: str | None = None
     start_time: float = field(default_factory=time.time)
-    end_time: Optional[float] = None
-    attributes: Dict[str, Any] = field(default_factory=dict)
+    end_time: float | None = None
+    attributes: dict[str, Any] = field(default_factory=dict)
     status: str = "OK"
 
     def finish(self, status: str = "OK") -> None:
@@ -47,14 +47,14 @@ class Span:
 class TraceManager:
     """Manages OpenTelemetry spans and correlation ID context."""
 
-    def __init__(self, correlation_id: Optional[str] = None) -> None:
+    def __init__(self, correlation_id: str | None = None) -> None:
         """Initialize TraceManager for a request context."""
         self.correlation_id = correlation_id or str(uuid.uuid4())
-        self.spans: List[Span] = []
-        self._active_spans: List[Span] = []
+        self.spans: list[Span] = []
+        self._active_spans: list[Span] = []
         logger.debug("TraceManager initialized", extra={"correlation_id": self.correlation_id})
 
-    def start_span(self, name: str, attributes: Optional[Dict[str, Any]] = None) -> Span:
+    def start_span(self, name: str, attributes: dict[str, Any] | None = None) -> Span:
         """Start a new child span."""
         parent_id = self._active_spans[-1].span_id if self._active_spans else None
         span = Span(
@@ -75,7 +75,7 @@ class TraceManager:
             self._active_spans.remove(span)
         logger.debug("Span ended", extra={"span_name": span.name, "duration_ms": round(span.duration_ms, 2)})
 
-    def export_trace_summary(self) -> Dict[str, Any]:
+    def export_trace_summary(self) -> dict[str, Any]:
         """Export summary of all spans in trace."""
         return {
             "correlation_id": self.correlation_id,

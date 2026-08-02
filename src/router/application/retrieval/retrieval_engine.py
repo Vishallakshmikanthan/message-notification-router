@@ -2,7 +2,7 @@
 
 import logging
 import time
-from typing import Optional, Sequence
+from collections.abc import Sequence
 
 from router.application.retrieval.bm25_service import BM25Service
 from router.application.retrieval.embedding_service import EmbeddingService
@@ -34,14 +34,14 @@ class RetrievalEngine(IRetrievalEngine):
 
     def __init__(
         self,
-        query_builder: Optional[IQueryBuilder] = None,
-        bm25_service: Optional[IBM25Service] = None,
-        embedding_service: Optional[IEmbeddingService] = None,
-        hybrid_retriever: Optional[IHybridRetriever] = None,
-        reranker: Optional[IReranker] = None,
-        validator: Optional[IEvidenceValidator] = None,
-        assembler: Optional[IEvidenceAssembler] = None,
-        retrieval_cache: Optional[IRetrievalCache] = None,
+        query_builder: IQueryBuilder | None = None,
+        bm25_service: IBM25Service | None = None,
+        embedding_service: IEmbeddingService | None = None,
+        hybrid_retriever: IHybridRetriever | None = None,
+        reranker: IReranker | None = None,
+        validator: IEvidenceValidator | None = None,
+        assembler: IEvidenceAssembler | None = None,
+        retrieval_cache: IRetrievalCache | None = None,
     ) -> None:
         """Initialize RetrievalEngine component pipeline.
 

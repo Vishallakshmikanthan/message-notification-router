@@ -1,6 +1,6 @@
 """HistoryRepository implementation matching message_history.csv."""
 
-from typing import Sequence
+from collections.abc import Sequence
 
 from router.domain.entities.history import HistoricalMessage
 from router.domain.ports.repository_ports import IHistoryRepository

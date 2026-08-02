@@ -1,7 +1,8 @@
 """BaseAgent Abstract Implementation adhering to IAgent port contract."""
 
 from abc import ABC
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.context import MessageContext

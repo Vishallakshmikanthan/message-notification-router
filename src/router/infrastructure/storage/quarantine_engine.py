@@ -1,6 +1,7 @@
 """QuarantineEngine implementation for isolating corrupt/invalid CSV rows."""
 
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.core.logging.logger import get_logger
 

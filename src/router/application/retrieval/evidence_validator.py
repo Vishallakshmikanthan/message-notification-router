@@ -2,7 +2,6 @@
 
 import logging
 import re
-from typing import List, Set
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.evidence import RetrievalCandidate
@@ -19,8 +18,8 @@ class EvidenceValidator(IEvidenceValidator):
         logger.info("EvidenceValidator initialized")
 
     def validate_candidates(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Execute 5 validation gates on candidate pool.
 
         Args:
@@ -52,13 +51,13 @@ class EvidenceValidator(IEvidenceValidator):
         return validated
 
     def _gate1_false_positive_filter(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Gate 1: Remove candidates where semantic score is high but entity codes contradict."""
         query_text = context.message_text or ""
         query_numbers = set(re.findall(r"\b\d{4,8}\b", query_text))
 
-        filtered: List[RetrievalCandidate] = []
+        filtered: list[RetrievalCandidate] = []
         for cand in candidates:
             msg_text = cand.historical_message.message_text if cand.historical_message else ""
             msg_numbers = set(re.findall(r"\b\d{4,8}\b", msg_text))
@@ -72,11 +71,11 @@ class EvidenceValidator(IEvidenceValidator):
         return filtered
 
     def _gate2_duplicate_suppression(
-        self, candidates: List[RetrievalCandidate]
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate]
+    ) -> list[RetrievalCandidate]:
         """Gate 2: Suppress near-duplicate items from same sender within 24-hour window."""
-        seen_senders_24h: Set[str] = set()
-        suppressed: List[RetrievalCandidate] = []
+        seen_senders_24h: set[str] = set()
+        suppressed: list[RetrievalCandidate] = []
 
         for cand in candidates:
             sender = cand.historical_message.sender_id if cand.historical_message else ""
@@ -92,10 +91,10 @@ class EvidenceValidator(IEvidenceValidator):
         return suppressed
 
     def _gate3_quality_thresholding(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Gate 3: Discard items with final_score < 0.35 unless exact sender/business match."""
-        thresholded: List[RetrievalCandidate] = []
+        thresholded: list[RetrievalCandidate] = []
         target_sender = context.sender_id or (context.sender.user_id if context.sender else "")
         target_business = context.business.business_id if context.business else ""
 
@@ -116,8 +115,8 @@ class EvidenceValidator(IEvidenceValidator):
         return thresholded
 
     def _gate4_conflict_resolution(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Gate 4: Resolve conflicting positive (replies) and negative (dismissals) evidence."""
         has_replies = any(c.behaviour_score > 0 for c in candidates)
         has_dismissals = any(c.behaviour_score < 0 for c in candidates)
@@ -129,8 +128,8 @@ class EvidenceValidator(IEvidenceValidator):
         return candidates
 
     def _gate5_cold_start_handler(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Gate 5: Handle cold-start users or unknown business entities."""
         user_history_count = 0
         if context.history:

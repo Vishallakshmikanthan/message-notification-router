@@ -10,8 +10,6 @@ Spec: decision_engine.md §1 Component Breakdown (DecisionEngine output contract
 
 from __future__ import annotations
 
-from typing import Dict, List, Tuple
-
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
     DecisionAction,
@@ -25,7 +23,7 @@ from router.domain.value_objects.notification_action import NotificationAction
 logger = get_logger(__name__)
 
 # Mapping: DecisionAction -> NotificationAction (legacy enum)
-_ACTION_MAP: Dict[DecisionAction, NotificationAction] = {
+_ACTION_MAP: dict[DecisionAction, NotificationAction] = {
     DecisionAction.DELIVER_IMMEDIATELY: NotificationAction.NOTIFY,
     DecisionAction.DELIVER_SILENT: NotificationAction.DIGEST,
     DecisionAction.SUMMARIZE_LATER: NotificationAction.DIGEST,
@@ -36,7 +34,7 @@ _ACTION_MAP: Dict[DecisionAction, NotificationAction] = {
 }
 
 # Mapping: DecisionCategory -> MessageType (legacy enum)
-_CATEGORY_MAP: Dict[DecisionCategory, MessageType] = {
+_CATEGORY_MAP: dict[DecisionCategory, MessageType] = {
     DecisionCategory.PERSONAL_URGENT: MessageType.URGENT,
     DecisionCategory.PERSONAL_CASUAL: MessageType.PERSONAL,
     DecisionCategory.WORK_CRITICAL: MessageType.URGENT,
@@ -62,7 +60,7 @@ class OutputFormatter(IOutputFormatter):
     def format(
         self,
         decision_result: DecisionResult,
-    ) -> Tuple[NotificationAction, MessageType, str, float, List[str]]:
+    ) -> tuple[NotificationAction, MessageType, str, float, list[str]]:
         """Map a DecisionResult to the legacy 5-tuple IDecisionEngine output contract.
 
         Args:
@@ -86,7 +84,7 @@ class OutputFormatter(IOutputFormatter):
         confidence = decision_result.metadata.confidence_breakdown.calibrated_confidence
 
         # Evidence IDs: deduplicated list, filter out placeholder "none" values
-        evidence_ids: List[str] = [
+        evidence_ids: list[str] = [
             eid
             for eid in decision_result.evidence_ids
             if eid and eid.lower() != "none"

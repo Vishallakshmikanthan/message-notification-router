@@ -1,8 +1,8 @@
 """SchemaValidator implementing 4-Level Validation Hierarchy specified in validation_strategy.md."""
 
-from datetime import datetime
 import re
-from typing import Any, Dict, List, Mapping, Optional, Set
+from collections.abc import Mapping
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.infrastructure.storage.quarantine_engine import QuarantineEngine
@@ -23,12 +23,12 @@ class SchemaValidator:
         "voice_note_id": re.compile(r"^voice_\d{3}$"),
     }
 
-    def __init__(self, quarantine_engine: Optional[QuarantineEngine] = None) -> None:
+    def __init__(self, quarantine_engine: QuarantineEngine | None = None) -> None:
         """Initialize SchemaValidator with QuarantineEngine instance."""
         self.quarantine_engine = quarantine_engine or QuarantineEngine()
 
     def validate_level1_structure(
-        self, row: Mapping[str, Any], expected_columns: List[str], dataset_name: str
+        self, row: Mapping[str, Any], expected_columns: list[str], dataset_name: str
     ) -> bool:
         """Level 1: File & Structural Validation (column matching)."""
         for col in expected_columns:
@@ -44,8 +44,8 @@ class SchemaValidator:
     def validate_level2_types_and_formats(
         self,
         row: Mapping[str, Any],
-        pk_field: Optional[str],
-        pk_type: Optional[str],
+        pk_field: str | None,
+        pk_type: str | None,
         dataset_name: str,
     ) -> bool:
         """Level 2: Field Type & Regex Format Validation."""
@@ -81,7 +81,7 @@ class SchemaValidator:
     def validate_foreign_key(
         self,
         fk_value: Any,
-        target_keys: Set[Any],
+        target_keys: set[Any],
         fk_name: str,
         dataset_name: str,
         row: Mapping[str, Any],

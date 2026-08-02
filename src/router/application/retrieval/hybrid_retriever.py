@@ -1,7 +1,6 @@
 """Hybrid Search Fusion Service using Reciprocal Rank Fusion (RRF) as specified in hybrid_search.md."""
 
 import logging
-from typing import Dict, List
 
 from router.domain.entities.evidence import RetrievalCandidate, StructuredQuery
 from router.domain.ports.retrieval_ports import IHybridRetriever
@@ -21,7 +20,7 @@ class HybridRetriever(IHybridRetriever):
         self.k = k
         logger.info("HybridRetriever initialized with RRF k=%d", k)
 
-    def compute_modality_weights(self, query: StructuredQuery) -> Dict[str, float]:
+    def compute_modality_weights(self, query: StructuredQuery) -> dict[str, float]:
         """Compute dynamic modality weights (w_BM25 vs w_Dense) based on query attributes.
 
         Rules from hybrid_search.md:
@@ -45,10 +44,10 @@ class HybridRetriever(IHybridRetriever):
 
     def fuse_results(
         self,
-        bm25_candidates: List[RetrievalCandidate],
-        dense_candidates: List[RetrievalCandidate],
+        bm25_candidates: list[RetrievalCandidate],
+        dense_candidates: list[RetrievalCandidate],
         query: StructuredQuery,
-    ) -> List[RetrievalCandidate]:
+    ) -> list[RetrievalCandidate]:
         """Fuse sparse and dense candidates using RRF and dynamic weighting.
 
         Args:
@@ -63,7 +62,7 @@ class HybridRetriever(IHybridRetriever):
         w_bm25 = weights["bm25"]
         w_dense = weights["dense"]
 
-        merged: Dict[str, RetrievalCandidate] = {}
+        merged: dict[str, RetrievalCandidate] = {}
 
         # Process BM25 ranks
         for rank_idx, cand in enumerate(bm25_candidates, start=1):
@@ -82,7 +81,7 @@ class HybridRetriever(IHybridRetriever):
             merged[msg_id].dense_score = cand.dense_score
 
         # Calculate RRF score for each merged candidate
-        fused_list: List[RetrievalCandidate] = []
+        fused_list: list[RetrievalCandidate] = []
         for msg_id, cand in merged.items():
             rrf_score = 0.0
             if cand.bm25_rank is not None:

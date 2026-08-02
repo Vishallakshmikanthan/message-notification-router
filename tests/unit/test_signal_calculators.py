@@ -1,12 +1,25 @@
 """Unit tests for individual categorical signal calculators."""
 
-from router.application.signals.behaviour_engine import BehaviourEngine, NotificationFatigueCalculator
-from router.application.signals.personalization_engine import GreetingDetectionCalculator, PersonalizationEngine, QuietHoursCalculator
-from router.application.signals.risk_engine import RiskEngine, ScamSignalCalculator, SpamSignalCalculator, UnknownSenderRiskCalculator
-from router.application.signals.trust_engine import BusinessTrustCalculator, KnownContactCalculator, TrustEngine
-from router.application.signals.urgency_engine import EmergencySignalCalculator, MeetingUrgencyCalculator, PaymentUrgencyCalculator, UrgencyEngine
-from router.domain.entities.context import CoreMessageContext, MessageContext, TemporalInformation
-from router.domain.entities.sub_contexts import BusinessContext, MediaContext, NotificationContext, RelationshipContext, UserContext
+from router.application.signals.behaviour_engine import NotificationFatigueCalculator
+from router.application.signals.personalization_engine import GreetingDetectionCalculator
+from router.application.signals.risk_engine import (
+    ScamSignalCalculator,
+    SpamSignalCalculator,
+    UnknownSenderRiskCalculator,
+)
+from router.application.signals.trust_engine import BusinessTrustCalculator, KnownContactCalculator
+from router.application.signals.urgency_engine import (
+    EmergencySignalCalculator,
+    MeetingUrgencyCalculator,
+    PaymentUrgencyCalculator,
+)
+from router.domain.entities.context import CoreMessageContext, MessageContext
+from router.domain.entities.sub_contexts import (
+    BusinessContext,
+    NotificationContext,
+    RelationshipContext,
+    UserContext,
+)
 
 
 def test_emergency_signal_calculator() -> None:

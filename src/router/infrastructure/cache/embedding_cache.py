@@ -3,7 +3,6 @@
 import hashlib
 import logging
 from collections import OrderedDict
-from typing import Dict, List, Optional
 
 from router.domain.ports.retrieval_ports import IEmbeddingCache
 
@@ -20,8 +19,8 @@ class EmbeddingCache(IEmbeddingCache):
             max_lru_size: Maximum capacity for in-memory query LRU cache.
         """
         self._max_lru_size = max_lru_size
-        self._query_lru_cache: OrderedDict[str, List[float]] = OrderedDict()
-        self._document_embedding_store: Dict[str, List[float]] = {}
+        self._query_lru_cache: OrderedDict[str, list[float]] = OrderedDict()
+        self._document_embedding_store: dict[str, list[float]] = {}
         self._hits = 0
         self._misses = 0
         logger.info("EmbeddingCache initialized with LRU capacity %d", max_lru_size)
@@ -31,7 +30,7 @@ class EmbeddingCache(IEmbeddingCache):
         normalized = text.strip().lower()
         return hashlib.md5(normalized.encode("utf-8")).hexdigest()
 
-    def get_query_embedding(self, query_text: str) -> Optional[List[float]]:
+    def get_query_embedding(self, query_text: str) -> list[float] | None:
         """Retrieve query vector from LRU cache.
 
         Args:
@@ -49,7 +48,7 @@ class EmbeddingCache(IEmbeddingCache):
         self._misses += 1
         return None
 
-    def put_query_embedding(self, query_text: str, vector: List[float]) -> None:
+    def put_query_embedding(self, query_text: str, vector: list[float]) -> None:
         """Store query vector in LRU cache.
 
         Args:
@@ -64,11 +63,11 @@ class EmbeddingCache(IEmbeddingCache):
             self._query_lru_cache.popitem(last=False)
         logger.debug("Stored query vector in LRU cache for key %s", key)
 
-    def get_document_embedding(self, message_id: str) -> Optional[List[float]]:
+    def get_document_embedding(self, message_id: str) -> list[float] | None:
         """Retrieve pre-computed document vector by historical message ID."""
         return self._document_embedding_store.get(message_id)
 
-    def put_document_embedding(self, message_id: str, vector: List[float]) -> None:
+    def put_document_embedding(self, message_id: str, vector: list[float]) -> None:
         """Store pre-computed document vector for historical message ID."""
         self._document_embedding_store[message_id] = vector
 

@@ -1,6 +1,6 @@
 """Unit tests for Reranker component."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from router.application.retrieval.reranker import Reranker
 from router.domain.entities.context import MessageContext
@@ -23,7 +23,7 @@ def test_reranker_scoring_and_floor() -> None:
         sender_id="sender_1",
         conversation_type="personal",
         message_text="Your OTP verification code is 1234",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     msg2 = HistoricalMessage(
@@ -32,7 +32,7 @@ def test_reranker_scoring_and_floor() -> None:
         sender_id="sender_99",
         conversation_type="personal",
         message_text="Random unrelated text",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     cands = [
@@ -58,7 +58,7 @@ def test_exact_duplicate_hash_suppression() -> None:
         sender_id="sender_1",
         conversation_type="personal",
         message_text="Identical broadcast message text",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     cands = [

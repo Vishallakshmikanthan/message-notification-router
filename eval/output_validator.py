@@ -13,7 +13,7 @@ from __future__ import annotations
 import csv
 import logging
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ class OutputCSVValidator:
         """Initialize OutputCSVValidator."""
         pass
 
-    def validate_file(self, csv_path: str) -> Dict[str, Any]:
+    def validate_file(self, csv_path: str) -> dict[str, Any]:
         """Validate an output.csv file against Hackerrank submission constraints.
 
         Args:
@@ -61,7 +61,7 @@ class OutputCSVValidator:
         if not p.exists():
             return {"is_valid": False, "errors": [f"File {csv_path} does not exist"]}
 
-        errors: List[str] = []
+        errors: list[str] = []
         row_count = 0
 
         with p.open("r", encoding="utf-8") as f:

@@ -1,8 +1,8 @@
 """MessageContextFactory for instantiating frozen, validated MessageContext master objects."""
 
-from datetime import datetime, timezone
 import re
 import uuid
+from datetime import UTC, datetime
 
 from router.application.context.builder_pipeline import UnvalidatedContextBag
 from router.core.logging.logger import get_logger
@@ -31,7 +31,7 @@ class MessageContextFactory:
         assembly_latency_ms: float = 0.0,
     ) -> MessageContext:
         """Instantiate sealed MessageContext instance from validated context bag and quality metrics."""
-        now_dt = datetime.now(timezone.utc)
+        now_dt = datetime.now(UTC)
         context_id = f"ctx_{uuid.uuid4().hex[:12]}"
 
         # 1. Metadata
@@ -68,7 +68,7 @@ class MessageContextFactory:
 
         # 3. Temporal Information
         ts_ms = bag.payload.timestamp if bag.payload.timestamp > 0 else int(now_dt.timestamp() * 1000)
-        ts_dt = datetime.fromtimestamp(ts_ms / 1000.0, tz=timezone.utc)
+        ts_dt = datetime.fromtimestamp(ts_ms / 1000.0, tz=UTC)
         iso_ts = ts_dt.isoformat()
         day_of_week = ts_dt.strftime("%A").upper()
         hour_of_day = ts_dt.hour

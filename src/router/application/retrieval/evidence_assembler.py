@@ -1,8 +1,7 @@
 """Evidence Assembler implementation matching evidence_models.md specification."""
 
 import logging
-from datetime import datetime, timezone
-from typing import List
+from datetime import UTC, datetime
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.evidence import EvidenceBundle, EvidenceItem, RetrievalCandidate
@@ -19,7 +18,7 @@ class EvidenceAssembler(IEvidenceAssembler):
         logger.info("EvidenceAssembler initialized")
 
     def assemble_bundle(
-        self, validated_candidates: List[RetrievalCandidate], context: MessageContext
+        self, validated_candidates: list[RetrievalCandidate], context: MessageContext
     ) -> EvidenceBundle:
         """Construct immutable EvidenceBundle from validated candidates.
 
@@ -36,7 +35,7 @@ class EvidenceAssembler(IEvidenceAssembler):
         target_business = context.business.business_id if context.business else ""
         target_group = context.group.group_id if context.group else ""
 
-        items: List[EvidenceItem] = []
+        items: list[EvidenceItem] = []
         has_conflicting = False
 
         for cand in validated_candidates:
@@ -89,7 +88,7 @@ class EvidenceAssembler(IEvidenceAssembler):
         bundle = EvidenceBundle(
             query_message_id=query_msg_id,
             user_id=user_id,
-            timestamp=datetime.now(timezone.utc).isoformat(),
+            timestamp=datetime.now(UTC).isoformat(),
             retrieval_confidence=confidence,
             evidence_count=len(items),
             primary_reason=primary_reason,

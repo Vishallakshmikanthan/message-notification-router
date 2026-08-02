@@ -1,7 +1,6 @@
 """ContextAssembler (ContextAssemblyEngine) entrypoint service orchestrating context building."""
 
 import time
-from typing import List, Optional, Union
 
 from router.application.context.builder_pipeline import ParallelContextBuilderPipeline
 from router.application.context.context_factory import MessageContextFactory
@@ -22,11 +21,11 @@ class ContextAssembler:
 
     def __init__(
         self,
-        registry: Optional[ContextRepositoryRegistry] = None,
-        cache: Optional[ContextCache] = None,
-        pipeline: Optional[ParallelContextBuilderPipeline] = None,
-        validation_service: Optional[ContextValidationService] = None,
-        factory: Optional[MessageContextFactory] = None,
+        registry: ContextRepositoryRegistry | None = None,
+        cache: ContextCache | None = None,
+        pipeline: ParallelContextBuilderPipeline | None = None,
+        validation_service: ContextValidationService | None = None,
+        factory: MessageContextFactory | None = None,
     ) -> None:
         """Initialize ContextAssembler with repository registry, cache, pipeline, validator, and factory."""
         self.registry = registry or ContextRepositoryRegistry()
@@ -35,7 +34,7 @@ class ContextAssembler:
         self.validation_service = validation_service or ContextValidationService()
         self.factory = factory or MessageContextFactory()
 
-    def assemble(self, raw_message: Union[RawMessagePayload, Message, dict]) -> MessageContext:
+    def assemble(self, raw_message: RawMessagePayload | Message | dict) -> MessageContext:
         """Assemble a single raw message payload into a fully enriched, immutable MessageContext."""
         t_start = time.perf_counter()
 
@@ -63,12 +62,12 @@ class ContextAssembler:
         return ctx
 
     def assemble_batch(
-        self, raw_messages: List[Union[RawMessagePayload, Message, dict]]
-    ) -> List[MessageContext]:
+        self, raw_messages: list[RawMessagePayload | Message | dict]
+    ) -> list[MessageContext]:
         """Assemble a batch of raw message payloads into fully enriched MessageContext objects."""
         return [self.assemble(msg) for msg in raw_messages]
 
-    def _normalize_payload(self, raw_message: Union[RawMessagePayload, Message, dict]) -> RawMessagePayload:
+    def _normalize_payload(self, raw_message: RawMessagePayload | Message | dict) -> RawMessagePayload:
         """Normalize raw input payload (RawMessagePayload, domain Message, or dictionary) into RawMessagePayload."""
         if isinstance(raw_message, RawMessagePayload):
             return raw_message

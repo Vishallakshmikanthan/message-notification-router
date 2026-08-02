@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import Any, Dict, Optional
+from typing import Any
 
 from router.application.prompts.prompt_builder import BuiltPrompt
 from router.infrastructure.llm.output_parser import OutputParser, ParseResult
@@ -56,10 +56,10 @@ class OpenAIProvider:
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         model: str = _DEFAULT_OPENAI_MODEL,
-        retry_manager: Optional[RetryManager] = None,
-        output_parser: Optional[OutputParser] = None,
+        retry_manager: RetryManager | None = None,
+        output_parser: OutputParser | None = None,
         timeout_secs: float = _DEFAULT_TIMEOUT_SECS,
     ) -> None:
         """Initialize OpenAIProvider.
@@ -82,7 +82,7 @@ class OpenAIProvider:
             extra={"model": model, "client_available": self._client is not None},
         )
 
-    def complete(self, prompt: BuiltPrompt) -> Dict[str, Any]:
+    def complete(self, prompt: BuiltPrompt) -> dict[str, Any]:
         """Send a prompt to OpenAI and return the parsed JSON response.
 
         Args:
@@ -158,7 +158,7 @@ class OpenAIProvider:
         return response.choices[0].message.content or ""
 
     @staticmethod
-    def _read_api_key() -> Optional[str]:
+    def _read_api_key() -> str | None:
         """Read OpenAI API key from environment.
 
         Returns:
@@ -170,7 +170,7 @@ class OpenAIProvider:
             logger.warning("OPENAI_API_KEY not set in environment")
         return key
 
-    def _init_client(self) -> Optional[Any]:
+    def _init_client(self) -> Any | None:
         """Initialize the OpenAI client SDK.
 
         Returns:
@@ -189,7 +189,7 @@ class OpenAIProvider:
             return None
 
     @staticmethod
-    def _mock_response() -> Dict[str, Any]:
+    def _mock_response() -> dict[str, Any]:
         """Return a deterministic mock response when no client is available.
 
         Returns:

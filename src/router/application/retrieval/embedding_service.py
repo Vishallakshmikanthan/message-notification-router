@@ -3,7 +3,7 @@
 import json
 import logging
 import os
-from typing import Dict, List, Optional, Sequence, Tuple
+from collections.abc import Sequence
 
 import numpy as np
 
@@ -46,8 +46,8 @@ class FAISSIndexWrapper:
         """
         self.dimension = dimension
         self.index_type = index_type
-        self._mapping: Dict[int, str] = {}  # int_id -> message_id
-        self._rev_mapping: Dict[str, int] = {}  # message_id -> int_id
+        self._mapping: dict[int, str] = {}  # int_id -> message_id
+        self._rev_mapping: dict[str, int] = {}  # message_id -> int_id
         self._next_id = 0
 
         if HAS_FAISS:
@@ -60,9 +60,9 @@ class FAISSIndexWrapper:
                 self.index = faiss.IndexFlatIP(dimension)
         else:
             self.index = None
-            self._vectors: List[np.ndarray] = []
+            self._vectors: list[np.ndarray] = []
 
-    def add_vectors(self, message_ids: List[str], vectors: np.ndarray) -> None:
+    def add_vectors(self, message_ids: list[str], vectors: np.ndarray) -> None:
         """Add normalized vectors and message IDs to the index."""
         num_vecs = len(message_ids)
         if num_vecs == 0:
@@ -80,7 +80,7 @@ class FAISSIndexWrapper:
             for i in range(num_vecs):
                 self._vectors.append(vectors[i].astype(np.float32))
 
-    def search(self, query_vector: np.ndarray, top_k: int = 100) -> List[Tuple[str, float]]:
+    def search(self, query_vector: np.ndarray, top_k: int = 100) -> list[tuple[str, float]]:
         """Search top_k nearest neighbors by inner product (cosine similarity)."""
         if self.ntotal == 0:
             return []
@@ -90,7 +90,7 @@ class FAISSIndexWrapper:
         if HAS_FAISS:
             scores, indices = self.index.search(q_vec, min(top_k, self.ntotal))
             results = []
-            for score, idx in zip(scores[0], indices[0]):
+            for score, idx in zip(scores[0], indices[0], strict=False):
                 if idx in self._mapping:
                     results.append((self._mapping[idx], float(score)))
             return results
@@ -119,7 +119,7 @@ class FAISSIndexWrapper:
     def load_mapping(self, filepath: str) -> None:
         """Load integer-to-message_id mapping from JSON file."""
         if os.path.exists(filepath):
-            with open(filepath, "r", encoding="utf-8") as f:
+            with open(filepath, encoding="utf-8") as f:
                 data = json.load(f)
                 self._mapping = {int(k): v for k, v in data.items()}
                 self._rev_mapping = {v: int(k) for k, v in data.items()}
@@ -132,7 +132,7 @@ class EmbeddingService(IEmbeddingService):
     def __init__(
         self,
         model_name: str = "all-MiniLM-L6-v2",
-        embedding_cache: Optional[IEmbeddingCache] = None,
+        embedding_cache: IEmbeddingCache | None = None,
         dimension: int = 384,
     ) -> None:
         """Initialize EmbeddingService.
@@ -152,10 +152,10 @@ class EmbeddingService(IEmbeddingService):
             self._model = None
 
         self._faiss_index = FAISSIndexWrapper(dimension=dimension, index_type="HNSW")
-        self._corpus: Dict[str, HistoricalMessage] = {}
+        self._corpus: dict[str, HistoricalMessage] = {}
         logger.info("EmbeddingService initialized (dimension=%d)", dimension)
 
-    def generate_embedding(self, text: str) -> List[float]:
+    def generate_embedding(self, text: str) -> list[float]:
         """Generate 384-dimensional L2-normalized vector embedding for text string.
 
         Args:
@@ -201,8 +201,8 @@ class EmbeddingService(IEmbeddingService):
         Args:
             messages: HistoricalMessage entities.
         """
-        message_ids: List[str] = []
-        vectors_list: List[np.ndarray] = []
+        message_ids: list[str] = []
+        vectors_list: list[np.ndarray] = []
 
         for msg in messages:
             self._corpus[msg.message_id] = msg
@@ -225,7 +225,7 @@ class EmbeddingService(IEmbeddingService):
             matrix = np.vstack(vectors_list)
             self._faiss_index.add_vectors(message_ids, matrix)
 
-    def search(self, query_vector: List[float], top_k: int = 100) -> List[RetrievalCandidate]:
+    def search(self, query_vector: list[float], top_k: int = 100) -> list[RetrievalCandidate]:
         """Perform dense vector search against indexed FAISS corpus.
 
         Args:
@@ -241,7 +241,7 @@ class EmbeddingService(IEmbeddingService):
         q_arr = np.array(query_vector, dtype=np.float32)
         results = self._faiss_index.search(q_arr, top_k=top_k)
 
-        candidates: List[RetrievalCandidate] = []
+        candidates: list[RetrievalCandidate] = []
         for msg_id, raw_score in results:
             # Sigmoid clipping to ensure [0.0, 1.0] range
             dense_score = float(max(0.0, raw_score))

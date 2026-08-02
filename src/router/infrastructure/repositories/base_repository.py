@@ -1,6 +1,7 @@
 """Base Repository Generic Concrete Implementation."""
 
-from typing import Generic, Sequence, TypeVar
+from collections.abc import Sequence
+from typing import Generic, TypeVar
 
 from router.domain.ports.repository_ports import IRepository
 

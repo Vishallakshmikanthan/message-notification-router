@@ -17,7 +17,7 @@ import json
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -48,11 +48,11 @@ class ParseResult:
         is_fallback: Whether the fallback hardcoded response was returned.
     """
 
-    parsed: Dict[str, Any]
+    parsed: dict[str, Any]
     raw_response: str
     repair_applied: bool
     repair_stage: int
-    parse_errors: List[str] = field(default_factory=list)
+    parse_errors: list[str] = field(default_factory=list)
     is_fallback: bool = False
 
     @property
@@ -71,7 +71,7 @@ class ParseResult:
         return str(self.parsed.get("reason", ""))
 
     @property
-    def evidence(self) -> List[str]:
+    def evidence(self) -> list[str]:
         """Extract evidence key list from parsed output."""
         return list(self.parsed.get("evidence", []))
 
@@ -109,7 +109,7 @@ class OutputParser:
         Returns:
             ParseResult with parsed JSON dict and repair metadata.
         """
-        errors: List[str] = []
+        errors: list[str] = []
 
         # Stage 1: Syntax Repair — extract and fix JSON
         stage1_result, stage1_text = self._stage1_syntax_repair(raw_response, errors)
@@ -158,7 +158,7 @@ class OutputParser:
             is_fallback=True,
         )
 
-    def extract_json_string(self, text: str) -> Optional[str]:
+    def extract_json_string(self, text: str) -> str | None:
         """Extract a JSON string from text that may contain markdown or prose.
 
         Handles:
@@ -185,8 +185,8 @@ class OutputParser:
         return None
 
     def _stage1_syntax_repair(
-        self, raw: str, errors: List[str]
-    ) -> tuple[Optional[Dict[str, Any]], str]:
+        self, raw: str, errors: list[str]
+    ) -> tuple[dict[str, Any] | None, str]:
         """Stage 1: Extract JSON and repair syntax errors.
 
         Handles:
@@ -242,7 +242,7 @@ class OutputParser:
         # Fix unescaped newlines in string values
         # Replace literal newlines inside string values with \n
         in_string = False
-        result_chars: List[str] = []
+        result_chars: list[str] = []
         i = 0
         while i < len(text):
             ch = text[i]
@@ -256,7 +256,7 @@ class OutputParser:
         return "".join(result_chars)
 
     @staticmethod
-    def _stage2_schema_coercion(data: Dict[str, Any], errors: List[str]) -> Dict[str, Any]:
+    def _stage2_schema_coercion(data: dict[str, Any], errors: list[str]) -> dict[str, Any]:
         """Stage 2: Coerce types to match the expected output schema.
 
         Handles:
@@ -300,7 +300,7 @@ class OutputParser:
         return coerced
 
     @staticmethod
-    def _stage3_allowed_values(data: Dict[str, Any]) -> tuple[Dict[str, Any], List[str]]:
+    def _stage3_allowed_values(data: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
         """Stage 3: Validate allowed values and confidence bounds.
 
         Validates:
@@ -314,7 +314,7 @@ class OutputParser:
         Returns:
             Tuple of (validated_dict, list_of_errors).
         """
-        errors: List[str] = []
+        errors: list[str] = []
 
         # Validate required fields present
         for required_field in ("action", "reason", "confidence"):
@@ -334,7 +334,7 @@ class OutputParser:
         return data, errors
 
     @staticmethod
-    def _stage3_fix(data: Dict[str, Any]) -> Dict[str, Any]:
+    def _stage3_fix(data: dict[str, Any]) -> dict[str, Any]:
         """Apply Stage 3 fixes to bring data into compliance.
 
         Args:
@@ -368,7 +368,7 @@ class OutputParser:
         return fixed
 
     @staticmethod
-    def _build_fallback(errors: List[str]) -> Dict[str, Any]:
+    def _build_fallback(errors: list[str]) -> dict[str, Any]:
         """Build a hardcoded Stage 5 fallback response.
 
         Args:

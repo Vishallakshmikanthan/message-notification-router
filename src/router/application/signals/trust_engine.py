@@ -1,7 +1,6 @@
 """TrustEngine implementation computing business authenticity, relationship closeness, and historical reliability."""
 
 import math
-from typing import Dict
 
 from router.application.signals.base_calculator import BaseSignalCalculator
 from router.core.logging.logger import get_logger
@@ -276,6 +275,6 @@ class TrustEngine(BaseSignalCalculator):
         results = {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}
         return results["relationship_score"]
 
-    def calculate_all(self, context: MessageContext) -> Dict[str, SignalValue]:
+    def calculate_all(self, context: MessageContext) -> dict[str, SignalValue]:
         """Compute dictionary mapping each trust signal name to its SignalValue."""
         return {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}

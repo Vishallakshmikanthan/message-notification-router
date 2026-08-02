@@ -11,7 +11,8 @@ Implements Verifier Agent specification from agent_architecture.md §3.7:
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.application.agents.base_agent import BaseAgent
 from router.domain.entities.context import MessageContext
@@ -28,7 +29,7 @@ class VerifierAgent(BaseAgent):
 
     async def run(
         self, context: MessageContext, inputs: Mapping[str, Any]
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Execute verification on proposed decision and critique report.
 
         Args:

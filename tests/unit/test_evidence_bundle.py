@@ -1,11 +1,9 @@
 """Unit tests for Evidence Domain Entities (EvidenceItem, EvidenceBundle, StructuredQuery)."""
 
-from datetime import datetime, timezone
 
 from router.domain.entities.evidence import (
     EvidenceBundle,
     EvidenceItem,
-    RetrievalCandidate,
     StructuredQuery,
 )
 

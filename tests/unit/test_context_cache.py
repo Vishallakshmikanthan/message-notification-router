@@ -1,10 +1,7 @@
 """Unit tests for ContextCache multi-level caching topology."""
 
-import pytest
 from unittest.mock import MagicMock
 
-from router.domain.entities.business import BusinessAccount
-from router.domain.entities.group import Group
 from router.domain.entities.user import User
 from router.infrastructure.cache.context_cache import ContextCache
 

@@ -2,7 +2,6 @@
 
 import math
 import re
-from typing import Dict
 
 from router.application.signals.base_calculator import BaseSignalCalculator
 from router.core.logging.logger import get_logger
@@ -11,10 +10,10 @@ from router.domain.entities.signal import SignalValue
 
 logger = get_logger(__name__)
 
-EMERGENCY_KEYWORDS = {"sos", "help me", "accident", "hospitalized", "911", "call immediately", "emergency", "urgent", "asap", "distress"}
+EMERGENCY_KEYWORDS = {"sos", "help me", "accident", "hospitalized", "911", "call immediately", "emergency", "asap", "distress", "medical emergency"}
 OTP_KEYWORDS = {"otp", "verification code", "one time password", "auth code", "security code", "valid for"}
-BILL_KEYWORDS = {"bill overdue", "payment due", "account balance due", "invoice unpaid", "past due"}
-PAYMENT_KEYWORDS = {"payment request", "pay back", "wire transfer", "send money"}
+BILL_KEYWORDS = {"bill overdue", "payment due", "account balance due", "invoice unpaid", "past due", "impending bill", "bill due", "due within", "due date"}
+PAYMENT_KEYWORDS = {"payment request", "pay back", "wire transfer", "send money", "payment of", "credit card payment"}
 MEETING_URL_PATTERN = re.compile(r"https?://(?:meet\.google\.com|zoom\.us|teams\.microsoft\.com|webex\.com)/[a-zA-Z0-9_-]+", re.IGNORECASE)
 MEETING_NOW_KEYWORDS = {"starting now", "join now", "standup", "call in progress", "meeting starting"}
 HEALTH_KEYWORDS = {"hospital", "doctor", "lab report", "prescription", "glucose", "clinic", "patient", "medical test"}
@@ -46,7 +45,7 @@ class EmergencySignalCalculator(BaseSignalCalculator):
 
         score = min(
             1.0,
-            0.6 * (1.0 if has_emerg_kw else 0.0)
+            0.85 * (1.0 if has_emerg_kw else 0.0)
             + 0.3 * (1.0 if is_family else 0.0)
             + 0.3 * (1.0 if is_high_voice_stress else 0.0),
         )
@@ -174,7 +173,7 @@ class MeetingUrgencyCalculator(BaseSignalCalculator):
         raw_text = context.core_message.raw_text_content or context.message_text or ""
         cleaned = context.core_message.cleaned_text or ""
         has_link = bool(MEETING_URL_PATTERN.search(raw_text)) or context.core_message.contains_links
-        
+
         combined_lower = f"{raw_text} {cleaned}".lower()
         has_meeting_domain = any(dom in combined_lower for dom in ["meet.google", "zoom.us", "teams.microsoft", "webex"])
         has_link = has_link or has_meeting_domain
@@ -352,6 +351,6 @@ class UrgencyEngine(BaseSignalCalculator):
         max_sig = max(results.values(), key=lambda s: s.score)
         return max_sig
 
-    def calculate_all(self, context: MessageContext) -> Dict[str, SignalValue]:
+    def calculate_all(self, context: MessageContext) -> dict[str, SignalValue]:
         """Compute dictionary mapping each urgency signal name to its SignalValue."""
         return {calc.get_name(): calc.calculate_signal(context) for calc in self.calculators}

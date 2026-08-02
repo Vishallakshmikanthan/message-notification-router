@@ -1,6 +1,6 @@
 """SignalAggregator implementation for assembling individual signal scores into category containers and master bundle."""
 
-from typing import Dict
+
 from router.application.signals.signal_factory import SignalFactory
 from router.core.logging.logger import get_logger
 from router.domain.entities.signal import SignalBundle, SignalValue
@@ -18,7 +18,7 @@ class SignalAggregator:
     def assemble_bundle(
         cls,
         message_id: str,
-        signals: Dict[str, SignalValue],
+        signals: dict[str, SignalValue],
         latency_ms: float,
         pre_check_completeness: float,
     ) -> SignalBundle:

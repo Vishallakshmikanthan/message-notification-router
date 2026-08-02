@@ -2,7 +2,6 @@
 
 import logging
 import re
-from typing import List, Optional
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.evidence import StructuredQuery
@@ -23,7 +22,7 @@ TAXONOMY_SYNONYMS = {
 class QueryBuilder(IQueryBuilder):
     """Builds and expands structured queries from incoming MessageContext."""
 
-    def __init__(self, embedding_service: Optional[IEmbeddingService] = None) -> None:
+    def __init__(self, embedding_service: IEmbeddingService | None = None) -> None:
         """Initialize QueryBuilder with optional EmbeddingService.
 
         Args:
@@ -76,7 +75,7 @@ class QueryBuilder(IQueryBuilder):
                 domain_mismatch = True
 
         # Taxonomy & Expansion Tokens
-        expansion_tokens: List[str] = []
+        expansion_tokens: list[str] = []
         for token in base_tokens:
             token_lower = token.lower()
             if token_lower in TAXONOMY_SYNONYMS:
@@ -87,7 +86,7 @@ class QueryBuilder(IQueryBuilder):
             expansion_tokens.extend(["domain_mismatch", "suspicious_url", "phishing_check"])
 
         # User Behavior Influences
-        behaviour_flags: List[str] = []
+        behaviour_flags: list[str] = []
         dismissal_rate = getattr(context.notification_behaviour, "dismissal_ratio_30d", 0.0)
         reply_rate = getattr(context.behaviour_stats, "reply_rate_30d", 0.0)
 
@@ -124,7 +123,7 @@ class QueryBuilder(IQueryBuilder):
         }
 
         # Generate Dense Query Vector
-        dense_vector: List[float] = []
+        dense_vector: list[float] = []
         if self._embedding_service:
             dense_vector = self._embedding_service.generate_embedding(composite_text or raw_text)
 
@@ -149,7 +148,7 @@ class QueryBuilder(IQueryBuilder):
             domain_mismatch=domain_mismatch,
         )
 
-    def _extract_tokens(self, text: str) -> List[str]:
+    def _extract_tokens(self, text: str) -> list[str]:
         """Extract clean tokens from text string."""
         if not text:
             return []

@@ -1,7 +1,6 @@
 """MediaManifest, ImageManifest, and VoiceNoteManifest Domain Entities."""
 
-from dataclasses import dataclass, field
-from typing import Literal, Optional
+from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -25,9 +24,9 @@ class ImageManifest:
     width_px: int = 0
     height_px: int = 0
     mime_type: str = "image/jpeg"
-    ocr_text: Optional[str] = None
-    vlm_caption: Optional[str] = None
-    media_category: Optional[str] = None
+    ocr_text: str | None = None
+    vlm_caption: str | None = None
+    media_category: str | None = None
     has_qr_code: bool = False
 
     def __post_init__(self) -> None:
@@ -47,8 +46,8 @@ class VoiceNoteManifest:
     duration_seconds: float = 0.0
     audio_codec: str = "opus"
     file_size_bytes: int = 0
-    transcript: Optional[str] = None
-    acoustic_tone: Optional[str] = None
+    transcript: str | None = None
+    acoustic_tone: str | None = None
 
     def __post_init__(self) -> None:
         if not self.media_id and self.voice_note_id:

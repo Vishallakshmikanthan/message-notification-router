@@ -1,7 +1,8 @@
 """Abstract Repository Interface Contracts for Domain Layer."""
 
 from abc import ABC, abstractmethod
-from typing import Generic, Sequence, TypeVar
+from collections.abc import Sequence
+from typing import Generic, TypeVar
 
 from router.domain.entities.business import BusinessAccount, UserBusinessHistory
 from router.domain.entities.group import Group, GroupMember

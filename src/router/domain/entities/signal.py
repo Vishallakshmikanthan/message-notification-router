@@ -1,7 +1,8 @@
 """SignalBundle Domain Entity encapsulating all computed analytical signals as specified in signal_bundle.md."""
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List
+from typing import Any
+
 from router.domain.value_objects.risk_level import RiskLevel
 
 
@@ -12,7 +13,7 @@ class SignalExplainability:
     raw_value: float
     primary_driver: str
     rationale: str
-    contributing_factors: Dict[str, float] = field(default_factory=dict)
+    contributing_factors: dict[str, float] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -280,9 +281,9 @@ class SignalBundle:
         )
 
     @property
-    def candidate_evidence_ids(self) -> List[str]:
+    def candidate_evidence_ids(self) -> list[str]:
         """Returns list of evidence driver IDs across computed active signals."""
-        evidence: List[str] = []
+        evidence: list[str] = []
         for category in [
             self.urgency,
             self.risk,
@@ -309,9 +310,9 @@ class SignalBundle:
         return self.metadata.global_completeness
 
     @property
-    def raw_signals(self) -> Dict[str, Any]:
+    def raw_signals(self) -> dict[str, Any]:
         """Returns dict mapping signal names to score values for legacy consumers."""
-        result: Dict[str, Any] = {}
+        result: dict[str, Any] = {}
         for cat_name in ["behaviour", "risk", "trust", "urgency", "relationship", "business", "group", "history", "temporal", "media", "conversation"]:
             cat_obj = getattr(self, cat_name)
             for attr in dir(cat_obj):

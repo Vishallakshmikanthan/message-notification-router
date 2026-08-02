@@ -1,6 +1,6 @@
 """Unit tests for BM25Service component."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from router.application.retrieval.bm25_service import BM25Service
 from router.domain.entities.evidence import StructuredQuery
@@ -17,7 +17,7 @@ def test_bm25_indexing_and_search() -> None:
         sender_id="sender_A",
         conversation_type="personal",
         message_text="Your OTP for login is 482910. Do not share.",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
     msg2 = HistoricalMessage(
         message_id="msg_002",
@@ -25,7 +25,7 @@ def test_bm25_indexing_and_search() -> None:
         sender_id="sender_B",
         conversation_type="personal",
         message_text="Hey, want to grab coffee today?",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     bm25.index_messages([msg1, msg2])

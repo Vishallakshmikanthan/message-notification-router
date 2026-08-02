@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 from datetime import date, datetime
-from typing import Optional
 
 
 @dataclass(frozen=True)
@@ -15,8 +14,8 @@ class HistoricalMessage:
     conversation_type: str
     message_text: str
     created_at: datetime
-    business_id: Optional[str] = None
-    group_id: Optional[str] = None
+    business_id: str | None = None
+    group_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -28,7 +27,7 @@ class MessageEvent:
     user_id: str
     event_type: str
     event_timestamp: datetime
-    details: Optional[str] = None
+    details: str | None = None
 
 
 @dataclass(frozen=True)

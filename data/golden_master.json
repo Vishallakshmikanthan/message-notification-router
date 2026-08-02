@@ -1,0 +1,1204 @@
+{
+  "items": [
+    {
+      "message_id": "msg_eval_u_001",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_002",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_003",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_004",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_005",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_006",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_007",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_008",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_009",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_010",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_011",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_012",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_013",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_014",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_015",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_016",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_017",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_018",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_019",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_020",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_021",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_022",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_023",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_024",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_025",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_026",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_027",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_028",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_029",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_030",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_031",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_032",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_033",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_034",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_035",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_036",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_037",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_038",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_039",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_040",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_041",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_042",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_043",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_044",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_045",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_046",
+      "message_text": "SOS Emergency! I was involved in an accident, call me immediately!",
+      "user_id": "user_main",
+      "sender_id": "s_001",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_047",
+      "message_text": "Your hospital lab results are ready. Urgent review required.",
+      "user_id": "user_main",
+      "sender_id": "s_002",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_048",
+      "message_text": "Impending bill due date: Your credit card payment of  is due within 2 hours.",
+      "user_id": "user_main",
+      "sender_id": "s_003",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_049",
+      "message_text": "Verified 2FA/OTP code: 948201 for bank login. Do not share.",
+      "user_id": "user_main",
+      "sender_id": "s_004",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_u_050",
+      "message_text": "Flight alert: Boarding starts in 15 minutes at Gate 4B.",
+      "user_id": "user_main",
+      "sender_id": "s_005",
+      "ground_truth_action": "notify",
+      "expected_action": "notify"
+    },
+    {
+      "message_id": "msg_eval_d_001",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_002",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_003",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_004",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_005",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_006",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_007",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_008",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_009",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_010",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_011",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_012",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_013",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_014",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_015",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_016",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_017",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_018",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_019",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_020",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_021",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_022",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_023",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_024",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_025",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_026",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_027",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_028",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_029",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_030",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_031",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_032",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_033",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_034",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_035",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_036",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_037",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_038",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_039",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_040",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_041",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_042",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_043",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_044",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_045",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_046",
+      "message_text": "Hi, let us catch up over coffee tomorrow if you are free.",
+      "user_id": "user_main",
+      "sender_id": "s_010",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_047",
+      "message_text": "Sharing photos from yesterday trip! Check out the scenery.",
+      "user_id": "user_main",
+      "sender_id": "s_011",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_048",
+      "message_text": "Weekly newsletter: Top 5 tech trends this month.",
+      "user_id": "user_main",
+      "sender_id": "s_012",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_049",
+      "message_text": "Did anyone leave their umbrella in the conference room?",
+      "user_id": "user_main",
+      "sender_id": "s_013",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_d_050",
+      "message_text": "Reminder: Team lunch scheduled for Friday at 1 PM.",
+      "user_id": "user_main",
+      "sender_id": "s_014",
+      "ground_truth_action": "digest",
+      "expected_action": "digest"
+    },
+    {
+      "message_id": "msg_eval_m_001",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_002",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_003",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_004",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_005",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_006",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_007",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_008",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_009",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_010",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_011",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_012",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_013",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_014",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_015",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_016",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_017",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_018",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_019",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_020",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_021",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_022",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_023",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_024",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_025",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_026",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_027",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_028",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_029",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_030",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_031",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_032",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_033",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_034",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_035",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_036",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_037",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_038",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_039",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_040",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_041",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_042",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_043",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_044",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_045",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_046",
+      "message_text": "Threat or harassment: Pay  now or your personal photos will be leaked.",
+      "user_id": "user_main",
+      "sender_id": "s_020",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_047",
+      "message_text": "Unsolicited broadcast: Forward this to 10 friends for good luck tonight!",
+      "user_id": "user_main",
+      "sender_id": "s_021",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_048",
+      "message_text": "CONGRATULATIONS! You won ,000,000! Click here http://phish-scam.xyz to claim.",
+      "user_id": "user_main",
+      "sender_id": "s_022",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_049",
+      "message_text": "Urgent account block notice: Login immediately at http://bank-update-fake.net",
+      "user_id": "user_main",
+      "sender_id": "s_023",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    },
+    {
+      "message_id": "msg_eval_m_050",
+      "message_text": "Cheap crypto investments! Double your bitcoin in 24 hours guaranteed.",
+      "user_id": "user_main",
+      "sender_id": "s_024",
+      "ground_truth_action": "mute",
+      "expected_action": "mute"
+    }
+  ]
+}

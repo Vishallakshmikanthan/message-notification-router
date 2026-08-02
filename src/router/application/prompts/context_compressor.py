@@ -19,7 +19,6 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass
-from typing import List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -105,9 +104,9 @@ class ContextCompressor:
         system_text: str,
         message_text: str,
         signal_dict: dict,
-        rag_snippets: Optional[List[str]] = None,
-        thread_turns: Optional[List[str]] = None,
-        few_shot_examples: Optional[List[str]] = None,
+        rag_snippets: list[str] | None = None,
+        thread_turns: list[str] | None = None,
+        few_shot_examples: list[str] | None = None,
     ) -> CompressedContext:
         """Compress all context sections to fit the 4,096-token budget.
 
@@ -175,7 +174,7 @@ class ContextCompressor:
         )
 
     def _compress_context(
-        self, rag_snippets: List[str], thread_turns: List[str], budget: int
+        self, rag_snippets: list[str], thread_turns: list[str], budget: int
     ) -> str:
         """Combine and trim RAG snippets and thread turns.
 
@@ -195,7 +194,7 @@ class ContextCompressor:
         top_snippets = rag_snippets[: self._max_rag_snippets]
         recent_turns = thread_turns[-self._max_thread_turns :]
 
-        sections: List[str] = []
+        sections: list[str] = []
         if top_snippets:
             sections.append("## Retrieved Context\n" + "\n".join(top_snippets))
         if recent_turns:
@@ -204,7 +203,7 @@ class ContextCompressor:
         combined = "\n\n".join(sections)
         return self._trim_to_budget(self._remove_noise(combined), budget)
 
-    def _compress_few_shots(self, examples: List[str], budget: int) -> str:
+    def _compress_few_shots(self, examples: list[str], budget: int) -> str:
         """Compress few-shot examples to budget.
 
         Args:

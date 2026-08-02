@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 try:
     import yaml  # type: ignore[import-untyped]
@@ -67,7 +67,7 @@ class PromptTemplate:
         self.cacheable = cacheable
         self.description = description
 
-    def render(self, variables: Dict[str, Any]) -> str:
+    def render(self, variables: dict[str, Any]) -> str:
         """Render the template by substituting {placeholder} variables.
 
         Args:
@@ -108,14 +108,14 @@ class PromptLoader:
                       Defaults to the package-relative 'templates/' directory.
     """
 
-    def __init__(self, template_dir: Optional[Path] = None) -> None:
+    def __init__(self, template_dir: Path | None = None) -> None:
         """Initialize the PromptLoader.
 
         Args:
             template_dir: Root directory for YAML templates.
         """
         self._template_dir = template_dir or _DEFAULT_TEMPLATE_DIR
-        self._cache: Dict[str, PromptTemplate] = {}
+        self._cache: dict[str, PromptTemplate] = {}
         logger.info(
             "PromptLoader initialized",
             extra={"template_dir": str(self._template_dir), "yaml_available": _YAML_AVAILABLE},
@@ -162,7 +162,7 @@ class PromptLoader:
         )
         return template
 
-    def invalidate_cache(self, prompt_id: Optional[str] = None) -> None:
+    def invalidate_cache(self, prompt_id: str | None = None) -> None:
         """Invalidate the in-memory template cache.
 
         Args:
@@ -178,7 +178,7 @@ class PromptLoader:
                 del self._cache[key]
             logger.info("PromptLoader: cache invalidated", extra={"prompt_id": prompt_id})
 
-    def _parse_yaml(self, path: Path) -> Dict[str, Any]:
+    def _parse_yaml(self, path: Path) -> dict[str, Any]:
         """Parse YAML file into a Python dict.
 
         Args:
@@ -201,7 +201,7 @@ class PromptLoader:
             if not isinstance(data, dict):
                 raise PromptLoadError(f"Invalid YAML structure in '{path}': expected dict root.")
             return data
-        except (OSError, IOError) as exc:
+        except OSError as exc:
             raise PromptLoadError(f"Failed to read prompt file '{path}': {exc}") from exc
         except Exception as exc:
             if "yaml" in type(exc).__module__:
@@ -209,7 +209,7 @@ class PromptLoader:
             raise
 
     @staticmethod
-    def _minimal_yaml_parser(path: Path) -> Dict[str, Any]:
+    def _minimal_yaml_parser(path: Path) -> dict[str, Any]:
         """Fallback YAML parser when PyYAML is unavailable.
 
         Handles simple key: value pairs and multi-line 'content:' blocks.
@@ -220,7 +220,7 @@ class PromptLoader:
         Returns:
             Parsed dict with at least prompt_id, version, content keys.
         """
-        data: Dict[str, Any] = {}
+        data: dict[str, Any] = {}
         text = path.read_text(encoding="utf-8")
         lines = text.splitlines()
 
@@ -252,7 +252,7 @@ class PromptLoader:
 
     @staticmethod
     def _build_template(
-        raw: Dict[str, Any], prompt_id: str, major_version: int
+        raw: dict[str, Any], prompt_id: str, major_version: int
     ) -> PromptTemplate:
         """Construct a PromptTemplate from parsed YAML data.
 

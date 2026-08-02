@@ -15,9 +15,9 @@ from __future__ import annotations
 
 import logging
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, field_validator
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ class LLMOutputSchema(BaseModel):
     action: RoutingAction
     reason: str = Field(min_length=1, max_length=200)
     confidence: float = Field(ge=0.0, le=1.0)
-    evidence: List[str] = Field(default_factory=list)
+    evidence: list[str] = Field(default_factory=list)
 
     @field_validator("action", mode="before")
     @classmethod
@@ -100,7 +100,7 @@ class LLMOutputSchema(BaseModel):
 
     @field_validator("evidence", mode="before")
     @classmethod
-    def coerce_evidence(cls, v: Any) -> List[str]:
+    def coerce_evidence(cls, v: Any) -> list[str]:
         """Coerce evidence to list of strings.
 
         Args:
@@ -117,7 +117,7 @@ class LLMOutputSchema(BaseModel):
             return [str(item) for item in v if item is not None]
         return []
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Export as plain dictionary.
 
         Returns:
@@ -153,10 +153,10 @@ class ValidationResult:
     def __init__(
         self,
         is_valid: bool,
-        validated_data: Optional[Dict[str, Any]],
-        errors: List[str],
+        validated_data: dict[str, Any] | None,
+        errors: list[str],
         coercion_applied: bool = False,
-        hallucinated_keys: Optional[List[str]] = None,
+        hallucinated_keys: list[str] | None = None,
     ) -> None:
         self.is_valid = is_valid
         self.validated_data = validated_data
@@ -176,7 +176,7 @@ class JSONValidator:
                                Used for anti-hallucination validation.
     """
 
-    def __init__(self, context_evidence_keys: Optional[List[str]] = None) -> None:
+    def __init__(self, context_evidence_keys: list[str] | None = None) -> None:
         """Initialize JSONValidator.
 
         Args:
@@ -188,7 +188,7 @@ class JSONValidator:
             extra={"context_keys_count": len(self._context_keys)},
         )
 
-    def validate(self, data: Dict[str, Any]) -> ValidationResult:
+    def validate(self, data: dict[str, Any]) -> ValidationResult:
         """Validate a JSON dict against the LLMOutputSchema.
 
         Steps:
@@ -202,8 +202,8 @@ class JSONValidator:
         Returns:
             ValidationResult with is_valid, validated_data, and errors.
         """
-        errors: List[str] = []
-        hallucinated: List[str] = []
+        errors: list[str] = []
+        hallucinated: list[str] = []
 
         # Step 1: Pydantic validation with coercion
         try:
@@ -257,7 +257,7 @@ class JSONValidator:
             hallucinated_keys=hallucinated,
         )
 
-    def update_context_keys(self, keys: List[str]) -> None:
+    def update_context_keys(self, keys: list[str]) -> None:
         """Update the set of valid context evidence keys.
 
         Args:
@@ -270,7 +270,7 @@ class JSONValidator:
         )
 
     @staticmethod
-    def _extract_pydantic_errors(exc: Exception) -> List[str]:
+    def _extract_pydantic_errors(exc: Exception) -> list[str]:
         """Extract human-readable error strings from a Pydantic ValidationError.
 
         Args:

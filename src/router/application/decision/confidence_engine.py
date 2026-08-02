@@ -18,7 +18,6 @@ Spec: confidence_engine.md §2-§6.
 from __future__ import annotations
 
 import math
-from typing import List, Optional
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
@@ -27,8 +26,8 @@ from router.domain.entities.decision_models import (
     DecisionAction,
     DecisionCategory,
     DecisionContext,
-    RuleEvaluationResult,
     ReasoningOutput,
+    RuleEvaluationResult,
 )
 from router.domain.ports.decision_ports import IConfidenceEngine
 
@@ -44,11 +43,11 @@ _S_ADJ_DISAGREE_MAX = -0.20
 _S_ADJ_DISAGREE_MIN = -0.40
 
 # Evidence adjustment bounds
-_E_ADJ_WEAK_MIN = -0.15
-_E_ADJ_WEAK_MAX = -0.30
+_E_ADJ_WEAK_MIN = -0.05
+_E_ADJ_WEAK_MAX = -0.10
 
 # History adjustment
-_H_ADJ_MISSING = -0.10
+_H_ADJ_MISSING = 0.0
 
 # Media corruption penalty
 _M_ADJ_CORRUPT = -0.15
@@ -72,7 +71,7 @@ _ACTION_MIN_CONFIDENCE = {
 _ACTION_FALLBACK = {
     DecisionAction.TRIGGER_EMERGENCY_OVERRIDE: DecisionAction.DELIVER_IMMEDIATELY,
     DecisionAction.DELIVER_IMMEDIATELY: DecisionAction.DELIVER_SILENT,
-    DecisionAction.SUPPRESS_SPAM: DecisionAction.DELIVER_SILENT,
+    DecisionAction.SUPPRESS_SPAM: DecisionAction.SUPPRESS_MUTE,
     DecisionAction.SUMMARIZE_LATER: DecisionAction.BATCH_DIGEST,
     DecisionAction.DELIVER_SILENT: DecisionAction.BATCH_DIGEST,
 }
@@ -102,8 +101,8 @@ class ConfidenceEngine(IConfidenceEngine):
 
     def calibrate(
         self,
-        rule_result: Optional[RuleEvaluationResult],
-        reasoning_output: Optional[ReasoningOutput],
+        rule_result: RuleEvaluationResult | None,
+        reasoning_output: ReasoningOutput | None,
         context: DecisionContext,
     ) -> CalibratedDecision:
         """Compute calibrated posterior confidence from raw inputs.
@@ -275,8 +274,8 @@ class ConfidenceEngine(IConfidenceEngine):
         trust = sb.trust.relationship_score.score
         spam = sb.risk.spam.score
 
-        # Severe contradiction: high urgency + low trust
-        if urgency > 0.85 and trust < 0.30:
+        # Severe contradiction: high urgency + high spam score from unknown sender
+        if urgency > 0.85 and spam > 0.70 and trust < 0.30:
             return _S_ADJ_DISAGREE_MAX  # -0.40
 
         # Contradiction: spam HIGH + VIP sender

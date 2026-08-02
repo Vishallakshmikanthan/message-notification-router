@@ -2,7 +2,6 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
-from typing import Optional
 
 from router.application.context.sub_builders import (
     BehaviourContextBuilder,
@@ -71,7 +70,7 @@ class ParallelContextBuilderPipeline:
         self,
         payload: RawMessagePayload,
         registry: ContextRepositoryRegistry,
-        cache: Optional[ContextCache] = None,
+        cache: ContextCache | None = None,
     ) -> UnvalidatedContextBag:
         """Execute Stage 1 independent builders concurrently, followed by Stage 2 dependent synthesis."""
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:

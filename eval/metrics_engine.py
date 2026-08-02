@@ -10,13 +10,11 @@ Spec: evaluation_framework.md §2 & §3.
 
 from __future__ import annotations
 
-import math
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import Dict, List, Sequence, Tuple, Union
-
 
 # Severity Cost Matrix (evaluation_framework.md §2.2 & Hackerrank canonical actions: notify, digest, mute)
-SEVERITY_COST_MATRIX: Dict[Tuple[str, str], int] = {
+SEVERITY_COST_MATRIX: dict[tuple[str, str], int] = {
     # True Class -> Predicted Class : Penalty Points
     ("notify", "notify"): 0,
     ("notify", "digest"): 8,   # HIGH FAIL: Urgent missed or delayed
@@ -32,7 +30,7 @@ SEVERITY_COST_MATRIX: Dict[Tuple[str, str], int] = {
 }
 
 # Legacy mapping for backwards compatibility with test inputs
-_ACTION_NORMALIZATION: Dict[str, str] = {
+_ACTION_NORMALIZATION: dict[str, str] = {
     "NOTIFY_IMMEDIATELY": "notify",
     "DELIVER_IMMEDIATELY": "notify",
     "TRIGGER_EMERGENCY_OVERRIDE": "notify",
@@ -67,15 +65,15 @@ class EvaluationMetricsResult:
 
     accuracy: float
     macro_f1: float
-    precision_per_action: Dict[str, float]
-    recall_per_action: Dict[str, float]
-    f1_per_action: Dict[str, float]
+    precision_per_action: dict[str, float]
+    recall_per_action: dict[str, float]
+    f1_per_action: dict[str, float]
     total_penalty_score: int
     penalty_per_1000: float
     ece_score: float
     brier_score: float
     passed_gates: bool
-    gate_failures: List[str] = field(default_factory=list)
+    gate_failures: list[str] = field(default_factory=list)
 
 
 class MetricsEngine:
@@ -109,17 +107,17 @@ class MetricsEngine:
         norm_pred = [normalize_action(p) for p in y_pred]
 
         # 1. Classification Metrics
-        correct = sum(1 for t, p in zip(norm_true, norm_pred) if t == p)
+        correct = sum(1 for t, p in zip(norm_true, norm_pred, strict=False) if t == p)
         accuracy = correct / n
 
-        precision_map: Dict[str, float] = {}
-        recall_map: Dict[str, float] = {}
-        f1_map: Dict[str, float] = {}
+        precision_map: dict[str, float] = {}
+        recall_map: dict[str, float] = {}
+        f1_map: dict[str, float] = {}
 
         for action in VALID_ACTIONS:
-            tp = sum(1 for t, p in zip(norm_true, norm_pred) if t == action and p == action)
-            fp = sum(1 for t, p in zip(norm_true, norm_pred) if t != action and p == action)
-            fn = sum(1 for t, p in zip(norm_true, norm_pred) if t == action and p != action)
+            tp = sum(1 for t, p in zip(norm_true, norm_pred, strict=False) if t == action and p == action)
+            fp = sum(1 for t, p in zip(norm_true, norm_pred, strict=False) if t != action and p == action)
+            fn = sum(1 for t, p in zip(norm_true, norm_pred, strict=False) if t == action and p != action)
 
             prec = tp / (tp + fp) if (tp + fp) > 0 else 0.0
             rec = tp / (tp + fn) if (tp + fn) > 0 else 0.0
@@ -133,7 +131,7 @@ class MetricsEngine:
 
         # 2. Risk-Weighted Penalty Matrix
         total_penalty = 0
-        for t, p in zip(norm_true, norm_pred):
+        for t, p in zip(norm_true, norm_pred, strict=False):
             penalty = SEVERITY_COST_MATRIX.get((t, p), 5)  # default penalty 5 for unknown
             total_penalty += penalty
 
@@ -184,9 +182,9 @@ class MetricsEngine:
         if n == 0:
             return 0.0
 
-        bins: List[List[Tuple[bool, float]]] = [[] for _ in range(num_bins)]
+        bins: list[list[tuple[bool, float]]] = [[] for _ in range(num_bins)]
 
-        for t, p, c in zip(y_true, y_pred, confidences):
+        for t, p, c in zip(y_true, y_pred, confidences, strict=False):
             is_correct = (t == p)
             bin_idx = min(int(c * num_bins), num_bins - 1)
             bins[bin_idx].append((is_correct, c))
@@ -218,6 +216,6 @@ class MetricsEngine:
 
         squared_errors = [
             (c - (1.0 if t == p else 0.0)) ** 2
-            for t, p, c in zip(y_true, y_pred, confidences)
+            for t, p, c in zip(y_true, y_pred, confidences, strict=False)
         ]
         return sum(squared_errors) / n

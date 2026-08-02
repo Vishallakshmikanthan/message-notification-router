@@ -16,8 +16,8 @@ Spec: rule_engine.md §2 LLM Bypass Matrix, §3 Rule Catalog.
 from __future__ import annotations
 
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, List, Optional
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
@@ -69,7 +69,7 @@ class RuleEngineV2(IRuleEngineV2):
 
     def __init__(self) -> None:
         """Initialize and register all rules sorted by priority (DESC)."""
-        self._rules: List[_Rule] = []
+        self._rules: list[_Rule] = []
         self._register_all_rules()
         self._rules.sort(key=lambda r: (-r.priority, r.rule_id))
         logger.info(
@@ -184,10 +184,7 @@ class RuleEngineV2(IRuleEngineV2):
             category=DecisionCategory.PERSONAL_URGENT,
             bypass_llm=True,
             confidence=1.0,
-            condition=lambda ctx: (
-                ctx.signal_bundle.urgency.emergency.score > 0.85
-                and ctx.signal_bundle.personal_sender_known
-            ),
+            condition=lambda ctx: ctx.signal_bundle.urgency.emergency.score >= 0.85,
         )
         self._register(
             rule_id="RULE_FAMILY_EMERGENCY_001",
@@ -250,7 +247,41 @@ class RuleEngineV2(IRuleEngineV2):
             category=DecisionCategory.SPAM_VIRAL,
             bypass_llm=True,
             confidence=0.95,
-            condition=lambda ctx: ctx.signal_bundle.risk.scam.score >= 0.95,
+            condition=lambda ctx: ctx.signal_bundle.risk.scam.score >= 0.85,
+        )
+        self._register(
+            rule_id="RULE_HEALTH_LAB_RESULTS_001",
+            description="Hospital or medical lab report alert: deliver immediately.",
+            priority=95,
+            action=DecisionAction.DELIVER_IMMEDIATELY,
+            category=DecisionCategory.PERSONAL_URGENT,
+            bypass_llm=True,
+            confidence=0.95,
+            condition=lambda ctx: any(
+                kw in (
+                    (ctx.message_context.core_message and ctx.message_context.core_message.cleaned_text)
+                    or ctx.message_context.message_text
+                    or ""
+                ).lower()
+                for kw in ["hospital", "lab result", "doctor alert", "prescription ready", "clinic alert", "patient alert"]
+            ),
+        )
+        self._register(
+            rule_id="RULE_CHAIN_SPAM_001",
+            description="Broadcast viral spam or chain letter detected.",
+            priority=95,
+            action=DecisionAction.SUPPRESS_SPAM,
+            category=DecisionCategory.SPAM_VIRAL,
+            bypass_llm=True,
+            confidence=0.95,
+            condition=lambda ctx: any(
+                kw in (
+                    (ctx.message_context.core_message and ctx.message_context.core_message.cleaned_text)
+                    or ctx.message_context.message_text
+                    or ""
+                ).lower()
+                for kw in ["forward this to", "forward to 10", "chain letter", "unsolicited broadcast", "forward this message"]
+            ),
         )
         self._register(
             rule_id="RULE_EXPLICIT_GROUP_MUTE_001",
@@ -278,6 +309,8 @@ class RuleEngineV2(IRuleEngineV2):
             confidence=0.95,
             condition=lambda ctx: (
                 ctx.signal_bundle.is_quiet_hours
+                and ctx.signal_bundle.risk.spam.score <= 0.50
+                and ctx.signal_bundle.risk.scam.score <= 0.50
                 and ctx.signal_bundle.trust.relationship_score.score < 0.85
                 and ctx.signal_bundle.urgency_score < 0.85
             ),
@@ -326,6 +359,29 @@ class RuleEngineV2(IRuleEngineV2):
             ),
         )
         self._register(
+            rule_id="RULE_FLIGHT_DEPARTURE_001",
+            description="Flight departure or gate change notification: deliver immediately.",
+            priority=96,
+            action=DecisionAction.DELIVER_IMMEDIATELY,
+            category=DecisionCategory.TRANSACTIONAL,
+            bypass_llm=True,
+            confidence=0.95,
+            condition=lambda ctx: ctx.signal_bundle.urgency.time_sensitive_event.score >= 0.85,
+        )
+        self._register(
+            rule_id="RULE_PAYMENT_REMINDER_001",
+            description="Impending bill due date or payment reminder: deliver immediately.",
+            priority=95,
+            action=DecisionAction.DELIVER_IMMEDIATELY,
+            category=DecisionCategory.TRANSACTIONAL,
+            bypass_llm=True,
+            confidence=0.90,
+            condition=lambda ctx: (
+                ctx.signal_bundle.urgency.payment.score > 0.80
+                and ctx.signal_bundle.risk.scam.score < 0.60
+            ),
+        )
+        self._register(
             rule_id="RULE_REPEAT_PROMO_001",
             description="Repeated vendor promotions exceeding daily threshold.",
             priority=85,
@@ -336,19 +392,6 @@ class RuleEngineV2(IRuleEngineV2):
             condition=lambda ctx: (
                 ctx.signal_bundle.business.promotional_intent.score > 0.80
                 and ctx.signal_bundle.risk.spam.score > 0.60
-            ),
-        )
-        self._register(
-            rule_id="RULE_PAYMENT_REMINDER_001",
-            description="Impending bill due date within 24 hours.",
-            priority=85,
-            action=DecisionAction.DELIVER_IMMEDIATELY,
-            category=DecisionCategory.TRANSACTIONAL,
-            bypass_llm=True,
-            confidence=0.90,
-            condition=lambda ctx: (
-                ctx.signal_bundle.urgency.payment.score > 0.80
-                and ctx.signal_bundle.urgency.deadline.score > 0.70
             ),
         )
         self._register(

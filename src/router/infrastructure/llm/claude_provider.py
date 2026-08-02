@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from router.application.prompts.prompt_builder import BuiltPrompt
 from router.infrastructure.llm.output_parser import OutputParser, ParseResult
@@ -57,10 +57,10 @@ class ClaudeProvider:
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         model: str = _DEFAULT_CLAUDE_MODEL,
-        retry_manager: Optional[RetryManager] = None,
-        output_parser: Optional[OutputParser] = None,
+        retry_manager: RetryManager | None = None,
+        output_parser: OutputParser | None = None,
         timeout_secs: float = _DEFAULT_TIMEOUT_SECS,
     ) -> None:
         """Initialize ClaudeProvider.
@@ -83,7 +83,7 @@ class ClaudeProvider:
             extra={"model": model, "client_available": self._client is not None},
         )
 
-    def complete(self, prompt: BuiltPrompt) -> Dict[str, Any]:
+    def complete(self, prompt: BuiltPrompt) -> dict[str, Any]:
         """Send a prompt to Claude and return the parsed JSON response.
 
         Args:
@@ -178,7 +178,7 @@ class ClaudeProvider:
         ]
 
     @staticmethod
-    def _read_api_key() -> Optional[str]:
+    def _read_api_key() -> str | None:
         """Read Anthropic API key from environment.
 
         Returns:
@@ -190,7 +190,7 @@ class ClaudeProvider:
             logger.warning("ANTHROPIC_API_KEY not set in environment")
         return key
 
-    def _init_client(self) -> Optional[Any]:
+    def _init_client(self) -> Any | None:
         """Initialize the Anthropic client SDK.
 
         Returns:
@@ -209,7 +209,7 @@ class ClaudeProvider:
             return None
 
     @staticmethod
-    def _mock_response() -> Dict[str, Any]:
+    def _mock_response() -> dict[str, Any]:
         """Return a deterministic mock response when no client is available.
 
         Returns:

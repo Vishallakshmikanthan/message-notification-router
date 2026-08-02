@@ -1,7 +1,6 @@
 """FileManager implementation for disk file system auditing and path resolution."""
 
 import os
-from typing import Set
 
 from router.core.logging.logger import get_logger
 
@@ -14,12 +13,12 @@ class FileManager:
     def __init__(self, media_dir: str = "./dataset/media") -> None:
         """Initialize FileManager with media directory path."""
         self.media_dir = media_dir
-        self._valid_paths: Set[str] = set()
+        self._valid_paths: set[str] = set()
 
-    def audit_media_directories(self) -> Set[str]:
+    def audit_media_directories(self) -> set[str]:
         """Audit physical media directories and cache valid file paths."""
         logger.info("Auditing media directory", path=self.media_dir)
-        valid_paths: Set[str] = set()
+        valid_paths: set[str] = set()
         if os.path.exists(self.media_dir) and os.path.isdir(self.media_dir):
             for root, _, files in os.walk(self.media_dir):
                 for file in files:

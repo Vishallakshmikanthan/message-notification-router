@@ -1,6 +1,6 @@
 """End-to-end integration tests for RetrievalEngine 10-Stage Pipeline."""
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from router.application.retrieval.retrieval_engine import RetrievalEngine
 from router.domain.entities.context import (
@@ -10,8 +10,6 @@ from router.domain.entities.context import (
 from router.domain.entities.evidence import EvidenceBundle
 from router.domain.entities.history import HistoricalMessage
 from router.domain.entities.sub_contexts import (
-    DEFAULT_BUSINESS_CONTEXT,
-    DEFAULT_USER_CONTEXT,
     BusinessContext,
     UserContext,
 )
@@ -28,7 +26,7 @@ def test_retrieval_engine_pipeline_end_to_end() -> None:
         sender_id="bank_xyz",
         conversation_type="business",
         message_text="OTP 481920 is your verification code for bank login.",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
         business_id="biz_bank_xyz",
     )
     msg2 = HistoricalMessage(
@@ -37,7 +35,7 @@ def test_retrieval_engine_pipeline_end_to_end() -> None:
         sender_id="promo_store",
         conversation_type="business",
         message_text="50% off discount sale today! Click here to shop.",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
         business_id="biz_promo",
     )
 
@@ -123,7 +121,7 @@ def test_retrieval_engine_caching() -> None:
         sender_id="friend_alice",
         conversation_type="personal",
         message_text="Hey Mary, see you at 6 PM for dinner!",
-        created_at=datetime.now(timezone.utc),
+        created_at=datetime.now(UTC),
     )
 
     engine.index_corpus([msg])

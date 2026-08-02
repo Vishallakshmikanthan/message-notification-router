@@ -1,7 +1,8 @@
 """JSON Audit Logger for per-message explainability & telemetry."""
 
 import datetime
-from typing import Any, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.core.logging.logger import get_logger
 
@@ -27,7 +28,7 @@ class AuditLogger:
         record = {
             "audit_version": "1.0.0",
             "correlation_id": correlation_id,
-            "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "timestamp_utc": datetime.datetime.now(datetime.UTC).isoformat(),
             "message_id": message_id,
             "user_id_hash": user_id,
             "decision": {

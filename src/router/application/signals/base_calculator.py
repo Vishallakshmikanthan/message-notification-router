@@ -1,7 +1,8 @@
 """Abstract base SignalCalculator class extending ISignalCalculator port."""
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Mapping
+from collections.abc import Mapping
+from typing import Any
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.signal import SignalExplainability, SignalValue
@@ -46,7 +47,7 @@ class BaseSignalCalculator(ISignalCalculator, ABC):
         raw_value: float,
         primary_driver: str,
         rationale: str,
-        contributing_factors: Dict[str, float] | None = None,
+        contributing_factors: dict[str, float] | None = None,
     ) -> SignalValue:
         """Helper method to construct bounded SignalValue with explainability metadata."""
         clamped_score = max(0.0, min(1.0, float(score)))

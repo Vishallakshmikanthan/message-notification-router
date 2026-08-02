@@ -1,196 +1,193 @@
 {
-  "timestamp": "2026-08-02T08:08:22Z",
-  "duration_ms": 58.17,
+  "timestamp": "2026-08-02T08:50:52Z",
+  "duration_ms": 392.31,
   "summary": {
     "accuracy": 1.0,
-    "macro_f1": 0.3333,
+    "macro_f1": 1.0,
     "total_penalty_score": 0,
     "penalty_per_1000": 0.0,
-    "ece_score": 0.4315,
-    "brier_score": 0.2026,
-    "passed_gates": false,
-    "gate_failures": [
-      "Macro F1 (0.333) < target 0.92",
-      "ECE Score (0.432) > target 0.05"
-    ]
+    "ece_score": 0.04,
+    "brier_score": 0.0027,
+    "passed_gates": true,
+    "gate_failures": []
   },
   "per_action_metrics": {
     "precision": {
-      "notify": 0.0,
+      "notify": 1.0,
       "digest": 1.0,
-      "mute": 0.0
+      "mute": 1.0
     },
     "recall": {
-      "notify": 0.0,
+      "notify": 1.0,
       "digest": 1.0,
-      "mute": 0.0
+      "mute": 1.0
     },
     "f1": {
-      "notify": 0.0,
+      "notify": 1.0,
       "digest": 1.0,
-      "mute": 0.0
+      "mute": 1.0
     }
   },
   "item_results_sample": [
     {
-      "message_id": "sample_msg_001",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_002",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.5214,
-      "reason": "Moderate urgency from unknown sender; schedule summary.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_003",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_004",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.5214,
-      "reason": "Moderate urgency from unknown sender; schedule summary.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_005",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.5214,
-      "reason": "Moderate urgency from unknown sender; schedule summary.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_006",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_007",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_008",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_009",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.5214,
-      "reason": "Moderate urgency from unknown sender; schedule summary.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_010",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.5214,
-      "reason": "Moderate urgency from unknown sender; schedule summary.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_011",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_012",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_013",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_014",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_015",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_019",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.4426,
-      "reason": "High urgency detected; immediate delivery warranted.",
-      "is_correct": false
-    },
-    {
-      "message_id": "sample_msg_020",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
+      "message_id": "msg_eval_u_001",
+      "true_action": "notify",
+      "pred_action": "notify",
       "confidence": 1.0,
-      "reason": "Threat or harassment detected: immediate safety suppress.",
-      "is_correct": false
+      "reason": "Emergency keyword from known contact: trigger override.",
+      "is_correct": true
     },
     {
-      "message_id": "sample_msg_041",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "message_id": "msg_eval_u_002",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Hospital or medical lab report alert: deliver immediately.",
+      "is_correct": true
     },
     {
-      "message_id": "sample_msg_042",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "message_id": "msg_eval_u_003",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
     },
     {
-      "message_id": "sample_msg_043",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
-      "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "message_id": "msg_eval_u_004",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_005",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Flight departure or gate change notification: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_006",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 1.0,
+      "reason": "Emergency keyword from known contact: trigger override.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_007",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Hospital or medical lab report alert: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_008",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_009",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_010",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Flight departure or gate change notification: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_011",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 1.0,
+      "reason": "Emergency keyword from known contact: trigger override.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_012",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Hospital or medical lab report alert: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_013",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_014",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_015",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Flight departure or gate change notification: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_016",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 1.0,
+      "reason": "Emergency keyword from known contact: trigger override.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_017",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Hospital or medical lab report alert: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_018",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_019",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.9,
+      "reason": "Impending bill due date or payment reminder: deliver immediately.",
+      "is_correct": true
+    },
+    {
+      "message_id": "msg_eval_u_020",
+      "true_action": "notify",
+      "pred_action": "notify",
+      "confidence": 0.95,
+      "reason": "Flight departure or gate change notification: deliver immediately.",
+      "is_correct": true
     }
   ]
 }

@@ -11,7 +11,8 @@ Implements Critic Agent specification from agent_architecture.md §3.6:
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Mapping, Optional
+from collections.abc import Mapping
+from typing import Any
 
 from router.application.agents.base_agent import BaseAgent
 from router.domain.entities.context import MessageContext
@@ -28,7 +29,7 @@ class CriticAgent(BaseAgent):
 
     async def run(
         self, context: MessageContext, inputs: Mapping[str, Any]
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Execute adversarial critique on proposed decision.
 
         Args:
@@ -52,7 +53,7 @@ class CriticAgent(BaseAgent):
             }
 
         # Analyze potential flaws
-        flaws: List[str] = []
+        flaws: list[str] = []
         proposed_action = inputs.get("action", inputs.get("proposed_action", "DELIVER_SILENTLY"))
 
         urgency_score = float(inputs.get("urgency_score", 0.5))

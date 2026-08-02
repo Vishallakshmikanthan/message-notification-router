@@ -17,8 +17,7 @@ from __future__ import annotations
 
 import hashlib
 import logging
-from dataclasses import dataclass, field
-from typing import Dict, Optional
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
@@ -104,8 +103,8 @@ class PromptCache:
         """
         self._max_entries = max_entries
         # Keyed by provider name → {fingerprint: PromptCacheEntry}
-        self._entries: Dict[str, Dict[str, PromptCacheEntry]] = {}
-        self._stats: Dict[str, CacheStats] = {}
+        self._entries: dict[str, dict[str, PromptCacheEntry]] = {}
+        self._stats: dict[str, CacheStats] = {}
         logger.info("PromptCache initialized", extra={"max_entries": max_entries})
 
     def check(self, provider: str, system_prompt: str) -> tuple[bool, str]:
@@ -195,7 +194,7 @@ class PromptCache:
 
         return fingerprint
 
-    def get_entry(self, provider: str, fingerprint: str) -> Optional[PromptCacheEntry]:
+    def get_entry(self, provider: str, fingerprint: str) -> PromptCacheEntry | None:
         """Retrieve a cached entry by fingerprint.
 
         Args:
@@ -207,7 +206,7 @@ class PromptCache:
         """
         return self._entries.get(provider, {}).get(fingerprint)
 
-    def get_stats(self, provider: Optional[str] = None) -> Dict[str, CacheStats]:
+    def get_stats(self, provider: str | None = None) -> dict[str, CacheStats]:
         """Return cache statistics per provider.
 
         Args:

@@ -12,10 +12,10 @@ Spec: decision_engine.md §1 Component Breakdown — DecisionLogger.
 
 from __future__ import annotations
 
-import json
 import threading
-from datetime import datetime, timezone
-from typing import Any, Callable, Dict, List, Optional
+from collections.abc import Callable
+from datetime import UTC, datetime
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
@@ -49,7 +49,7 @@ class DecisionLogger(IDecisionLogger):
 
     def __init__(
         self,
-        audit_sink: Optional[Callable[[Dict[str, Any]], None]] = None,
+        audit_sink: Callable[[dict[str, Any]], None] | None = None,
         async_logging: bool = True,
     ) -> None:
         """Initialize DecisionLogger with optional audit sink.
@@ -139,7 +139,7 @@ class DecisionLogger(IDecisionLogger):
     def _build_audit_record(
         decision_result: DecisionResult,
         context: DecisionContext,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Build the complete structured audit record.
 
         Args:
@@ -171,7 +171,7 @@ class DecisionLogger(IDecisionLogger):
             # Correlation IDs
             "execution_id": decision_result.decision_id,
             "context_id": decision_result.context_id,
-            "logged_at": datetime.now(timezone.utc).isoformat(),
+            "logged_at": datetime.now(UTC).isoformat(),
             # Decision outcome
             "action": str(decision_result.action),
             "category": str(decision_result.category),

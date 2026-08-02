@@ -11,8 +11,7 @@ Spec: performance.md §1 & §2.
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
-from typing import Dict, List
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +35,7 @@ class PerformanceMetricsTracker:
 
     def __init__(self, cost_per_1k_tokens: float = 0.00015) -> None:
         """Initialize tracker."""
-        self.latencies_ms: List[float] = []
+        self.latencies_ms: list[float] = []
         self.rule_hits = 0
         self.llm_calls = 0
         self.tokens_used = 0

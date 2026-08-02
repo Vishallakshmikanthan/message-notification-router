@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +28,7 @@ MAX_COMPLETION_TOKENS = 150
 _CHARS_PER_TOKEN = 3.5
 
 # Signal field short names mapping
-_SIGNAL_SHORT_NAMES: Dict[str, str] = {
+_SIGNAL_SHORT_NAMES: dict[str, str] = {
     "urgency_score": "urgency",
     "spam_score": "spam",
     "scam_score": "scam",
@@ -88,7 +88,7 @@ class TokenOptimizer:
     def __init__(
         self,
         max_completion_tokens: int = MAX_COMPLETION_TOKENS,
-        budget: Optional[TokenBudgetAllocation] = None,
+        budget: TokenBudgetAllocation | None = None,
     ) -> None:
         """Initialize TokenOptimizer.
 
@@ -118,7 +118,7 @@ class TokenOptimizer:
         """Return token budget allocation."""
         return self._budget
 
-    def encode_signals(self, signal_dict: Dict[str, Any]) -> str:
+    def encode_signals(self, signal_dict: dict[str, Any]) -> str:
         """Encode a signal dictionary into a compact pipe-delimited string.
 
         Converts verbose signal payloads into dense KV pairs such as:
@@ -130,7 +130,7 @@ class TokenOptimizer:
         Returns:
             Compact encoded signal string.
         """
-        parts: List[str] = []
+        parts: list[str] = []
         for long_key, short_key in _SIGNAL_SHORT_NAMES.items():
             val = signal_dict.get(long_key)
             if val is None:
@@ -185,7 +185,7 @@ class TokenOptimizer:
         estimated = self.estimate_tokens(text)
         return estimated <= limit
 
-    def build_api_params(self) -> Dict[str, Any]:
+    def build_api_params(self) -> dict[str, Any]:
         """Build LLM API parameters with token constraints.
 
         Returns:

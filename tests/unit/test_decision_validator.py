@@ -12,7 +12,6 @@ Tests cover:
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import MagicMock
 
 from router.application.decision.decision_validator import DecisionValidator
@@ -22,7 +21,6 @@ from router.domain.entities.decision_models import (
     DecisionAction,
     DecisionCategory,
     DecisionContext,
-    VerificationResult,
 )
 from router.domain.entities.evidence import EvidenceBundle, EvidenceItem
 
@@ -185,17 +183,17 @@ class TestValidatorPass3Consistency:
         result = validator.validate(decision, ctx)
         assert any("REASONING_INCONSISTENCY" in e for e in result.validation_errors)
 
-    def test_suppress_spam_with_very_high_urgency_fails(self):
+    def test_suppress_spam_with_very_high_urgency_passes(self):
         validator = DecisionValidator()
         decision = _make_calibrated(
             action=DecisionAction.SUPPRESS_SPAM,
-            urgency=0.95,  # Contradictory
+            urgency=0.95,  # Valid — scam artificial urgency
             confidence=0.90,
             summary="Spam detected from sender.",
         )
         ctx = _make_context()
         result = validator.validate(decision, ctx)
-        assert any("REASONING_INCONSISTENCY" in e for e in result.validation_errors)
+        assert not any("REASONING_INCONSISTENCY" in e for e in result.validation_errors)
 
     def test_consistent_decision_passes(self):
         validator = DecisionValidator()

@@ -1,8 +1,8 @@
 """Multi-Tier CacheManager Implementation conforming to cache_strategy.md."""
 
-from collections import OrderedDict
 import time
-from typing import Any, Dict, Optional
+from collections import OrderedDict
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.domain.ports.cache_ports import ICache, ICacheManager
@@ -13,13 +13,13 @@ logger = get_logger(__name__)
 class InMemoryCacheTier(ICache):
     """In-memory LRU/TTL cache tier implementation."""
 
-    def __init__(self, name: str, max_capacity: Optional[int] = None, default_ttl: Optional[int] = None) -> None:
+    def __init__(self, name: str, max_capacity: int | None = None, default_ttl: int | None = None) -> None:
         """Initialize cache tier store with optional max capacity and default TTL."""
         self.name = name
         self.max_capacity = max_capacity
         self.default_ttl = default_ttl
         self._store: OrderedDict[str, Any] = OrderedDict()
-        self._expiry: Dict[str, float] = {}
+        self._expiry: dict[str, float] = {}
 
     def get(self, key: str) -> Any | None:
         """Get cached value by key, enforcing TTL expiration and LRU ordering."""
@@ -114,7 +114,7 @@ class CacheManager(ICacheManager):
             tier.clear()
         logger.info("Purged all cache tiers")
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self) -> dict[str, Any]:
         """Return cache manager operational stats and hit ratios."""
         hit_ratio = (self._hits / self._requests * 100.0) if self._requests > 0 else 0.0
         return {

@@ -1,6 +1,5 @@
 """Context Quality & Completeness Scoring Engine implementing mathematical Q-score formula."""
 
-from typing import Dict, List, Tuple
 
 from router.application.context.builder_pipeline import UnvalidatedContextBag
 from router.core.logging.logger import get_logger
@@ -25,9 +24,9 @@ class ContextQualityEngine:
 
     def compute_quality_score(self, bag: UnvalidatedContextBag) -> ContextQualityMetrics:
         """Calculate global completeness metric Q in [0.0, 1.0] and sub-context scores."""
-        scores: Dict[str, float] = {}
-        missing_fields: List[str] = []
-        warnings: List[str] = []
+        scores: dict[str, float] = {}
+        missing_fields: list[str] = []
+        warnings: list[str] = []
 
         # 1. User Context (0.20)
         if bag.sender.is_registered_user and bag.receiver.is_registered_user:
@@ -50,9 +49,7 @@ class ContextQualityEngine:
             warnings.append("Corrupted message payload")
 
         # 3. Media Context (0.15)
-        if not bag.media.has_media or bag.media.media_type == "TEXT_ONLY":
-            scores["media"] = 1.0
-        elif bag.media.validation_status == "VALIDATED":
+        if not bag.media.has_media or bag.media.media_type == "TEXT_ONLY" or bag.media.validation_status == "VALIDATED":
             scores["media"] = 1.0
         elif bag.media.validation_status == "PARTIAL":
             scores["media"] = 0.50
@@ -69,9 +66,7 @@ class ContextQualityEngine:
             missing_fields.append("historical_trajectory")
 
         # 5. Group Context (0.10)
-        if bag.group.group_id == "NONE":
-            scores["group"] = 1.0
-        elif bag.group.sender_role != "NON_MEMBER":
+        if bag.group.group_id == "NONE" or bag.group.sender_role != "NON_MEMBER":
             scores["group"] = 1.0
         else:
             scores["group"] = 0.50

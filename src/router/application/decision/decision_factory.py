@@ -10,8 +10,8 @@ from __future__ import annotations
 
 import time
 import uuid
-from datetime import datetime, timezone
-from typing import Any, Optional
+from datetime import UTC, datetime
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.context import MessageContext
@@ -67,12 +67,12 @@ class DecisionFactory(IDecisionFactory):
             raise ValueError("DecisionFactory: evidence_bundle must not be None.")
 
         context_id = str(uuid.uuid4())
-        timestamp = datetime.now(timezone.utc).isoformat()
+        timestamp = datetime.now(UTC).isoformat()
 
         # Extract optional sub-contexts from MessageContext
-        business_ctx: Optional[Any] = self._extract_business_context(message_context)
-        historical_ctx: Optional[Any] = self._extract_historical_context(message_context, signal_bundle)
-        user_ctx: Optional[Any] = self._extract_user_context(message_context, signal_bundle)
+        business_ctx: Any | None = self._extract_business_context(message_context)
+        historical_ctx: Any | None = self._extract_historical_context(message_context, signal_bundle)
+        user_ctx: Any | None = self._extract_user_context(message_context, signal_bundle)
 
         preprocessing_latency_ms = (time.perf_counter() - start_time) * 1000.0
 
@@ -104,7 +104,7 @@ class DecisionFactory(IDecisionFactory):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _extract_business_context(ctx: MessageContext) -> Optional[Any]:
+    def _extract_business_context(ctx: MessageContext) -> Any | None:
         """Extract business sub-context if present.
 
         Args:
@@ -124,7 +124,7 @@ class DecisionFactory(IDecisionFactory):
     @staticmethod
     def _extract_historical_context(
         ctx: MessageContext, signal_bundle: SignalBundle
-    ) -> Optional[Any]:
+    ) -> Any | None:
         """Extract historical interaction context from MessageContext and signals.
 
         Args:
@@ -145,7 +145,7 @@ class DecisionFactory(IDecisionFactory):
     @staticmethod
     def _extract_user_context(
         ctx: MessageContext, signal_bundle: SignalBundle
-    ) -> Optional[Any]:
+    ) -> Any | None:
         """Extract enriched user context from receiver context and signals.
 
         Args:
@@ -166,7 +166,7 @@ class DecisionFactory(IDecisionFactory):
         }
 
     @staticmethod
-    def _extract_media_context(ctx: MessageContext) -> Optional[Any]:
+    def _extract_media_context(ctx: MessageContext) -> Any | None:
         """Extract media context if a media payload is present.
 
         Args:

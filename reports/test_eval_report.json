@@ -1,24 +1,24 @@
 {
-  "timestamp": "2026-08-02T08:08:29Z",
-  "duration_ms": 76.76,
+  "timestamp": "2026-08-02T08:51:30Z",
+  "duration_ms": 75.83,
   "summary": {
-    "accuracy": 0.5,
-    "macro_f1": 0.2222,
-    "total_penalty_score": 225,
-    "penalty_per_1000": 2250.0,
-    "ece_score": 0.3532,
-    "brier_score": 0.1248,
+    "accuracy": 0.33,
+    "macro_f1": 0.1654,
+    "total_penalty_score": 305,
+    "penalty_per_1000": 3050.0,
+    "ece_score": 0.17,
+    "brier_score": 0.25,
     "passed_gates": false,
     "gate_failures": [
-      "Macro F1 (0.222) < target 0.92",
-      "Risk Penalty (2250.0/1000) >= target 50.0",
-      "ECE Score (0.353) > target 0.05"
+      "Macro F1 (0.165) < target 0.92",
+      "Risk Penalty (3050.0/1000) >= target 50.0",
+      "ECE Score (0.170) > target 0.05"
     ]
   },
   "per_action_metrics": {
     "precision": {
       "notify": 0.0,
-      "digest": 0.5,
+      "digest": 0.33,
       "mute": 0.0
     },
     "recall": {
@@ -28,170 +28,170 @@
     },
     "f1": {
       "notify": 0.0,
-      "digest": 0.6667,
+      "digest": 0.4962,
       "mute": 0.0
     }
   },
   "item_results_sample": [
     {
       "message_id": "synthetic_msg_001",
-      "true_action": "NOTIFY_IMMEDIATELY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_002",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     },
     {
       "message_id": "synthetic_msg_003",
-      "true_action": "SUMMARIZE_IN_BATCH",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "mute",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_004",
-      "true_action": "DO_NOT_DISTURB",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_005",
-      "true_action": "NOTIFY_IMMEDIATELY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     },
     {
       "message_id": "synthetic_msg_006",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "mute",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_007",
-      "true_action": "SUMMARIZE_IN_BATCH",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_008",
-      "true_action": "DO_NOT_DISTURB",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     },
     {
       "message_id": "synthetic_msg_009",
-      "true_action": "NOTIFY_IMMEDIATELY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "mute",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_010",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_011",
-      "true_action": "SUMMARIZE_IN_BATCH",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     },
     {
       "message_id": "synthetic_msg_012",
-      "true_action": "DO_NOT_DISTURB",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "mute",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_013",
-      "true_action": "NOTIFY_IMMEDIATELY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_014",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     },
     {
       "message_id": "synthetic_msg_015",
-      "true_action": "SUMMARIZE_IN_BATCH",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "mute",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_016",
-      "true_action": "DO_NOT_DISTURB",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_017",
-      "true_action": "NOTIFY_IMMEDIATELY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     },
     {
       "message_id": "synthetic_msg_018",
-      "true_action": "DELIVER_SILENTLY",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "mute",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_019",
-      "true_action": "SUMMARIZE_IN_BATCH",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "notify",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
     {
       "message_id": "synthetic_msg_020",
-      "true_action": "DO_NOT_DISTURB",
-      "pred_action": "DIGEST",
-      "confidence": 0.3532,
+      "true_action": "digest",
+      "pred_action": "digest",
+      "confidence": 0.5,
       "reason": "Low urgency and unknown context; added to summary queue.",
-      "is_correct": false
+      "is_correct": true
     }
   ]
 }

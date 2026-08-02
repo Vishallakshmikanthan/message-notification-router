@@ -9,14 +9,12 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
 from enum import StrEnum
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.evidence import EvidenceBundle
 from router.domain.entities.signal import SignalBundle
-
 
 # ---------------------------------------------------------------------------
 # Primary Action & Category Enums
@@ -97,7 +95,7 @@ class ActionParameters:
     banner_style: str = "HEADS_UP"
     """One of: HEADS_UP, SILENT_SHADE, SUMMARY_CARD, NONE."""
 
-    scheduled_time: Optional[str] = None
+    scheduled_time: str | None = None
     """ISO-8601 timestamp if action is BATCH_DIGEST or SUMMARIZE_LATER."""
 
     priority_level: int = 5
@@ -144,7 +142,7 @@ class VerificationStatus:
     grounding_verified: bool = True
     consistency_verified: bool = True
     fallback_applied: bool = False
-    fallback_reason: Optional[str] = None
+    fallback_reason: str | None = None
     grounding_warning: bool = False
 
 
@@ -197,16 +195,16 @@ class DecisionContext:
     evidence_bundle: EvidenceBundle
     """Top retrieved grounded context snippets."""
 
-    media_context: Optional[Any] = None
+    media_context: Any | None = None
     """Multimodal analysis metadata (image/voice context if present)."""
 
-    historical_context: Optional[Any] = None
+    historical_context: Any | None = None
     """Recent 7-day interaction velocity, missed calls, response patterns."""
 
-    business_context: Optional[Any] = None
+    business_context: Any | None = None
     """Verified business metadata, campaign IDs, transactional tags."""
 
-    user_context: Optional[Any] = None
+    user_context: Any | None = None
     """User current active status, quiet hours rules, address book status."""
 
     preprocessing_latency_ms: float = 0.0
@@ -228,13 +226,13 @@ class RuleEvaluationResult:
     rule_fired: bool
     """Indicates whether a deterministic rule matched."""
 
-    rule_id: Optional[str] = None
+    rule_id: str | None = None
     """Identifier of the fired rule (e.g., 'RULE_OTP_BYPASS_001')."""
 
-    action: Optional[DecisionAction] = None
+    action: DecisionAction | None = None
     """Action assigned by the rule."""
 
-    category: Optional[DecisionCategory] = None
+    category: DecisionCategory | None = None
     """Category classification assigned by the rule."""
 
     priority: int = 0
@@ -301,7 +299,7 @@ class ReasonerInputFrame:
     hour_of_day: int
 
     # Evidence grounding (top-5 snippets)
-    evidence_snippets: List[EvidenceSnippet] = field(default_factory=list)
+    evidence_snippets: list[EvidenceSnippet] = field(default_factory=list)
 
     # Media context (optional)
     has_media: bool = False
@@ -339,7 +337,7 @@ class ReasoningOutput:
     reasoning_summary: str
     """Concise natural language explanation (max 250 chars)."""
 
-    key_factors: List[str]
+    key_factors: list[str]
     """Primary factors driving the recommendation."""
 
     raw_confidence: float
@@ -348,7 +346,7 @@ class ReasoningOutput:
     proposed_category: DecisionCategory = DecisionCategory.PERSONAL_CASUAL
     """Suggested message domain category."""
 
-    evidence_ids_referenced: List[str] = field(default_factory=list)
+    evidence_ids_referenced: list[str] = field(default_factory=list)
     """Evidence IDs cited in the reasoning summary."""
 
     llm_latency_ms: float = 0.0
@@ -372,14 +370,14 @@ class CalibratedDecision:
     urgency_score: float
     importance_score: float
     reasoning_summary: str
-    key_factors: List[str]
-    evidence_ids: List[str]
+    key_factors: list[str]
+    evidence_ids: list[str]
 
     calibrated_confidence: float
     confidence_breakdown: ConfidenceBreakdown
 
     bypassed_llm: bool = False
-    triggered_rule_id: Optional[str] = None
+    triggered_rule_id: str | None = None
     grounding_warning: bool = False
 
 
@@ -398,10 +396,10 @@ class VerificationResult:
     is_valid: bool
     """True if decision passed all 5 validation gates."""
 
-    validation_errors: List[str] = field(default_factory=list)
+    validation_errors: list[str] = field(default_factory=list)
     """List of specific validation failure descriptions."""
 
-    suggested_fallback_action: Optional[DecisionAction] = None
+    suggested_fallback_action: DecisionAction | None = None
     """Safe fallback action if any validation gate failed."""
 
     passes_executed: int = 0
@@ -441,7 +439,7 @@ class DecisionResult:
     reasoning_summary: str
     """Structured natural language explanation (max 250 chars)."""
 
-    triggered_rule_id: Optional[str]
+    triggered_rule_id: str | None
     """Rule ID if deterministic rule fired; None if LLM was used."""
 
     bypassed_llm: bool
@@ -453,7 +451,7 @@ class DecisionResult:
     metadata: DecisionMetadata
     """Latency, confidence breakdown, audit hashes."""
 
-    evidence_ids: List[str] = field(default_factory=list)
+    evidence_ids: list[str] = field(default_factory=list)
     """IDs of evidence items grounding the reasoning."""
 
     def compute_audit_hash(self) -> str:
@@ -475,7 +473,7 @@ class DecisionResult:
 # Utility: default ActionParameters per action
 # ---------------------------------------------------------------------------
 
-_ACTION_PARAMS_MAP: Dict[DecisionAction, ActionParameters] = {
+_ACTION_PARAMS_MAP: dict[DecisionAction, ActionParameters] = {
     DecisionAction.DELIVER_IMMEDIATELY: ActionParameters(
         play_sound=True, vibrate=True, banner_style="HEADS_UP", priority_level=9
     ),
@@ -500,7 +498,7 @@ _ACTION_PARAMS_MAP: Dict[DecisionAction, ActionParameters] = {
 }
 
 
-def build_action_params(action: DecisionAction, scheduled_time: Optional[str] = None) -> ActionParameters:
+def build_action_params(action: DecisionAction, scheduled_time: str | None = None) -> ActionParameters:
     """Build default ActionParameters for a given DecisionAction.
 
     Args:

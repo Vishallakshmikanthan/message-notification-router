@@ -17,8 +17,8 @@ Spec: prompt_architecture.md §2 (Prompt Layer Architectural Specifications).
 from __future__ import annotations
 
 import logging
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from typing import Any
 
 from router.application.prompts.context_compressor import ContextCompressor
 from router.application.prompts.prompt_cache import PromptCache
@@ -49,7 +49,7 @@ class BuiltPrompt:
     estimated_tokens: int
     is_cache_hit: bool
     system_fingerprint: str
-    api_params: Dict[str, Any]
+    api_params: dict[str, Any]
 
     @property
     def full_text(self) -> str:
@@ -81,10 +81,10 @@ class PromptBuilder:
 
     def __init__(
         self,
-        loader: Optional[PromptLoader] = None,
-        compressor: Optional[ContextCompressor] = None,
-        optimizer: Optional[TokenOptimizer] = None,
-        cache: Optional[PromptCache] = None,
+        loader: PromptLoader | None = None,
+        compressor: ContextCompressor | None = None,
+        optimizer: TokenOptimizer | None = None,
+        cache: PromptCache | None = None,
         provider: str = "default",
         major_version: int = 1,
     ) -> None:
@@ -112,10 +112,10 @@ class PromptBuilder:
     def build_classification_prompt(
         self,
         message_text: str,
-        signal_dict: Dict[str, Any],
-        evidence_snippets: Optional[List[str]] = None,
-        thread_turns: Optional[List[str]] = None,
-        few_shot_examples: Optional[List[str]] = None,
+        signal_dict: dict[str, Any],
+        evidence_snippets: list[str] | None = None,
+        thread_turns: list[str] | None = None,
+        few_shot_examples: list[str] | None = None,
     ) -> BuiltPrompt:
         """Build the full Tier 1 classification prompt.
 
@@ -143,9 +143,9 @@ class PromptBuilder:
     def build_reasoning_prompt(
         self,
         message_text: str,
-        signal_dict: Dict[str, Any],
-        evidence_snippets: Optional[List[str]] = None,
-        thread_turns: Optional[List[str]] = None,
+        signal_dict: dict[str, Any],
+        evidence_snippets: list[str] | None = None,
+        thread_turns: list[str] | None = None,
     ) -> BuiltPrompt:
         """Build the Tier 2 multi-stage reasoning prompt.
 
@@ -169,7 +169,7 @@ class PromptBuilder:
     def build_repair_prompt(
         self,
         malformed_response: str,
-        schema_errors: List[str],
+        schema_errors: list[str],
     ) -> BuiltPrompt:
         """Build the Stage 4 output repair prompt (max 200 tokens).
 
@@ -183,7 +183,7 @@ class PromptBuilder:
         system_template = self._load_system()
         repair_template = self._loader.load("output_validation_prompt", self._major_version)
 
-        variables: Dict[str, Any] = {
+        variables: dict[str, Any] = {
             "malformed_response": malformed_response[:500],
             "schema_errors": "\n".join(f"- {e}" for e in schema_errors[:5]),
         }
@@ -213,10 +213,10 @@ class PromptBuilder:
         self,
         prompt_id: str,
         message_text: str,
-        signal_dict: Dict[str, Any],
-        evidence_snippets: Optional[List[str]] = None,
-        thread_turns: Optional[List[str]] = None,
-        few_shot_examples: Optional[List[str]] = None,
+        signal_dict: dict[str, Any],
+        evidence_snippets: list[str] | None = None,
+        thread_turns: list[str] | None = None,
+        few_shot_examples: list[str] | None = None,
     ) -> BuiltPrompt:
         """Internal prompt assembly pipeline.
 
@@ -320,10 +320,10 @@ class PromptBuilder:
 
     @staticmethod
     def _build_variables(
-        signal_dict: Dict[str, Any],
-        evidence_snippets: List[str],
+        signal_dict: dict[str, Any],
+        evidence_snippets: list[str],
         message_text: str,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Build template variable substitution dict.
 
         Args:

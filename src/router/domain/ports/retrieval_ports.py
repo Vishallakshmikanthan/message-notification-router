@@ -1,12 +1,11 @@
 """Abstract Retrieval Interface Ports for Domain and Application Layers."""
 
 from abc import ABC, abstractmethod
-from typing import List, Sequence
+from collections.abc import Sequence
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.evidence import (
     EvidenceBundle,
-    EvidenceItem,
     RetrievalCandidate,
     StructuredQuery,
 )
@@ -31,7 +30,7 @@ class IBM25Service(ABC):
         ...
 
     @abstractmethod
-    def search(self, query: StructuredQuery, top_k: int = 100) -> List[RetrievalCandidate]:
+    def search(self, query: StructuredQuery, top_k: int = 100) -> list[RetrievalCandidate]:
         """Perform sparse keyword search and return top_k candidates."""
         ...
 
@@ -40,7 +39,7 @@ class IEmbeddingService(ABC):
     """Abstract Interface for Dense Vector Generation and Vector Search."""
 
     @abstractmethod
-    def generate_embedding(self, text: str) -> List[float]:
+    def generate_embedding(self, text: str) -> list[float]:
         """Generate 384-dimensional L2-normalized vector embedding."""
         ...
 
@@ -50,7 +49,7 @@ class IEmbeddingService(ABC):
         ...
 
     @abstractmethod
-    def search(self, query_vector: List[float], top_k: int = 100) -> List[RetrievalCandidate]:
+    def search(self, query_vector: list[float], top_k: int = 100) -> list[RetrievalCandidate]:
         """Perform dense nearest-neighbor similarity search."""
         ...
 
@@ -61,10 +60,10 @@ class IHybridRetriever(ABC):
     @abstractmethod
     def fuse_results(
         self,
-        bm25_candidates: List[RetrievalCandidate],
-        dense_candidates: List[RetrievalCandidate],
+        bm25_candidates: list[RetrievalCandidate],
+        dense_candidates: list[RetrievalCandidate],
         query: StructuredQuery,
-    ) -> List[RetrievalCandidate]:
+    ) -> list[RetrievalCandidate]:
         """Fuse sparse and dense candidates using RRF and dynamic weighting."""
         ...
 
@@ -74,8 +73,8 @@ class IReranker(ABC):
 
     @abstractmethod
     def rerank(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Re-rank candidate pool using Cross-Encoder and Multi-Factor scoring."""
         ...
 
@@ -85,8 +84,8 @@ class IEvidenceValidator(ABC):
 
     @abstractmethod
     def validate_candidates(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Execute 5 validation gates on candidate pool."""
         ...
 
@@ -96,7 +95,7 @@ class IEvidenceAssembler(ABC):
 
     @abstractmethod
     def assemble_bundle(
-        self, validated_candidates: List[RetrievalCandidate], context: MessageContext
+        self, validated_candidates: list[RetrievalCandidate], context: MessageContext
     ) -> EvidenceBundle:
         """Assemble immutable EvidenceBundle from validated candidates."""
         ...
@@ -115,12 +114,12 @@ class IEmbeddingCache(ABC):
     """Abstract Interface for Embedding Cache Tiers."""
 
     @abstractmethod
-    def get_query_embedding(self, query_text: str) -> List[float] | None:
+    def get_query_embedding(self, query_text: str) -> list[float] | None:
         """Get cached query vector."""
         ...
 
     @abstractmethod
-    def put_query_embedding(self, query_text: str, vector: List[float]) -> None:
+    def put_query_embedding(self, query_text: str, vector: list[float]) -> None:
         """Put query vector into LRU cache."""
         ...
 

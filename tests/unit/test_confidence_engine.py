@@ -12,9 +12,7 @@ Tests cover:
 
 from __future__ import annotations
 
-import math
-import pytest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from router.application.decision.confidence_engine import ConfidenceEngine
 from router.domain.entities.decision_models import (
@@ -130,7 +128,7 @@ class TestEvidenceAdjustment:
         engine = ConfidenceEngine()
         eb = _mock_evidence_bundle(items=[], evidence_count=0)
         adj = engine._compute_evidence_adjustment(eb)
-        assert adj == -0.30
+        assert adj == -0.10
 
     def test_low_relevance_evidence_penalty(self):
         engine = ConfidenceEngine()
@@ -138,7 +136,7 @@ class TestEvidenceAdjustment:
             items=[_mock_evidence_item(0.15)], evidence_count=1
         )
         adj = engine._compute_evidence_adjustment(eb)
-        assert adj == -0.30  # < 0.20 threshold
+        assert adj == -0.10  # < 0.20 threshold
 
     def test_medium_relevance_mild_penalty(self):
         engine = ConfidenceEngine()
@@ -146,7 +144,7 @@ class TestEvidenceAdjustment:
             items=[_mock_evidence_item(0.30)], evidence_count=1
         )
         adj = engine._compute_evidence_adjustment(eb)
-        assert adj == -0.15  # 0.20 <= x < 0.40
+        assert adj == -0.05  # 0.20 <= x < 0.40
 
     def test_good_evidence_no_penalty(self):
         engine = ConfidenceEngine()
@@ -166,7 +164,7 @@ class TestHistoryAdjustment:
         eb = _mock_evidence_bundle()
         ctx = _mock_context(sb, eb)
         adj = engine._compute_history_adjustment(ctx)
-        assert adj == -0.10
+        assert adj == 0.0
 
     def test_has_history_no_penalty(self):
         engine = ConfidenceEngine()

@@ -10,15 +10,12 @@ Tests cover:
 
 from __future__ import annotations
 
-import pytest
 from unittest.mock import MagicMock
 
 from router.application.decision.rule_engine_v2 import RuleEngineV2
 from router.domain.entities.decision_models import (
     DecisionAction,
-    DecisionCategory,
     DecisionContext,
-    RuleEvaluationResult,
 )
 from router.domain.entities.evidence import EvidenceBundle
 

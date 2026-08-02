@@ -1,10 +1,9 @@
 """Multi-Factor Re-ranking Service implementation matching reranking.md specification."""
 
 import hashlib
-import math
 import logging
-from datetime import datetime, timezone
-from typing import List, Set
+import math
+from datetime import UTC, datetime
 
 from router.domain.entities.context import MessageContext
 from router.domain.entities.evidence import RetrievalCandidate
@@ -36,8 +35,8 @@ class Reranker(IReranker):
         logger.info("Reranker initialized (lambda=%.2f, score_floor=%.2f)", recency_lambda, score_floor)
 
     def rerank(
-        self, candidates: List[RetrievalCandidate], context: MessageContext
-    ) -> List[RetrievalCandidate]:
+        self, candidates: list[RetrievalCandidate], context: MessageContext
+    ) -> list[RetrievalCandidate]:
         """Re-rank candidate pool using Cross-Encoder joint scoring and Multi-Factor heuristics.
 
         Args:
@@ -50,9 +49,9 @@ class Reranker(IReranker):
         if not candidates:
             return []
 
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
 
-        scored_candidates: List[RetrievalCandidate] = []
+        scored_candidates: list[RetrievalCandidate] = []
 
         for cand in candidates:
             msg = cand.historical_message
@@ -76,7 +75,7 @@ class Reranker(IReranker):
             if msg and msg.created_at:
                 msg_dt = msg.created_at
                 if msg_dt.tzinfo is None:
-                    msg_dt = msg_dt.replace(tzinfo=timezone.utc)
+                    msg_dt = msg_dt.replace(tzinfo=UTC)
                 delta_sec = (now - msg_dt).total_seconds()
                 recency_days = max(0.0, delta_sec / 86400.0)
 
@@ -135,8 +134,8 @@ class Reranker(IReranker):
                 scored_candidates.append(cand)
 
         # Exact Duplicate Hash Suppression
-        seen_hashes: Set[str] = set()
-        deduped: List[RetrievalCandidate] = []
+        seen_hashes: set[str] = set()
+        deduped: list[RetrievalCandidate] = []
 
         for cand in scored_candidates:
             msg_text = cand.historical_message.message_text if cand.historical_message else ""

@@ -2,7 +2,8 @@
 
 import csv
 import os
-from typing import Any, Dict, Mapping, Optional
+from collections.abc import Mapping
+from typing import Any
 
 from router.core.logging.logger import get_logger
 from router.domain.ports.service_ports import IDataLoader
@@ -29,18 +30,18 @@ class DataLoader(IDataLoader):
 
     def __init__(
         self,
-        user_repo: Optional[UserRepository] = None,
-        group_repo: Optional[GroupRepository] = None,
-        business_repo: Optional[BusinessRepository] = None,
-        media_repo: Optional[MediaRepository] = None,
-        history_repo: Optional[HistoryRepository] = None,
-        event_repo: Optional[EventRepository] = None,
-        summary_repo: Optional[NotificationSummaryRepository] = None,
-        message_repo: Optional[MessageRepository] = None,
-        file_manager: Optional[FileManager] = None,
-        schema_validator: Optional[SchemaValidator] = None,
-        quarantine_engine: Optional[QuarantineEngine] = None,
-        factory: Optional[DataModelFactory] = None,
+        user_repo: UserRepository | None = None,
+        group_repo: GroupRepository | None = None,
+        business_repo: BusinessRepository | None = None,
+        media_repo: MediaRepository | None = None,
+        history_repo: HistoryRepository | None = None,
+        event_repo: EventRepository | None = None,
+        summary_repo: NotificationSummaryRepository | None = None,
+        message_repo: MessageRepository | None = None,
+        file_manager: FileManager | None = None,
+        schema_validator: SchemaValidator | None = None,
+        quarantine_engine: QuarantineEngine | None = None,
+        factory: DataModelFactory | None = None,
     ) -> None:
         """Initialize DataLoader repositories, managers, and factories."""
         self.user_repo = user_repo or UserRepository()
@@ -64,7 +65,7 @@ class DataLoader(IDataLoader):
             logger.warning(f"CSV file not found: {file_path}")
             return []
         rows = []
-        with open(file_path, mode="r", encoding="utf-8-sig") as f:
+        with open(file_path, encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             for r in reader:
                 rows.append({k.strip(): v.strip() for k, v in r.items() if k})
@@ -73,7 +74,7 @@ class DataLoader(IDataLoader):
     def execute_pipeline(self, dataset_dir: str) -> Mapping[str, Any]:
         """Execute 7-stage deterministic boot data ingestion pipeline."""
         logger.info("Starting 7-stage deterministic boot pipeline", dataset_dir=dataset_dir)
-        reports: Dict[str, Any] = {}
+        reports: dict[str, Any] = {}
 
         media_dir = os.path.join(dataset_dir, "media")
         fm = self.file_manager or FileManager(media_dir=media_dir)

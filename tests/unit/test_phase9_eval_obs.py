@@ -1,8 +1,6 @@
 """Unit tests for Phase 9 Evaluation Framework & Observability."""
 
-import pytest
 from eval.metrics_engine import MetricsEngine
-from eval.output_validator import OutputCSVValidator
 from eval.regression_tester import RegressionTester
 from router.infrastructure.observability.telemetry import TelemetryCollector
 from router.infrastructure.observability.trace_manager import TraceManager

@@ -13,17 +13,12 @@ Tests cover:
 
 from __future__ import annotations
 
-import pytest
 from router.application.decision.decision_engine import DecisionEngineV2
 from router.application.decision.llm_interface import LLMTimeoutError
 from router.domain.entities.context import (
     CoreMessageContext,
     MessageContext,
     TemporalInformation,
-)
-from router.domain.entities.sub_contexts import (
-    BusinessContext,
-    UserContext,
 )
 from router.domain.value_objects.message_type import MessageType
 from router.domain.value_objects.notification_action import NotificationAction
@@ -234,7 +229,8 @@ class TestDecisionEngineV2LLMFallback:
 
     def test_llm_timeout_triggers_fallback(self):
         """When LLM times out, engine should still produce valid 5-tuple."""
-        from unittest.mock import MagicMock, patch
+        from unittest.mock import MagicMock
+
         from router.application.decision.llm_interface import LLMInterface
 
         # Create engine with a mock LLM that raises timeout
@@ -254,6 +250,7 @@ class TestDecisionEngineV2LLMFallback:
     def test_llm_service_error_triggers_fallback(self):
         """When LLM returns service error, engine should gracefully fallback."""
         from unittest.mock import MagicMock
+
         from router.application.decision.llm_interface import LLMInterface, LLMServiceError
 
         mock_llm = MagicMock(spec=LLMInterface)

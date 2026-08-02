@@ -3,7 +3,6 @@
 import hashlib
 import logging
 import time
-from typing import Dict, Optional, Tuple
 
 from router.domain.entities.evidence import EvidenceBundle
 from router.domain.ports.retrieval_ports import IRetrievalCache
@@ -16,7 +15,7 @@ class RetrievalCache(IRetrievalCache):
 
     def __init__(self) -> None:
         """Initialize RetrievalCache store."""
-        self._store: Dict[str, Tuple[EvidenceBundle, float]] = {}
+        self._store: dict[str, tuple[EvidenceBundle, float]] = {}
         self._hits = 0
         self._misses = 0
         logger.info("RetrievalCache initialized")
@@ -26,7 +25,7 @@ class RetrievalCache(IRetrievalCache):
         raw_key = f"{query_message_id}:{user_id}:{message_text.strip().lower()}"
         return hashlib.md5(raw_key.encode("utf-8")).hexdigest()
 
-    def get_bundle(self, cache_key: str) -> Optional[EvidenceBundle]:
+    def get_bundle(self, cache_key: str) -> EvidenceBundle | None:
         """Retrieve cached EvidenceBundle if key exists and TTL is valid."""
         if cache_key in self._store:
             bundle, expire_at = self._store[cache_key]

@@ -1,8 +1,7 @@
 """SignalFactory implementation for constructing immutable signal objects and default fallbacks."""
 
 import uuid
-from datetime import datetime, timezone
-from typing import Dict, Any
+from datetime import UTC, datetime
 
 from router.domain.entities.signal import (
     BehaviourSignals,
@@ -47,7 +46,7 @@ class SignalFactory:
         raw_value: float,
         primary_driver: str,
         rationale: str,
-        contributing_factors: Dict[str, float] | None = None,
+        contributing_factors: dict[str, float] | None = None,
     ) -> SignalValue:
         """Construct bounded SignalValue ensuring strictly [0.0, 1.0] limits."""
         clamped_score = max(0.0, min(1.0, float(score)))
@@ -65,7 +64,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_behaviour_signals(cls, signals: Dict[str, SignalValue]) -> BehaviourSignals:
+    def assemble_behaviour_signals(cls, signals: dict[str, SignalValue]) -> BehaviourSignals:
         """Assemble BehaviourSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return BehaviourSignals(
@@ -81,7 +80,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_risk_signals(cls, signals: Dict[str, SignalValue]) -> RiskSignals:
+    def assemble_risk_signals(cls, signals: dict[str, SignalValue]) -> RiskSignals:
         """Assemble RiskSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return RiskSignals(
@@ -96,7 +95,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_trust_signals(cls, signals: Dict[str, SignalValue]) -> TrustSignals:
+    def assemble_trust_signals(cls, signals: dict[str, SignalValue]) -> TrustSignals:
         """Assemble TrustSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return TrustSignals(
@@ -109,7 +108,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_urgency_signals(cls, signals: Dict[str, SignalValue]) -> UrgencySignals:
+    def assemble_urgency_signals(cls, signals: dict[str, SignalValue]) -> UrgencySignals:
         """Assemble UrgencySignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return UrgencySignals(
@@ -125,7 +124,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_relationship_signals(cls, signals: Dict[str, SignalValue]) -> RelationshipSignals:
+    def assemble_relationship_signals(cls, signals: dict[str, SignalValue]) -> RelationshipSignals:
         """Assemble RelationshipSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return RelationshipSignals(
@@ -135,7 +134,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_business_signals(cls, signals: Dict[str, SignalValue]) -> BusinessSignals:
+    def assemble_business_signals(cls, signals: dict[str, SignalValue]) -> BusinessSignals:
         """Assemble BusinessSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return BusinessSignals(
@@ -145,7 +144,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_group_signals(cls, signals: Dict[str, SignalValue]) -> GroupSignals:
+    def assemble_group_signals(cls, signals: dict[str, SignalValue]) -> GroupSignals:
         """Assemble GroupSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return GroupSignals(
@@ -154,7 +153,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_history_signals(cls, signals: Dict[str, SignalValue]) -> HistorySignals:
+    def assemble_history_signals(cls, signals: dict[str, SignalValue]) -> HistorySignals:
         """Assemble HistorySignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return HistorySignals(
@@ -163,7 +162,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_temporal_signals(cls, signals: Dict[str, SignalValue]) -> TemporalSignals:
+    def assemble_temporal_signals(cls, signals: dict[str, SignalValue]) -> TemporalSignals:
         """Assemble TemporalSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return TemporalSignals(
@@ -171,7 +170,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_media_signals(cls, signals: Dict[str, SignalValue]) -> MediaSignals:
+    def assemble_media_signals(cls, signals: dict[str, SignalValue]) -> MediaSignals:
         """Assemble MediaSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return MediaSignals(
@@ -179,7 +178,7 @@ class SignalFactory:
         )
 
     @classmethod
-    def assemble_conversation_signals(cls, signals: Dict[str, SignalValue]) -> ConversationSignals:
+    def assemble_conversation_signals(cls, signals: dict[str, SignalValue]) -> ConversationSignals:
         """Assemble ConversationSignals category container using dict of signal values or fallbacks."""
         f = cls.create_null_fallback
         return ConversationSignals(
@@ -190,7 +189,7 @@ class SignalFactory:
     def build_bundle(
         cls,
         message_id: str,
-        all_signals: Dict[str, SignalValue],
+        all_signals: dict[str, SignalValue],
         latency_ms: float,
         global_confidence: float,
         global_completeness: float,
@@ -199,7 +198,7 @@ class SignalFactory:
         metadata = SignalBundleMetadata(
             bundle_id=str(uuid.uuid4()),
             message_id=message_id,
-            computed_at=datetime.now(timezone.utc).isoformat(),
+            computed_at=datetime.now(UTC).isoformat(),
             calculation_latency_ms=round(latency_ms, 3),
             global_confidence=round(global_confidence, 4),
             global_completeness=round(global_completeness, 4),

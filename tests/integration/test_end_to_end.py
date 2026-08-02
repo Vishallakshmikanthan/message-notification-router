@@ -1,11 +1,9 @@
 """End-to-End Integration Test for Phase 8 & 9."""
 
-import asyncio
 import pytest
+
 from eval.evaluation_pipeline import EvaluationPipeline
-from eval.output_validator import OutputCSVValidator
 from router.application.agents.agent_orchestrator import AgentOrchestrator
-from router.application.decision.decision_engine import DecisionEngineV2
 from router.application.prompts.prompt_manager import PromptManager
 from router.infrastructure.llm.claude_provider import ClaudeProvider
 from router.infrastructure.llm.openai_provider import OpenAIProvider

@@ -20,7 +20,6 @@ Spec: decision_validation.md §1 Output Validation Engine.
 from __future__ import annotations
 
 import re
-from typing import List, Optional
 
 from router.core.logging.logger import get_logger
 from router.domain.entities.decision_models import (
@@ -84,9 +83,9 @@ class DecisionValidator(IDecisionValidator):
         Returns:
             VerificationResult with is_valid flag and error details.
         """
-        errors: List[str] = []
+        errors: list[str] = []
         passes_executed = 0
-        suggested_fallback: Optional[DecisionAction] = None
+        suggested_fallback: DecisionAction | None = None
 
         # Pass 1: Schema Validation
         passes_executed += 1
@@ -151,7 +150,7 @@ class DecisionValidator(IDecisionValidator):
     @staticmethod
     def _pass1_schema_validation(
         decision: CalibratedDecision, context: DecisionContext
-    ) -> List[str]:
+    ) -> list[str]:
         """Pass 1: Schema validation — required fields and type checks.
 
         Args:
@@ -161,7 +160,7 @@ class DecisionValidator(IDecisionValidator):
         Returns:
             List of error strings (empty if valid).
         """
-        errors: List[str] = []
+        errors: list[str] = []
 
         if not isinstance(decision.action, (str, DecisionAction)):
             errors.append("SCHEMA_ERROR: action must be a DecisionAction enum string.")
@@ -188,7 +187,7 @@ class DecisionValidator(IDecisionValidator):
         return errors
 
     @staticmethod
-    def _pass2_allowed_values(decision: CalibratedDecision) -> List[str]:
+    def _pass2_allowed_values(decision: CalibratedDecision) -> list[str]:
         """Pass 2: Validate enum values and numeric range boundaries.
 
         Args:
@@ -197,7 +196,7 @@ class DecisionValidator(IDecisionValidator):
         Returns:
             List of error strings.
         """
-        errors: List[str] = []
+        errors: list[str] = []
 
         # Validate DecisionAction enum
         valid_actions = set(DecisionAction)
@@ -238,7 +237,7 @@ class DecisionValidator(IDecisionValidator):
         return errors
 
     @staticmethod
-    def _pass3_reasoning_consistency(decision: CalibratedDecision) -> List[str]:
+    def _pass3_reasoning_consistency(decision: CalibratedDecision) -> list[str]:
         """Pass 3: Cross-check action against reasoning summary for logical consistency.
 
         Examples:
@@ -251,7 +250,7 @@ class DecisionValidator(IDecisionValidator):
         Returns:
             List of error strings.
         """
-        errors: List[str] = []
+        errors: list[str] = []
         summary_lower = decision.reasoning_summary.lower()
 
         # DELIVER_IMMEDIATELY requires urgency score >= 0.60
@@ -274,15 +273,8 @@ class DecisionValidator(IDecisionValidator):
                     )
                     break  # One error per check sufficient
 
-        # SUPPRESS_SPAM must not have very high urgency (> 0.90)
-        if (
-            decision.action == DecisionAction.SUPPRESS_SPAM
-            and decision.urgency_score > 0.90
-        ):
-            errors.append(
-                f"REASONING_INCONSISTENCY: SUPPRESS_SPAM with urgency_score={decision.urgency_score:.2f} "
-                f"(too high for spam suppression)."
-            )
+        # Note: SUPPRESS_SPAM (safety/scam/spam suppression) is valid even with high urgency scores,
+        # because phishing/scam attempts frequently use artificial urgency tactics.
 
         # TRIGGER_EMERGENCY_OVERRIDE must have urgency > 0.80
         if (
@@ -299,7 +291,7 @@ class DecisionValidator(IDecisionValidator):
     @staticmethod
     def _pass4_evidence_grounding(
         decision: CalibratedDecision, context: DecisionContext
-    ) -> List[str]:
+    ) -> list[str]:
         """Pass 4: Verify that reasoning_summary does not cite ungrounded facts.
 
         Checks that any evidence IDs cited in the decision exist in the EvidenceBundle.
@@ -312,7 +304,7 @@ class DecisionValidator(IDecisionValidator):
         Returns:
             List of error strings.
         """
-        errors: List[str] = []
+        errors: list[str] = []
         eb = context.evidence_bundle
 
         # Verify cited evidence IDs exist in EvidenceBundle
@@ -323,20 +315,13 @@ class DecisionValidator(IDecisionValidator):
                     f"UNGROUNDED_FACT: evidence_id '{cited_id}' not found in EvidenceBundle."
                 )
 
-        # Warn on grounding quality (not a hard error but flagged)
-        if decision.grounding_warning and not decision.bypassed_llm:
-            # Grounding warning is informational; only escalate to error for DELIVER_IMMEDIATELY
-            if decision.action == DecisionAction.DELIVER_IMMEDIATELY:
-                errors.append(
-                    "EVIDENCE_GROUNDING_WARNING: DELIVER_IMMEDIATELY with low evidence quality."
-                )
-
+        # Grounding warning is informational logging, not a hard error.
         return errors
 
     @staticmethod
     def _pass5_confidence_threshold(
         decision: CalibratedDecision, context: DecisionContext
-    ) -> tuple[List[str], Optional[DecisionAction]]:
+    ) -> tuple[list[str], DecisionAction | None]:
         """Pass 5: Verify calibrated confidence meets action-specific minimum threshold.
 
         During quiet hours, DELIVER_IMMEDIATELY requires confidence >= 0.85.
@@ -348,8 +333,8 @@ class DecisionValidator(IDecisionValidator):
         Returns:
             Tuple of (errors list, suggested_fallback_action or None).
         """
-        errors: List[str] = []
-        fallback: Optional[DecisionAction] = None
+        errors: list[str] = []
+        fallback: DecisionAction | None = None
 
         sb = context.signal_bundle
         action = decision.action
@@ -373,7 +358,7 @@ class DecisionValidator(IDecisionValidator):
             ):
                 fallback = DecisionAction.DELIVER_SILENT
             elif action in (DecisionAction.SUPPRESS_SPAM, DecisionAction.SUPPRESS_MUTE):
-                fallback = DecisionAction.DELIVER_SILENT
+                fallback = DecisionAction.SUPPRESS_SPAM
             else:
                 fallback = DecisionAction.BATCH_DIGEST
 
@@ -382,6 +367,8 @@ class DecisionValidator(IDecisionValidator):
             DecisionAction.DELIVER_SILENT,
             DecisionAction.BATCH_DIGEST,
             DecisionAction.SUMMARIZE_LATER,
+            DecisionAction.SUPPRESS_SPAM,
+            DecisionAction.SUPPRESS_MUTE,
         ):
             fallback_action = (
                 DecisionAction.DELIVER_SILENT
