@@ -1,18 +1,18 @@
 {
-  "timestamp": "2026-08-02T06:28:15Z",
-  "duration_ms": 143.71,
+  "timestamp": "2026-08-02T08:08:29Z",
+  "duration_ms": 76.76,
   "summary": {
     "accuracy": 0.5,
     "macro_f1": 0.2222,
     "total_penalty_score": 225,
     "penalty_per_1000": 2250.0,
-    "ece_score": 0.1088,
-    "brier_score": 0.0118,
+    "ece_score": 0.3532,
+    "brier_score": 0.1248,
     "passed_gates": false,
     "gate_failures": [
       "Macro F1 (0.222) < target 0.92",
       "Risk Penalty (2250.0/1000) >= target 50.0",
-      "ECE Score (0.109) > target 0.05"
+      "ECE Score (0.353) > target 0.05"
     ]
   },
   "per_action_metrics": {
@@ -37,7 +37,7 @@
       "message_id": "synthetic_msg_001",
       "true_action": "NOTIFY_IMMEDIATELY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -45,7 +45,7 @@
       "message_id": "synthetic_msg_002",
       "true_action": "DELIVER_SILENTLY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -53,7 +53,7 @@
       "message_id": "synthetic_msg_003",
       "true_action": "SUMMARIZE_IN_BATCH",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -61,7 +61,7 @@
       "message_id": "synthetic_msg_004",
       "true_action": "DO_NOT_DISTURB",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -69,7 +69,7 @@
       "message_id": "synthetic_msg_005",
       "true_action": "NOTIFY_IMMEDIATELY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -77,7 +77,7 @@
       "message_id": "synthetic_msg_006",
       "true_action": "DELIVER_SILENTLY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -85,7 +85,7 @@
       "message_id": "synthetic_msg_007",
       "true_action": "SUMMARIZE_IN_BATCH",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -93,7 +93,7 @@
       "message_id": "synthetic_msg_008",
       "true_action": "DO_NOT_DISTURB",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -101,7 +101,7 @@
       "message_id": "synthetic_msg_009",
       "true_action": "NOTIFY_IMMEDIATELY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -109,7 +109,7 @@
       "message_id": "synthetic_msg_010",
       "true_action": "DELIVER_SILENTLY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -117,7 +117,7 @@
       "message_id": "synthetic_msg_011",
       "true_action": "SUMMARIZE_IN_BATCH",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -125,7 +125,7 @@
       "message_id": "synthetic_msg_012",
       "true_action": "DO_NOT_DISTURB",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -133,7 +133,7 @@
       "message_id": "synthetic_msg_013",
       "true_action": "NOTIFY_IMMEDIATELY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -141,7 +141,7 @@
       "message_id": "synthetic_msg_014",
       "true_action": "DELIVER_SILENTLY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -149,7 +149,7 @@
       "message_id": "synthetic_msg_015",
       "true_action": "SUMMARIZE_IN_BATCH",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -157,7 +157,7 @@
       "message_id": "synthetic_msg_016",
       "true_action": "DO_NOT_DISTURB",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -165,7 +165,7 @@
       "message_id": "synthetic_msg_017",
       "true_action": "NOTIFY_IMMEDIATELY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -173,7 +173,7 @@
       "message_id": "synthetic_msg_018",
       "true_action": "DELIVER_SILENTLY",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -181,7 +181,7 @@
       "message_id": "synthetic_msg_019",
       "true_action": "SUMMARIZE_IN_BATCH",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     },
@@ -189,7 +189,7 @@
       "message_id": "synthetic_msg_020",
       "true_action": "DO_NOT_DISTURB",
       "pred_action": "DIGEST",
-      "confidence": 0.1088,
+      "confidence": 0.3532,
       "reason": "Low urgency and unknown context; added to summary queue.",
       "is_correct": false
     }

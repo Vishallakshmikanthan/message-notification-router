@@ -15,9 +15,19 @@ import argparse
 import csv
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 
+# Ensure 'src' and project root directory are in sys.path for resolution
+root_dir = Path(__file__).resolve().parent.parent.parent
+src_dir = root_dir / "src"
+if str(src_dir) not in sys.path:
+    sys.path.insert(0, str(src_dir))
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
+
+from eval.evaluation_pipeline import EvaluationPipeline
 from eval.output_validator import OutputCSVValidator
 from router.application.context.context_assembler import ContextAssembler
 from router.application.data.data_manager import DataManager

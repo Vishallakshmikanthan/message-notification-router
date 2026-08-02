@@ -123,6 +123,13 @@ class ConfidenceEngine(IConfidenceEngine):
         sb = context.signal_bundle
         eb = context.evidence_bundle
 
+        # Extract retrieved evidence IDs from EvidenceBundle (actual historical message IDs)
+        retrieved_ids = [
+            item.message_id
+            for item in eb.items
+            if item.message_id and str(item.message_id).strip().lower() != "none"
+        ]
+
         # ---- Extract raw decision fields --------------------------------
         if rule_result and rule_result.rule_fired:
             c_raw = rule_result.confidence
@@ -132,7 +139,7 @@ class ConfidenceEngine(IConfidenceEngine):
             importance_score = sb.trust.relationship_score.score
             reasoning_summary = rule_result.reasoning_summary or ""
             key_factors = [rule_result.rule_id or "DETERMINISTIC_RULE"]
-            evidence_ids = sb.candidate_evidence_ids[:5]
+            evidence_ids = retrieved_ids[:5] if retrieved_ids else ["none"]
             bypassed_llm = True
             triggered_rule_id = rule_result.rule_id
 
@@ -144,7 +151,17 @@ class ConfidenceEngine(IConfidenceEngine):
             importance_score = reasoning_output.importance_rating
             reasoning_summary = reasoning_output.reasoning_summary
             key_factors = reasoning_output.key_factors
-            evidence_ids = reasoning_output.evidence_ids_referenced or sb.candidate_evidence_ids[:5]
+            valid_set = set(retrieved_ids)
+            ref_ids = [
+                eid
+                for eid in (reasoning_output.evidence_ids_referenced or [])
+                if eid in valid_set
+            ]
+            evidence_ids = (
+                ref_ids
+                if ref_ids
+                else (retrieved_ids[:5] if retrieved_ids else ["none"])
+            )
             bypassed_llm = False
             triggered_rule_id = None
 
@@ -157,16 +174,22 @@ class ConfidenceEngine(IConfidenceEngine):
             return self._build_fallback_decision(context, "NO_INPUT")
 
         # ---- Compute adjustment factors ----------------------------------
-        s_adj = self._compute_signal_agreement(sb)
-        e_adj = self._compute_evidence_adjustment(eb)
-        h_adj = self._compute_history_adjustment(context)
+        if bypassed_llm:
+            s_adj = 0.0
+            e_adj = 0.0
+            h_adj = 0.0
+            c_calibrated = c_raw
+        else:
+            s_adj = self._compute_signal_agreement(sb)
+            e_adj = self._compute_evidence_adjustment(eb)
+            h_adj = self._compute_history_adjustment(context)
 
-        # ---- Base confidence (clamped before calibration) ----------------
-        c_base = c_raw + s_adj + e_adj + h_adj
-        c_base = max(_CONFIDENCE_FLOOR, min(_CONFIDENCE_CEIL, c_base))
+            # ---- Base confidence (clamped before calibration) ----------------
+            c_base = c_raw + s_adj + e_adj + h_adj
+            c_base = max(_CONFIDENCE_FLOOR, min(_CONFIDENCE_CEIL, c_base))
 
-        # ---- Temperature scaling (Platt sigmoid) -------------------------
-        c_calibrated = self._sigmoid_calibrate(c_base)
+            # ---- Temperature scaling (Platt sigmoid) -------------------------
+            c_calibrated = self._sigmoid_calibrate(c_base)
 
         # ---- Grounding warning check -------------------------------------
         top_evidence_relevance = max(

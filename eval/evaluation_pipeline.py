@@ -103,11 +103,16 @@ class EvaluationPipeline:
         return metrics
 
     def _load_dataset(self, path: str) -> List[Dict[str, Any]]:
-        """Load benchmark dataset file."""
+        """Load benchmark dataset file (JSON or CSV)."""
         p = Path(path)
         if not p.exists():
             logger.warning(f"Dataset path {path} not found. Generating synthetic mock evaluation items.")
             return self._generate_synthetic_benchmark_items(100)
+
+        if p.suffix.lower() == ".csv":
+            import csv
+            with p.open("r", encoding="utf-8-sig") as f:
+                return list(csv.DictReader(f))
 
         with p.open("r", encoding="utf-8") as f:
             data = json.load(f)
@@ -141,6 +146,7 @@ class EvaluationPipeline:
         object.__setattr__(core_msg, "message_type", "text")
         object.__setattr__(core_msg, "forward_count", 0)
         object.__setattr__(core_msg, "char_count", len(msg_text))
+        object.__setattr__(core_msg, "word_count", len(msg_text.split()))
 
         return MessageContext(
             message_id=msg_id,

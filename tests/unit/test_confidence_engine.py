@@ -324,3 +324,40 @@ class TestFallbackBehavior:
             DecisionAction.DELIVER_SILENT,
             DecisionAction.SUMMARIZE_LATER,
         )
+
+    def test_evidence_ids_grounding_uses_bundle_message_ids(self):
+        engine = ConfidenceEngine()
+        sb = _mock_signal_bundle()
+        item = _mock_evidence_item(similarity_score=0.85)
+        eb = _mock_evidence_bundle(items=[item], evidence_count=1)
+        ctx = _mock_context(sb, eb)
+
+        rule = RuleEvaluationResult(
+            rule_fired=True,
+            rule_id="RULE_TEST",
+            action=DecisionAction.DELIVER_IMMEDIATELY,
+            confidence=1.0,
+            bypass_llm=True,
+        )
+
+        calibrated = engine.calibrate(rule_result=rule, reasoning_output=None, context=ctx)
+        assert calibrated.evidence_ids == ["ev_001"]
+        assert "routine" not in calibrated.evidence_ids
+
+    def test_deterministic_rule_bypasses_adjustment_penalties(self):
+        engine = ConfidenceEngine()
+        sb = _mock_signal_bundle(urgency=0.9, trust=0.1)  # would normally cause severe contradiction penalty
+        eb = _mock_evidence_bundle(items=[], evidence_count=0)  # zero evidence
+        ctx = _mock_context(sb, eb)
+
+        rule = RuleEvaluationResult(
+            rule_fired=True,
+            rule_id="RULE_SAFETY_THREAT_001",
+            action=DecisionAction.SUPPRESS_SPAM,
+            confidence=1.0,
+            bypass_llm=True,
+        )
+
+        calibrated = engine.calibrate(rule_result=rule, reasoning_output=None, context=ctx)
+        assert calibrated.calibrated_confidence == 1.0
+        assert calibrated.action == DecisionAction.SUPPRESS_SPAM

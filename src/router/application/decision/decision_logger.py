@@ -214,5 +214,5 @@ class DecisionLogger(IDecisionLogger):
             "model_version": meta.model_version,
             "decision_path": meta.decision_path,
             # Tamper-proof audit hash
-            "audit_hash": decision_result.audit_hash,
+            "audit_hash": meta.audit_hash,
         }

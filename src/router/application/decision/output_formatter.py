@@ -27,7 +27,7 @@ logger = get_logger(__name__)
 # Mapping: DecisionAction -> NotificationAction (legacy enum)
 _ACTION_MAP: Dict[DecisionAction, NotificationAction] = {
     DecisionAction.DELIVER_IMMEDIATELY: NotificationAction.NOTIFY,
-    DecisionAction.DELIVER_SILENT: NotificationAction.NOTIFY,
+    DecisionAction.DELIVER_SILENT: NotificationAction.DIGEST,
     DecisionAction.SUMMARIZE_LATER: NotificationAction.DIGEST,
     DecisionAction.BATCH_DIGEST: NotificationAction.DIGEST,
     DecisionAction.SUPPRESS_SPAM: NotificationAction.MUTE,
