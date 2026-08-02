@@ -94,19 +94,43 @@ class ContextAssembler:
             )
 
         if isinstance(raw_message, dict):
+            fwd_count = 0
+            raw_fwd = raw_message.get("forwarded_count") or raw_message.get("forward_count")
+            if raw_fwd:
+                try:
+                    fwd_count = int(raw_fwd)
+                except ValueError:
+                    fwd_count = 0
+
+            sender_phone = (
+                raw_message.get("sender_user_id")
+                or raw_message.get("sender_phone")
+                or raw_message.get("sender_id")
+                or ""
+            )
+            receiver_phone = (
+                raw_message.get("user_id")
+                or raw_message.get("receiver_phone")
+                or ""
+            )
+            content = raw_message.get("message_text") if raw_message.get("message_text") is not None else raw_message.get("content", "")
+            media_hash = raw_message.get("media_id") or raw_message.get("media_hash") or ""
+            media_type = (raw_message.get("media_type") or "TEXT").upper()
+
             return RawMessagePayload(
                 message_id=raw_message.get("message_id", ""),
-                sender_phone=raw_message.get("sender_phone", raw_message.get("sender_id", "")),
-                receiver_phone=raw_message.get("receiver_phone", raw_message.get("user_id", "")),
+                sender_phone=sender_phone,
+                receiver_phone=receiver_phone,
                 group_id=raw_message.get("group_id", "NONE"),
                 business_id=raw_message.get("business_id", "NONE"),
-                content=raw_message.get("content", raw_message.get("message_text", "")),
+                content=content,
                 timestamp=raw_message.get("timestamp", 0),
-                media_hash=raw_message.get("media_hash", raw_message.get("media_id", "")),
-                media_type=raw_message.get("media_type", "TEXT").upper(),
-                is_forwarded=raw_message.get("is_forwarded", False),
-                forward_count=raw_message.get("forward_count", 0),
+                media_hash=media_hash,
+                media_type=media_type,
+                is_forwarded=fwd_count > 0 or bool(raw_message.get("is_forwarded", False)),
+                forward_count=fwd_count,
             )
+
 
         raise InvalidPayloadException(f"Unsupported payload type: {type(raw_message)}")
 

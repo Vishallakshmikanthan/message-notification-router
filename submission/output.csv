@@ -1,0 +1,31 @@
+message_id,action,message_type,reason,confidence,evidence_message_ids
+sample_msg_001,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_002,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;non_business;direct
+sample_msg_003,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_004,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+sample_msg_005,notify,urgent,Health emergency signal detected.,0.35,routine;health_keywords;unverified_business;direct
+sample_msg_006,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_007,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+sample_msg_008,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;non_business;direct;clean
+sample_msg_009,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+sample_msg_010,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;near_term_keyword;non_business;direct
+sample_msg_011,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+sample_msg_012,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_013,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;non_business;frequently_forwarded;clean
+sample_msg_014,digest,personal,Group is explicitly muted by user and user is not mentioned.,0.73,routine;non_business;frequently_forwarded;clean
+sample_msg_015,notify,scam,Threat or harassment detected: immediate safety suppress.,0.65,routine;unverified_business;forwarded;clean
+sample_msg_019,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct
+sample_msg_020,digest,scam,Threat or harassment detected: immediate safety suppress.,0.35,routine;otp_code;non_business;direct
+sample_msg_041,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_042,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_043,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;unverified_business;direct;clean
+sample_msg_044,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_045,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_046,notify,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_047,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,routine;near_term_keyword;unverified_business;direct
+sample_msg_048,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;unverified_business;direct
+sample_msg_049,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.61,routine;non_business;direct;clean
+sample_msg_050,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.31,emergency_keywords;non_business;direct;clean
+sample_msg_051,digest,spam,High spam probability detected; message suppressed.,0.22,routine;imminent_event_keyword;non_business;direct
+sample_msg_052,digest,personal,Quiet hours active; non-VIP sender; urgency below threshold.,0.73,routine;near_term_keyword;non_business;direct
+sample_msg_053,digest,spam,High spam probability detected; message suppressed.,0.22,routine;otp_code;non_business;direct

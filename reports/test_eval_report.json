@@ -1,38 +1,35 @@
 {
-  "timestamp": "2026-08-02T05:53:53Z",
-  "duration_ms": 74.24,
+  "timestamp": "2026-08-02T06:16:34Z",
+  "duration_ms": 147.44,
   "summary": {
-    "accuracy": 0.0,
-    "macro_f1": 0.0,
-    "total_penalty_score": 500,
-    "penalty_per_1000": 5000.0,
+    "accuracy": 0.5,
+    "macro_f1": 0.2222,
+    "total_penalty_score": 225,
+    "penalty_per_1000": 2250.0,
     "ece_score": 0.1088,
     "brier_score": 0.0118,
     "passed_gates": false,
     "gate_failures": [
-      "Macro F1 (0.000) < target 0.92",
-      "Risk Penalty (5000.0/1000) >= target 50.0",
+      "Macro F1 (0.222) < target 0.92",
+      "Risk Penalty (2250.0/1000) >= target 50.0",
       "ECE Score (0.109) > target 0.05"
     ]
   },
   "per_action_metrics": {
     "precision": {
-      "NOTIFY_IMMEDIATELY": 0.0,
-      "DELIVER_SILENTLY": 0.0,
-      "SUMMARIZE_IN_BATCH": 0.0,
-      "DO_NOT_DISTURB": 0.0
+      "notify": 0.0,
+      "digest": 0.5,
+      "mute": 0.0
     },
     "recall": {
-      "NOTIFY_IMMEDIATELY": 0.0,
-      "DELIVER_SILENTLY": 0.0,
-      "SUMMARIZE_IN_BATCH": 0.0,
-      "DO_NOT_DISTURB": 0.0
+      "notify": 0.0,
+      "digest": 1.0,
+      "mute": 0.0
     },
     "f1": {
-      "NOTIFY_IMMEDIATELY": 0.0,
-      "DELIVER_SILENTLY": 0.0,
-      "SUMMARIZE_IN_BATCH": 0.0,
-      "DO_NOT_DISTURB": 0.0
+      "notify": 0.0,
+      "digest": 0.6667,
+      "mute": 0.0
     }
   },
   "item_results_sample": [

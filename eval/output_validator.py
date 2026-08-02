@@ -1,12 +1,11 @@
 """Output CSV Validation Suite for Hackathon Benchmark Submission.
 
-Implements Submission Artifact Specifications from submission_strategy.md §4.1:
-- Header Structure: message_id,action,reason,confidence,evidence
-- Action Schema Enforcer: Restricted strictly to 4 allowed actions
+Implements Submission Artifact Specifications from problem_statement.md & submission_strategy.md §4.1:
+- Header Structure: message_id,action,message_type,reason,confidence,evidence_message_ids
+- Action Schema Enforcer: Restricted strictly to allowed actions (notify, digest, mute)
+- MessageType Schema Enforcer: Restricted strictly to 11 valid categories
 - Confidence Schema Enforcer: Bounded strictly between 0.00 and 1.00
 - Null Value Guard: Zero empty cells permitted across all rows
-
-Spec: submission_strategy.md §4.1.
 """
 
 from __future__ import annotations
@@ -14,12 +13,32 @@ from __future__ import annotations
 import csv
 import logging
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
 
-VALID_ACTIONS = {"NOTIFY_IMMEDIATELY", "DELIVER_SILENTLY", "SUMMARIZE_IN_BATCH", "DO_NOT_DISTURB"}
-REQUIRED_COLUMNS = ["message_id", "action", "reason", "confidence", "evidence"]
+VALID_ACTIONS = {"notify", "digest", "mute"}
+VALID_MESSAGE_TYPES = {
+    "personal",
+    "urgent",
+    "event",
+    "payment",
+    "business_update",
+    "promotion",
+    "greeting",
+    "forward",
+    "spam",
+    "scam",
+    "unknown",
+}
+REQUIRED_COLUMNS = [
+    "message_id",
+    "action",
+    "message_type",
+    "reason",
+    "confidence",
+    "evidence_message_ids",
+]
 
 
 class OutputCSVValidator:
@@ -30,7 +49,7 @@ class OutputCSVValidator:
         pass
 
     def validate_file(self, csv_path: str) -> Dict[str, Any]:
-        """Validate an output.csv file against submission constraints.
+        """Validate an output.csv file against Hackerrank submission constraints.
 
         Args:
             csv_path: Path to output.csv file.
@@ -63,19 +82,27 @@ class OutputCSVValidator:
                     errors.append(f"Row {idx}: Invalid column count ({len(row)} != {len(REQUIRED_COLUMNS)})")
                     continue
 
-                msg_id, action, reason, conf_str, evidence_str = row
+                msg_id, action, msg_type, reason, conf_str, evidence_str = row
 
                 # Null value guard
                 if not msg_id.strip():
                     errors.append(f"Row {idx}: Empty message_id")
                 if not action.strip():
                     errors.append(f"Row {idx}: Empty action")
+                if not msg_type.strip():
+                    errors.append(f"Row {idx}: Empty message_type")
                 if not reason.strip():
                     errors.append(f"Row {idx}: Empty reason")
+                if not evidence_str.strip():
+                    errors.append(f"Row {idx}: Empty evidence_message_ids")
 
                 # Action enum guard
-                if action.strip() not in VALID_ACTIONS:
+                if action.strip().lower() not in VALID_ACTIONS:
                     errors.append(f"Row {idx}: Invalid action '{action}'. Must be one of {VALID_ACTIONS}")
+
+                # MessageType enum guard
+                if msg_type.strip().lower() not in VALID_MESSAGE_TYPES:
+                    errors.append(f"Row {idx}: Invalid message_type '{msg_type}'. Must be one of {VALID_MESSAGE_TYPES}")
 
                 # Confidence bound guard
                 try:
@@ -96,3 +123,4 @@ class OutputCSVValidator:
             "row_count": row_count,
             "errors": errors,
         }
+

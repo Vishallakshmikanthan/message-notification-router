@@ -79,11 +79,13 @@ message-notification-router/
 
 ## 4. Submission Artifact Packaging Specifications
 
-### 1. `output.csv` Validation Rules
-- **Header Structure**: `message_id,action,reason,confidence,evidence`
-- **Action Schema Enforcer**: Values strictly restricted to `NOTIFY_IMMEDIATELY`, `DELIVER_SILENTLY`, `SUMMARIZE_IN_BATCH`, `DO_NOT_DISTURB`.
+- **Header Structure**: `message_id,action,message_type,reason,confidence,evidence_message_ids`
+- **Action Schema Enforcer**: Values strictly restricted to `notify`, `digest`, `mute`.
+- **MessageType Schema Enforcer**: Values strictly restricted to 11 valid categories (`personal`, `urgent`, `event`, `payment`, `business_update`, `promotion`, `greeting`, `forward`, `spam`, `scam`, `unknown`).
 - **Confidence Schema Enforcer**: Float value bounded strictly between `0.00` and `1.00`.
+- **Evidence Schema Enforcer**: Semicolon-separated message ID list or `none`.
 - **Null Value Guard**: Zero empty cells permitted across all rows.
+
 
 ### 2. `code.zip` Packaging Cleanliness Protocol
 - **Excluded Patterns**: `.git/`, `__pycache__/`, `.pytest_cache/`, `.venv/`, `.env`, `.DS_Store`, `*.pyc`.

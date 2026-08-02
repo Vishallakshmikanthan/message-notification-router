@@ -15,31 +15,50 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Sequence, Tuple, Union
 
 
-# Severity Cost Matrix (evaluation_framework.md §2.2)
+# Severity Cost Matrix (evaluation_framework.md §2.2 & Hackerrank canonical actions: notify, digest, mute)
 SEVERITY_COST_MATRIX: Dict[Tuple[str, str], int] = {
     # True Class -> Predicted Class : Penalty Points
-    ("NOTIFY_IMMEDIATELY", "NOTIFY_IMMEDIATELY"): 0,
-    ("NOTIFY_IMMEDIATELY", "DELIVER_SILENTLY"): 10,  # CRITICAL FAIL
-    ("NOTIFY_IMMEDIATELY", "SUMMARIZE_IN_BATCH"): 8,   # HIGH FAIL
-    ("NOTIFY_IMMEDIATELY", "DO_NOT_DISTURB"): 15,    # FATAL FAIL
+    ("notify", "notify"): 0,
+    ("notify", "digest"): 8,   # HIGH FAIL: Urgent missed or delayed
+    ("notify", "mute"): 15,    # FATAL FAIL: Urgent muted
 
-    ("DELIVER_SILENTLY", "NOTIFY_IMMEDIATELY"): 2,   # Minor Annoyance
-    ("DELIVER_SILENTLY", "DELIVER_SILENTLY"): 0,
-    ("DELIVER_SILENTLY", "SUMMARIZE_IN_BATCH"): 1,  # Negligible
-    ("DELIVER_SILENTLY", "DO_NOT_DISTURB"): 3,      # Moderate
+    ("digest", "notify"): 2,   # Minor Annoyance: Low priority interrupted user
+    ("digest", "digest"): 0,
+    ("digest", "mute"): 3,     # Moderate: Digest items muted
 
-    ("SUMMARIZE_IN_BATCH", "NOTIFY_IMMEDIATELY"): 3, # Moderate
-    ("SUMMARIZE_IN_BATCH", "DELIVER_SILENTLY"): 1,
-    ("SUMMARIZE_IN_BATCH", "SUMMARIZE_IN_BATCH"): 0,
-    ("SUMMARIZE_IN_BATCH", "DO_NOT_DISTURB"): 2,    # Minor
-
-    ("DO_NOT_DISTURB", "NOTIFY_IMMEDIATELY"): 5,    # High Annoyance
-    ("DO_NOT_DISTURB", "DELIVER_SILENTLY"): 2,
-    ("DO_NOT_DISTURB", "SUMMARIZE_IN_BATCH"): 1,
-    ("DO_NOT_DISTURB", "DO_NOT_DISTURB"): 0,
+    ("mute", "notify"): 5,     # High Annoyance: Spam/mute interrupted user
+    ("mute", "digest"): 1,     # Negligible: Spam in digest
+    ("mute", "mute"): 0,
 }
 
-VALID_ACTIONS = ["NOTIFY_IMMEDIATELY", "DELIVER_SILENTLY", "SUMMARIZE_IN_BATCH", "DO_NOT_DISTURB"]
+# Legacy mapping for backwards compatibility with test inputs
+_ACTION_NORMALIZATION: Dict[str, str] = {
+    "NOTIFY_IMMEDIATELY": "notify",
+    "DELIVER_IMMEDIATELY": "notify",
+    "TRIGGER_EMERGENCY_OVERRIDE": "notify",
+    "DELIVER_SILENTLY": "digest",
+    "DELIVER_SILENT": "digest",
+    "SUMMARIZE_IN_BATCH": "digest",
+    "SUMMARIZE_LATER": "digest",
+    "BATCH_DIGEST": "digest",
+    "DO_NOT_DISTURB": "mute",
+    "SUPPRESS_SPAM": "mute",
+    "SUPPRESS_MUTE": "mute",
+    "NOTIFY": "notify",
+    "DIGEST": "digest",
+    "MUTE": "mute",
+}
+
+VALID_ACTIONS = ["notify", "digest", "mute"]
+
+
+def normalize_action(act: str) -> str:
+    """Normalize action string to canonical lower-case NotificationAction ('notify', 'digest', 'mute')."""
+    cleaned = str(act).strip()
+    if cleaned in _ACTION_NORMALIZATION:
+        return _ACTION_NORMALIZATION[cleaned]
+    return cleaned.lower()
+
 
 
 @dataclass
@@ -86,8 +105,11 @@ class MetricsEngine:
         if n == 0:
             raise ValueError("Cannot evaluate empty dataset")
 
+        norm_true = [normalize_action(t) for t in y_true]
+        norm_pred = [normalize_action(p) for p in y_pred]
+
         # 1. Classification Metrics
-        correct = sum(1 for t, p in zip(y_true, y_pred) if t == p)
+        correct = sum(1 for t, p in zip(norm_true, norm_pred) if t == p)
         accuracy = correct / n
 
         precision_map: Dict[str, float] = {}
@@ -95,9 +117,9 @@ class MetricsEngine:
         f1_map: Dict[str, float] = {}
 
         for action in VALID_ACTIONS:
-            tp = sum(1 for t, p in zip(y_true, y_pred) if t == action and p == action)
-            fp = sum(1 for t, p in zip(y_true, y_pred) if t != action and p == action)
-            fn = sum(1 for t, p in zip(y_true, y_pred) if t == action and p != action)
+            tp = sum(1 for t, p in zip(norm_true, norm_pred) if t == action and p == action)
+            fp = sum(1 for t, p in zip(norm_true, norm_pred) if t != action and p == action)
+            fn = sum(1 for t, p in zip(norm_true, norm_pred) if t == action and p != action)
 
             prec = tp / (tp + fp) if (tp + fp) > 0 else 0.0
             rec = tp / (tp + fn) if (tp + fn) > 0 else 0.0
@@ -111,9 +133,10 @@ class MetricsEngine:
 
         # 2. Risk-Weighted Penalty Matrix
         total_penalty = 0
-        for t, p in zip(y_true, y_pred):
+        for t, p in zip(norm_true, norm_pred):
             penalty = SEVERITY_COST_MATRIX.get((t, p), 5)  # default penalty 5 for unknown
             total_penalty += penalty
+
 
         penalty_per_1000 = (total_penalty / n) * 1000.0
 

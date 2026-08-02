@@ -54,16 +54,17 @@ class UserContextBuilder:
                 now_ms = now_ts_ms or int(datetime.now(timezone.utc).timestamp() * 1000)
                 reg_ts = getattr(cached, "created_at_epoch_ms", 0) or 0
                 age_days = max(0, int((now_ms - reg_ts) / (1000 * 86400))) if reg_ts > 0 else 0
+                disp_name = getattr(cached, "display_name", None) or getattr(cached, "name", None) or getattr(cached, "user_name", None) or "User"
                 return UserContext(
                     user_id=cached.user_id,
-                    display_name=cached.display_name or "User",
-                    phone_number=cached.phone_number or phone_or_id,
-                    user_type="INDIVIDUAL",
+                    display_name=disp_name,
+                    phone_number=getattr(cached, "phone_number", "") or phone_or_id,
+                    user_type=getattr(cached, "user_type", "INDIVIDUAL"),
                     registration_timestamp=reg_ts,
                     account_age_days=age_days,
-                    preferred_language=cached.preferred_language or "en",
-                    timezone=cached.timezone or "UTC",
-                    is_verified=cached.is_verified,
+                    preferred_language=getattr(cached, "preferred_language", "en") or "en",
+                    timezone=getattr(cached, "timezone", "UTC") or "UTC",
+                    is_verified=getattr(cached, "is_verified", False),
                     is_registered_user=True,
                 )
 
@@ -76,18 +77,20 @@ class UserContextBuilder:
                 now_ms = now_ts_ms or int(datetime.now(timezone.utc).timestamp() * 1000)
                 reg_ts = getattr(user, "created_at_epoch_ms", 0) or 0
                 age_days = max(0, int((now_ms - reg_ts) / (1000 * 86400))) if reg_ts > 0 else 0
+                disp_name = getattr(user, "display_name", None) or getattr(user, "name", None) or getattr(user, "user_name", None) or "User"
                 return UserContext(
                     user_id=user.user_id,
-                    display_name=user.display_name or "User",
-                    phone_number=user.phone_number or phone_or_id,
-                    user_type="INDIVIDUAL",
+                    display_name=disp_name,
+                    phone_number=getattr(user, "phone_number", "") or phone_or_id,
+                    user_type=getattr(user, "user_type", "INDIVIDUAL"),
                     registration_timestamp=reg_ts,
                     account_age_days=age_days,
-                    preferred_language=user.preferred_language or "en",
-                    timezone=user.timezone or "UTC",
-                    is_verified=user.is_verified,
+                    preferred_language=getattr(user, "preferred_language", "en") or "en",
+                    timezone=getattr(user, "timezone", "UTC") or "UTC",
+                    is_verified=getattr(user, "is_verified", False),
                     is_registered_user=True,
                 )
+
 
         # Fallback profile for unregistered user
         return UserContext(
