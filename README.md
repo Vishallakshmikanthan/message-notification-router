@@ -43,6 +43,8 @@
 
 ## 🎯 Project Overview
 
+> **🏆 This project was developed for the HackerRank Orchestrate August 2026 Hackathon**
+
 The **AI-Powered WhatsApp Message Notification Router** is a production-grade, enterprise-ready system designed to intelligently route incoming WhatsApp messages across multimodal signals (Text, OCR Images, Audio Transcripts). The system determines optimal delivery actions while guaranteeing zero PII exposure, sub-800ms latencies, and 100% deterministic rule enforcement.
 
 ### 🎨 System Illustrations
